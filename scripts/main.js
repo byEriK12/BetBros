@@ -32,10 +32,65 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const newUser = { username, email, password };
-      localStorage.setItem("betbros_user", JSON.stringify(newUser));
 
-      alert("¡Registro exitoso!");
-      window.location.href = "login.html"; 
+      // Enviar el nuevo usuario al backend con fetch
+      fetch('http://localhost:3010/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === 'Usuario registrado correctamente') {
+          alert("¡Registro exitoso!");
+          window.location.href = "login.html"; // Redirigir al login
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('Hubo un problema al registrar el usuario.');
+      });
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault(); 
+
+      const identifier = document.getElementById("identifier").value.trim();  // Nombre de usuario o correo
+      const password = document.getElementById("password").value;
+
+      const loginData = { identifier, password };
+
+      // Enviar datos al backend para validar el login
+      fetch('http://localhost:3010/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === 'Login exitoso') {
+          alert("¡Login exitoso!");
+          window.location.href = "dashboard.html";  // Redirigir a la página de bienvenida
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('Hubo un problema al iniciar sesión.');
+      });
     });
   }
 });

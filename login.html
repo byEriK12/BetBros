@@ -9,8 +9,13 @@
 </head>
 <body class="bg-dark text-white">
 
-  <nav class="navbar navbar-dark bg-dark px-4">
-    <a class="navbar-brand" href="#">BetBros</a>
+ <nav id="navbar" class="navbar px-4">
+    <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
+      <span>
+        <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
+        </span>
+    </a>
     <div>
       <button class="btn btn-outline-light me-2" onclick="showRegister()">REGÍSTRATE AHORA</button>
       <button class="btn btn-light" onclick="goTo('login.html')">INICIAR SESIÓN</button>
@@ -22,11 +27,11 @@
     <form id="loginForm">
       <div class="mb-3">
         <label for="loginInput" class="form-label">Nombre de usuario o correo electrónico</label>
-        <input type="text" class="form-control" id="loginInput" required>
+        <input type="text" class="form-control" id="identifier" required>
       </div>
       <div class="mb-3">
         <label for="loginPassword" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" id="loginPassword" required>
+        <input type="password" class="form-control" id="password" required>
       </div>
       <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
       <button type="button" class="btn btn-secondary w-100 mt-2" onclick="loadInicio()">Volver</button>
