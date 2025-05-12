@@ -1,4 +1,4 @@
-# BetBros: Apostamos por la diversión.
+# BetBros: Apuestas que unen, no que arruinan"
 
 **BetBros** es una aplicación web que permite a grupos de amigos o comunidades crear y gestionar apuestas informales de manera sencilla, divertida y sin dinero real. Está diseñada para recuperar el componente social y lúdico de las apuestas, evitando malentendidos y desorganización.
 
