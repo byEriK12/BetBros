@@ -14,8 +14,15 @@ function loadInicio() {
   window.location.href = "index.html";
 }
 
+function logout() {
+  localStorage.removeItem("betbros_user");
+  alert("Sesión cerrada correctamente.");
+  window.location.href = "index.html"; // Redirige al inicio
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{4,}$/;
 
   if (registerForm) {
     registerForm.addEventListener("submit", (e) => {
@@ -26,10 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
 
+      if (!passwordRegex.test(password)) {
+      alert("La contraseña debe tener al menos 4 caracteres, una mayúscula y un número.");
+      return;
+    }
+
       if (password !== confirmPassword) {
         alert("Las contraseñas no coinciden.");
         return;
-      }
+    }
 
       const newUser = { username, email, password };
 
@@ -81,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.message === 'Login exitoso') {
+          localStorage.setItem("betbros_user", JSON.stringify({ username: identifier }));
           alert("¡Login exitoso!");
           window.location.href = "dashboard.html";  // Redirigir a la página de bienvenida
         } else {
@@ -93,4 +106,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+  // Bienvenida personalizada en dashboard
+  const welcomeEl = document.getElementById("welcomeUser");
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+
+  if (welcomeEl && user) {
+    welcomeEl.textContent = ` ${user.username}`;
+  }
 });
+
+

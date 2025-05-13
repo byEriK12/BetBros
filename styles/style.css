@@ -37,7 +37,7 @@ h2, h3, h4, h5 {
 }
 
 .btn-primary:hover {
-  background-color: #2fd656;
+  background-color: #10501f;
 }
 
 .btn-outline-light {
@@ -56,7 +56,7 @@ h2, h3, h4, h5 {
 }
 
 .btn-light:hover {
-  background-color: #e2e6ea;
+  background-color: #2fd656;
 }
 
 /* CARDS */
@@ -117,4 +117,47 @@ label {
 .text-verde-betbros {
   color: #2fd656 !important;
 }
+
+.btn-verde-betbros {
+  background-color: #2fd656;
+  border: none;
+  color: white;
+}
+
+.btn-verde-betbros:hover {
+  background-color: #10501f;
+}
+
+.card.locked {
+  position: relative;
+  overflow: hidden;
+  cursor: not-allowed;
+}
+
+.card.locked::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+  z-index: 1;
+}
+
+.card.locked:hover::before {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.card.locked::after {
+  content: "🔒";
+  font-size: 2.5rem;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+
 

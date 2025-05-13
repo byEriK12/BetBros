@@ -24,13 +24,13 @@ app.post('/register', (req, res) => {
     );
 
     if (userExists) {
-        return res.status(400).json({ message: 'Usuario o correo ya registrado' });
+        return res.status(400).json({ message: 'Usuario o correo ya registrado.' });
     }
 
     users.push({ username, email, password });
     fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
 
-    res.status(201).json({ message: 'Usuario registrado correctamente' });
+    res.status(201).json({ message: 'Usuario registrado correctamente.' });
 });
 
 app.post('/login', (req, res) => {
@@ -45,10 +45,10 @@ app.post('/login', (req, res) => {
     );
 
     if (!user) {
-        return res.status(401).json({ message: 'Credenciales incorrectas' });
+        return res.status(401).json({ message: 'Credenciales incorrectas.' });
     }
 
-    res.status(200).json({ message: 'Login exitoso' });
+    res.status(200).json({ message: 'Login exitoso.' });
 });
 
 app.listen(PORT, () => {
