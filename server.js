@@ -30,22 +30,23 @@ app.post('/register', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    const { identifier, password } = req.body;
+  const { identifier, password } = req.body;
 
-    const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
 
-    const user = users.find(
-        (u) =>
-            (u.username === identifier || u.email === identifier) &&
-            u.password === password
-    );
+  const user = users.find(
+    (u) =>
+      (u.username === identifier || u.email === identifier) &&
+      u.password === password
+  );
 
-    if (!user) {
-        return res.status(401).json({ message: 'Credenciales incorrectas.' });
-    }
+  if (!user) {
+    return res.status(401).json({ message: 'Credenciales incorrectas.' });
+  }
 
-    res.status(200).json({ message: 'Login exitoso.' });
+  res.status(200).json({ message: 'Login exitoso.', username: user.username });
 });
+
 
 app.post('/create-group', (req, res) => {
   const { name, description, image, creator } = req.body;
@@ -82,6 +83,16 @@ app.post('/create-group', (req, res) => {
   fs.writeFileSync(GROUPS_DB, JSON.stringify(groups, null, 2));
 
   res.status(201).json({ message: 'Grupo privado creado correctamente.' });
+});
+
+app.get('/my-groups', (req, res) => {
+  const { username } = req.query; 
+
+  const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
+
+  const userGroups = groups.filter(group => group.creator === username); 
+
+  res.status(200).json(userGroups);
 });
 
 app.use(express.static(path.join(__dirname, 'public')));

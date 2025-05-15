@@ -92,15 +92,15 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.message)
         if (data.message.trim() === 'Login exitoso.') {
-          localStorage.setItem("betbros_user", JSON.stringify({ username: identifier }));
+          localStorage.setItem("betbros_user", JSON.stringify({ username: data.username }));
           alert("¡Login exitoso!");
-          window.location.href = "dashboard.html";  // Redirigir a la página de bienvenida
+          window.location.href = "dashboard.html";
         } else {
           alert(data.message);
         }
-      })
+    })
+
       .catch((error) => {
         console.error('Error:', error);
         alert('Hubo un problema al iniciar sesión.');
@@ -169,6 +169,50 @@ if (createGroupForm) {
   });
 }
 });
+    document.addEventListener("DOMContentLoaded", () => {
+  const groupsList = document.getElementById("groupsList");
+
+  // Solo ejecutar si estamos en la página de Mis Grupos
+  if (!groupsList) return;
+
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+
+  if (!user || !user.username) {
+    alert("No se ha podido identificar al usuario.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  fetch(`http://localhost:3010/my-groups?username=${user.username}`)
+    .then(response => response.json())
+    .then(groups => {
+      if (groups.length === 0) {
+        groupsList.innerHTML = '<p class="text-center">No tienes grupos creados.</p>';
+      } else {
+        groups.forEach(group => {
+          const groupCard = document.createElement("div");
+          groupCard.classList.add("col-12", "col-md-4", "mb-4");
+          groupCard.innerHTML = `
+            <div class="card">
+              <img src="${group.image || 'https://via.placeholder.com/300'}" class="card-img-top" alt="${group.name}">
+              <div class="card-body">
+                <h5 class="card-title">${group.name}</h5>
+                <p class="card-text">${group.description}</p>
+                <p class="text-muted">Creador: ${group.creator}</p>
+                <a href="group-detail.html?group=${group.name}" class="btn btn-primary">Apuestas</a>
+              </div>
+            </div>
+          `;
+          groupsList.appendChild(groupCard);
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Hubo un problema al cargar los grupos.');
+    });
+});
+
 
 
 
