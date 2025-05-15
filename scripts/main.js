@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message === 'Usuario registrado correctamente') {
+        if (data.message === 'Usuario registrado correctamente.') {
           alert("¡Registro exitoso!");
           window.location.href = "login.html"; // Redirigir al login
         } else {
@@ -92,7 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message === 'Login exitoso') {
+        console.log(data.message)
+        if (data.message.trim() === 'Login exitoso.') {
           localStorage.setItem("betbros_user", JSON.stringify({ username: identifier }));
           alert("¡Login exitoso!");
           window.location.href = "dashboard.html";  // Redirigir a la página de bienvenida
