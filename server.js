@@ -6,13 +6,9 @@ const path = require('path');
 const app = express();
 const PORT = 3010;
 const USERS_DB = path.join(__dirname, 'db', 'users.json');
+const GROUPS_DB = path.join(__dirname, 'db', 'groups.json');
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname));  
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
 
 app.post('/register', (req, res) => {
     const { username, email, password } = req.body;
@@ -49,6 +45,49 @@ app.post('/login', (req, res) => {
     }
 
     res.status(200).json({ message: 'Login exitoso.' });
+});
+
+app.post('/create-group', (req, res) => {
+  const { name, description, image, creator } = req.body;
+
+  if (name.length > 15) {
+    return res.status(400).json({ message: 'El nombre del grupo no puede superar los 15 caracteres.' });
+  }
+
+  if (description.length > 100) {
+    return res.status(400).json({ message: 'La descripción no puede superar los 100 caracteres.' });
+  }
+
+  if (!creator) {
+    return res.status(400).json({ message: 'No se ha proporcionado el creador del grupo.' });
+  }
+
+  const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
+  const nameExists = groups.some(group => group.name === name);
+
+  if (nameExists) {
+    return res.status(400).json({ message: 'Ya existe un grupo con ese nombre.' });
+  }
+
+  const newGroup = {
+    name,
+    description,
+    image: image || "", // se puede dejar vacío si no se proporciona
+    creator,
+    members: [creator],
+    createdAt: new Date().toISOString()
+  };
+
+  groups.push(newGroup);
+  fs.writeFileSync(GROUPS_DB, JSON.stringify(groups, null, 2));
+
+  res.status(201).json({ message: 'Grupo privado creado correctamente.' });
+});
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, () => {
