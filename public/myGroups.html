@@ -34,9 +34,9 @@
           <li><a class="dropdown-item" href="createPrivGroup.html">Crear grupo privado</a></li>
           <li><a class="dropdown-item" href="joinPrivGroup.html">Unirse a grupo privado</a></li>
           <li><a class="dropdown-item" href="myGroups.html">Mis grupos</a></li>
+          <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
         </ul>
       </div>
-      <button class="btn-verde-betbros" onclick="logout()">Cerrar sesión</button>
     </div>
   </nav>
 
@@ -47,11 +47,26 @@
       <a href="dashboard.html" class="btn btn-secondary">← Volver</a>
     </div>
 
-    <div id="groupsList" class="row">
-      <!-- Aquí se cargarán los grupos -->
+    <div id="groupsList" class="row mb-5">
+  <!-- Aquí se cargarán los grupos -->
+    </div>
+
+  <!-- Botones debajo de la lista -->
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-6 text-start">
+          <a href="createPrivGroup.html" class="btn btn-primary">
+          Crear grupo
+          </a>
+        </div>
+        <div class="col-md-6 text-end">
+          <a href="joinPrivGroup.html" class="btn btn-primary">
+          Unirse a grupo
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-
   <script src="scripts/main.js"></script>
 </body>
 </html>

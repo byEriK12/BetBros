@@ -95,10 +95,34 @@ app.get('/my-groups', (req, res) => {
   res.status(200).json(userGroups);
 });
 
+app.post('/delete-group', (req, res) => {
+  const { name, username } = req.body;
+
+  if (!name || !username) {
+    return res.status(400).json({ message: "Faltan datos para eliminar el grupo." });
+  }
+
+  const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
+  const group = groups.find(g => g.name === name);
+
+  if (!group) {
+    return res.status(404).json({ message: "El grupo no existe." });
+  }
+
+  if (group.creator !== username) {
+    return res.status(403).json({ message: "Solo el creador puede eliminar este grupo." });
+  }
+
+  const updatedGroups = groups.filter(g => g.name !== name);
+  fs.writeFileSync(GROUPS_DB, JSON.stringify(updatedGroups, null, 2));
+  res.json({ message: "Grupo eliminado correctamente." });
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
+  res.status(404).json({ message: 'Ruta no encontrada.' });
 });
 
 app.listen(PORT, () => {

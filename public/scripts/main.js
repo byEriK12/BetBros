@@ -20,6 +20,30 @@ function logout() {
   window.location.href = "index.html"; // Redirige al inicio
 }
 
+function deleteGroup(groupName) {
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+  if (!confirm(`¿Estás segur@ de que quieres eliminar el grupo "${groupName}"?`)) return;
+
+  fetch(`http://localhost:3010/delete-group`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: groupName, username: user?.username})
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message === "Grupo eliminado correctamente.") {
+        alert("Grupo eliminado.");
+        location.reload();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Hubo un problema al eliminar el grupo.');
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{4,}$/;
@@ -191,15 +215,34 @@ if (createGroupForm) {
       } else {
         groups.forEach(group => {
           const groupCard = document.createElement("div");
-          groupCard.classList.add("col-12", "col-md-4", "mb-4");
+          groupCard.classList.add("col-12", "mb-3");
           groupCard.innerHTML = `
-            <div class="card">
-              <img src="${group.image || 'https://via.placeholder.com/300'}" class="card-img-top" alt="${group.name}">
-              <div class="card-body">
-                <h5 class="card-title">${group.name}</h5>
-                <p class="card-text">${group.description}</p>
-                <p class="text-muted">Creador: ${group.creator}</p>
-                <a href="group-detail.html?group=${group.name}" class="btn btn-primary">Apuestas</a>
+            <div class="card h-100 p-3 d-flex flex-row align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <img src="${group.image || 'https://via.placeholder.com/120'}" class="rounded me-3" alt="${group.name}" style="width: 100px; height: 100px; object-fit: cover;">
+                <div>
+                  <h5 class="mb-1">
+                    <a href="group-detail.html?group=${group.name}" class="text-decoration-none text-dark fw-bold">
+                      ${group.name}
+                    </a>
+                  </h5>
+                  <p class="mb-1 text-muted">${group.description}</p>
+                  <small class="text-secondary">Creador: ${group.creator}</small><br>
+                  <small class="text-secondary">Apuestas en curso: <b>${group.bets || 0}</b></small><br>
+                  <small class="text-secondary">Participantes: <b>${group.members || 1}</b></small>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-mas-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Más información
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item delete-option" href="#" onclick="event.preventDefault(); deleteGroup('${group.name}')">
+                      Eliminar grupo
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           `;

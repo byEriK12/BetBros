@@ -175,4 +175,45 @@ label {
   color: #000;
 }
 
+/* GROUPS LIST */
+.card {
+  border-radius: 12px;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.img-thumbnail {
+  border: none;
+  border-radius: 10px;
+}
+
+.btn-mas-info {
+  background-color: transparent;
+  border: 1px solid #2fd656;
+  color: #2fd656;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-mas-info:hover,
+.btn-mas-info:focus,
+.btn-mas-info:active,
+.btn-mas-info.show {
+  background-color: #2fd656;
+  color: #000;
+  border-color: #2fd656;
+  box-shadow: none;
+}
+
+.dropdown-menu .dropdown-item.delete-option {
+  color: #ff6565;
+}
+
+.dropdown-menu .dropdown-item.delete-option:hover {
+  background-color: #ff6565;
+  color: #a70000;
+}
+
 
