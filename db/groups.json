@@ -1,12 +1,13 @@
 [
   {
-    "name": "gfdgdfsgsfdgdfs",
-    "description": "gfdsgfdsgdfsgfdsg df gfdsg dg fd g",
-    "image": "gfdgfdgfdg",
+    "name": "DSADSAD",
+    "description": "SADASDSADSAD",
+    "image": "SADSADSA",
     "creator": "admin",
     "members": [
       "admin"
     ],
-    "createdAt": "2025-05-17T11:37:53.798Z"
+    "createdAt": "2025-05-17T21:43:18.212Z",
+    "pendingDeletion": true
   }
 ]

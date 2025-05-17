@@ -31,9 +31,8 @@ function deleteGroup(groupName) {
   })
     .then(response => response.json())
     .then(data => {
-      if (data.message === "Grupo eliminado correctamente.") {
-        alert("Grupo eliminado.");
-        location.reload();
+      if (data.message === "Solicitud de eliminación enviada.") {
+        alert("Tu solicitud para eliminar el grupo ha sido enviada. Será revisada por el equipo de BetBros.");
       } else {
         alert(data.message);
       }
@@ -222,9 +221,10 @@ if (createGroupForm) {
                 <img src="${group.image || 'https://via.placeholder.com/120'}" class="rounded me-3" alt="${group.name}" style="width: 100px; height: 100px; object-fit: cover;">
                 <div>
                   <h5 class="mb-1">
-                    <a href="group-detail.html?group=${group.name}" class="text-decoration-none text-dark fw-bold">
+                    <a href="group-detail.html?group=${group.name}" class="fw-bold text-verde-betbros">
                       ${group.name}
                     </a>
+                    ${group.pendingDeletion ? '<span class="badge bg-warning text-dark">Eliminación pendiente</span>' : ''}
                   </h5>
                   <p class="mb-1 text-muted">${group.description}</p>
                   <small class="text-secondary">Creador: ${group.creator}</small><br>
@@ -256,6 +256,92 @@ if (createGroupForm) {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Lógica para joinPrivGroup.html
+  const joinPrivateForm = document.getElementById("joinPrivateGroupForm");
+  const publicGroupsList = document.getElementById("publicGroupsList");
+  const searchInput = document.getElementById("searchPublicGroups");
+
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+  if (!user) return;
+
+  if (joinPrivateForm) {
+    joinPrivateForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const code = document.getElementById("privateGroupCode").value.trim();
+
+      if (!code) {
+        alert("Introduce un código de invitación válido.");
+        return;
+      }
+
+      fetch('http://localhost:3010/join-private-group', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, username: user.username })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          if (data.success) {
+            window.location.href = "dashboard.html";
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Error al unirse al grupo privado.");
+        });
+    });
+  }
+
+  if (publicGroupsList) {
+    fetch('http://localhost:3010/public-groups')
+      .then(res => res.json())
+      .then(groups => {
+        groups.forEach(group => {
+          const card = document.createElement("div");
+          card.classList.add("card", "mb-3", "p-3");
+          card.innerHTML = `
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <h5 class="text-verde-betbros">${group.name}</h5>
+                <p class="mb-1">${group.description}</p>
+                <small>Creador: ${group.creator}</small>
+              </div>
+              <button class="btn btn-success" onclick="joinPublicGroup('${group.name}')">Unirse</button>
+            </div>
+          `;
+          publicGroupsList.appendChild(card);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error al cargar grupos públicos.");
+      });
+  }
+});
+
+function joinPublicGroup(groupName) {
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+  if (!user) return;
+
+  fetch('http://localhost:3010/join-public-group', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ groupName, username: user.username })
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert(data.message);
+      if (data.success) {
+        window.location.href = "dashboard.html";
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error al unirse al grupo público.");
+    });
+}
 
 
 
