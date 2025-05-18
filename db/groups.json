@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "name": "dasdas",
+    "description": "dsadasdas",
+    "image": "sdas",
+    "creator": "eric",
+    "isPublic": false,
+    "invitationCode": "3d6664f6",
+    "members": [
+      "eric"
+    ],
+    "bets": 0,
+    "pendingDeletion": false
+  }
+]

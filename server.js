@@ -91,8 +91,7 @@ app.get('/my-groups', (req, res) => {
   const { username } = req.query; 
 
   const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
-
-  const userGroups = groups.filter(group => group.creator === username); 
+  const userGroups = groups.filter(group => group.members.includes(username));
 
   res.status(200).json(userGroups);
 });
