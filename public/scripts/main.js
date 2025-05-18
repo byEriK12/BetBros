@@ -43,6 +43,40 @@ function deleteGroup(groupName) {
     });
 }
 
+function joinGroup() {
+  const code = document.getElementById("inviteCode").value.trim();
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+
+  if (!user || !user.username) {
+    alert("No se ha podido identificar al usuario.");
+    return;
+  }
+
+  if (!code) {
+    alert("Por favor, introduce un código de invitación.");
+    return;
+  }
+
+  fetch('http://localhost:3010/join-group', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ invitationCode: code, username: user.username })
+  })
+  .then(async (response) => {
+    const data = await response.json(); // <- extraemos la respuesta JSON
+
+    alert(data.message); // Mostramos el mensaje del servidor
+
+    if (response.ok) {
+      window.location.href = "myGroups.html"; // redirige solo si fue exitoso
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("No se pudo unir al grupo.");
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{4,}$/;
@@ -104,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("password").value;
 
       const loginData = { identifier, password };
-
+      const user = JSON.parse(localStorage.getItem("betbros_user"));
       // Enviar datos al backend para validar el login
       fetch('http://localhost:3010/login', {
         method: 'POST',
@@ -257,91 +291,46 @@ if (createGroupForm) {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Lógica para joinPrivGroup.html
-  const joinPrivateForm = document.getElementById("joinPrivateGroupForm");
-  const publicGroupsList = document.getElementById("publicGroupsList");
-  const searchInput = document.getElementById("searchPublicGroups");
+  const joinGroupForm = document.getElementById("joinGroupForm");
 
-  const user = JSON.parse(localStorage.getItem("betbros_user"));
-  if (!user) return;
-
-  if (joinPrivateForm) {
-    joinPrivateForm.addEventListener("submit", (e) => {
+  if (joinGroupForm) {
+    joinGroupForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const code = document.getElementById("privateGroupCode").value.trim();
-
-      if (!code) {
-        alert("Introduce un código de invitación válido.");
-        return;
-      }
-
-      fetch('http://localhost:3010/join-private-group', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, username: user.username })
-      })
-        .then(res => res.json())
-        .then(data => {
-          alert(data.message);
-          if (data.success) {
-            window.location.href = "dashboard.html";
-          }
-        })
-        .catch(err => {
-          console.error(err);
-          alert("Error al unirse al grupo privado.");
-        });
+      joinGroup(); // llama a tu función central
     });
-  }
-
-  if (publicGroupsList) {
-    fetch('http://localhost:3010/public-groups')
-      .then(res => res.json())
-      .then(groups => {
-        groups.forEach(group => {
-          const card = document.createElement("div");
-          card.classList.add("card", "mb-3", "p-3");
-          card.innerHTML = `
-            <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <h5 class="text-verde-betbros">${group.name}</h5>
-                <p class="mb-1">${group.description}</p>
-                <small>Creador: ${group.creator}</small>
-              </div>
-              <button class="btn btn-success" onclick="joinPublicGroup('${group.name}')">Unirse</button>
-            </div>
-          `;
-          publicGroupsList.appendChild(card);
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Error al cargar grupos públicos.");
-      });
   }
 });
 
-function joinPublicGroup(groupName) {
+function joinGroup() {
+  const code = document.getElementById("inviteCode").value.trim();
   const user = JSON.parse(localStorage.getItem("betbros_user"));
-  if (!user) return;
 
-  fetch('http://localhost:3010/join-public-group', {
+  if (!user || !user.username) {
+    alert("No se ha podido identificar al usuario.");
+    return;
+  }
+
+  if (!code) {
+    alert("Por favor, introduce un código de invitación.");
+    return;
+  }
+
+  fetch('http://localhost:3010/join-group', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ groupName, username: user.username })
+    body: JSON.stringify({ invitationCode: code, username: user.username })
   })
-    .then(res => res.json())
-    .then(data => {
-      alert(data.message);
-      if (data.success) {
-        window.location.href = "dashboard.html";
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Error al unirse al grupo público.");
-    });
+  .then(async (response) => {
+    const data = await response.json();
+    alert(data.message);
+    if (response.ok) {
+      window.location.href = "myGroups.html";
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("No se pudo unir al grupo.");
+  });
 }
-
 
 

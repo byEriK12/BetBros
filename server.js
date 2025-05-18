@@ -121,63 +121,30 @@ app.post('/delete-group', (req, res) => {
   res.json({ message: "Solicitud de eliminación enviada." });
 });
 
-// Obtener grupos públicos
-app.get('/public-groups', (req, res) => {
-  try {
-    const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
-    const publicGroups = groups.filter(group => group.isPublic === true);
-    res.json(publicGroups);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al cargar grupos públicos.' });
-  }
-});
+app.post('/join-group', (req, res) => {
+  const { invitationCode, username } = req.body;
 
-// Unirse a grupo público
-app.post('/join-public-group', (req, res) => {
-  const { groupName, username } = req.body;
-
-  if (!groupName || !username) {
-    return res.status(400).json({ message: "Faltan datos", success: false });
+  if (!invitationCode || !username) {
+    return res.status(400).json({ message: "Faltan datos para unirse al grupo." });
   }
 
   const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
-  const group = groups.find(g => g.name === groupName);
+  const group = groups.find(g => g.invitationCode === invitationCode);
 
   if (!group) {
-    return res.status(404).json({ message: "Grupo no encontrado", success: false });
+    return res.status(404).json({ message: "Código de invitación inválido." });
   }
 
-  if (!group.members.includes(username)) {
-    group.members.push(username);
-    fs.writeFileSync(GROUPS_DB, JSON.stringify(groups, null, 2));
+  if (group.members.includes(username)) {
+    return res.status(400).json({ message: "Ya eres miembro de este grupo." });
   }
 
-  res.json({ message: "Unido al grupo público con éxito.", success: true });
+  group.members.push(username);
+  fs.writeFileSync(GROUPS_DB, JSON.stringify(groups, null, 2));
+
+  res.status(200).json({ message: `Te has unido al grupo "${group.name}".` });
 });
 
-// Unirse a grupo privado (por código)
-app.post('/join-private-group', (req, res) => {
-  const { code, username } = req.body;
-
-  if (!code || !username) {
-    return res.status(400).json({ message: "Faltan datos", success: false });
-  }
-
-  const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
-  const group = groups.find(g => g.inviteCode === code); // Asegúrate de tener esta propiedad
-
-  if (!group) {
-    return res.status(404).json({ message: "Código inválido.", success: false });
-  }
-
-  if (!group.members.includes(username)) {
-    group.members.push(username);
-    fs.writeFileSync(GROUPS_DB, JSON.stringify(groups, null, 2));
-  }
-
-  res.json({ message: "Unido al grupo privado con éxito.", success: true });
-});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -186,7 +153,7 @@ app.get('/', (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).send('Página no encontrada');
+  res.status(404).send("Página no encontrada");
 });
 
 app.listen(PORT, () => {
