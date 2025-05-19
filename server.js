@@ -149,11 +149,17 @@ app.post('/save-bet', (req, res) => {
 
   try {
     const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
-    const { groupCode, username, title, description, multipleChoice, limitDate, options } = req.body;
-
-    if (!groupCode || !username || !title || !description || typeof multipleChoice !== 'boolean' || !limitDate || !Array.isArray(options) || options.length === 0) {
-  return res.status(400).json({ message: "Faltan datos para guardar la apuesta." });
-}
+    const { username, title, description, multipleChoice, limitDate, options } = req.body;
+    const { groupCode } = req.query; // Obtener el código del grupo desde la query
+    if (!groupCode) {
+      return res.status(400).json({ message: "Falta el código del grupo." });
+    }
+    if (!username || !title || !description || !limitDate || !options) {
+      return res.status(400).json({ message: "Faltan datos para guardar la apuesta." });
+    }
+    if (multipleChoice && options.length < 2) {
+      return res.status(400).json({ message: "Se requieren al menos 2 opciones para una apuesta de opción múltiple." });
+    }
 
     const newBet = {
       groupCode,
