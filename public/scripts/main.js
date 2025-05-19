@@ -76,6 +76,12 @@ function joinGroup() {
     alert("No se pudo unir al grupo.");
   });
 }
+function confirmarEliminacion() {
+  if (confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.")) {
+    // Aquí podrías llamar a una función para eliminar la cuenta
+    alert("Cuenta eliminada (simulado).");
+  }
+ }
 
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
