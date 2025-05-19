@@ -333,4 +333,72 @@ function joinGroup() {
   });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Mostrar el nombre de usuario si tienes login cargado
+  const welcomeUser = document.getElementById("welcomeUser");
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  if (user) {
+    welcomeUser.textContent = user.username;
+  }
+
+  // Función para añadir nueva opción de apuesta
+  const addOptionBtn = document.getElementById("addOptionBtn");
+  const optionsContainer = document.getElementById("optionsContainer");
+
+  if (addOptionBtn && optionsContainer) {
+    addOptionBtn.addEventListener("click", () => {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "form-control mb-2";
+      input.placeholder = `Opción ${optionsContainer.children.length + 1}`;
+      optionsContainer.appendChild(input);
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const crearBtn = document.getElementById('crearApuestaBtn');
+  if (crearBtn) {
+    crearBtn.addEventListener('click', async () => {
+      const username = localStorage.getItem('username');
+      const groupCode = localStorage.getItem('selectedGroupCode'); // asegúrate de guardar este valor cuando se selecciona un grupo
+      const nombre = document.getElementById('betTitle').value.trim();
+      const tipo = document.getElementById('multipleChoiceSwitch').checked ? 'multiple' : 'single';
+      const fechaLimite = document.getElementById('deadline').value;
+      const opcionesInputs = document.querySelectorAll('#optionsContainer input');
+      const opciones = Array.from(opcionesInputs)
+        .map(input => input.value.trim())
+        .filter(text => text.length > 0);
+
+      const apuesta = {
+        groupCode,
+        username,
+        nombre,
+        tipo,
+        fechaLimite,
+        opciones
+      };
+
+      try {
+        const response = await fetch('http://localhost:3010/save-bet', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(apuesta)
+        });
+
+        const data = await response.json();
+        alert(data.message);
+        window.location.href = 'dashboard.html'; // redirige después de guardar
+      } catch (error) {
+        console.error('Error al guardar la apuesta:', error);
+        alert('Ocurrió un error al guardar la apuesta.');
+      }
+    });
+  }
+});
+
+
+
 

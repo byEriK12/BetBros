@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crear Apuesta</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="styles/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR igual que dashboard -->
+  <nav id="navbar" class="navbar px-4">
+    <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
+      <span>
+        <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
+        </span>
+    </a>
+    <div class="d-flex align-items-center">
+      <div class="dropdown me-3">
+        <span class="fw-bold text-verde-betbros">Bienvenid@,</span>
+        <a
+          href="#"
+          class="dropdown-toggle text-white text-decoration-none fw-bold"
+          id="userDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span id="welcomeUser"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="createPrivGroup.html">Crear grupo privado</a></li>
+          <li><a class="dropdown-item" href="joinPrivGroup.html">Unirse a grupo privado</a></li>
+          <li><a class="dropdown-item" href="myGroups.html">Mis grupos</a></li>
+          <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Crear Apuesta</h2>
+
+    <!-- Título de la apuesta -->
+    <div class="mb-4">
+      <label for="betTitle" class="form-label">Título de la apuesta</label>
+      <input type="text" id="betTitle" class="form-control" placeholder="Escribe aquí el título..." />
+    </div>
+
+    <!-- Imagen de la apuesta -->
+    <div class="mb-4">
+      <label for="betImage" class="form-label">URL de la imagen de la apuesta (opcional)</label>
+      <input type="text" id="betImage" class="form-control" placeholder="Escribe aquí la URL..." />
+    </div>
+
+    <!-- Descripción de la apuesta -->
+    <div class="mb-4">
+      <label for="betDescription" class="form-label">Descripción de la apuesta</label>
+      <textarea id="betDescription" class="form-control" rows="3" placeholder="Escribe aquí la descripción..."></textarea>
+    </div>
+
+    <!-- Opciones de apuesta -->
+    <div class="mb-4">
+      <label class="form-label">Opciones de apuesta</label>
+      <div id="optionsContainer">
+        <input type="text" class="form-control mb-2" placeholder="Opción 1" />
+        <input type="text" class="form-control mb-2" placeholder="Opción 2" />
+      </div>
+      <button id="addOptionBtn" class="btn btn-outline-light btn-sm">+ Añadir opción</button>
+    </div>
+
+    <!-- Slider + Fecha -->
+    <div class="row mb-4 align-items-center">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <label class="form-label">¿Se puede apostar a más de una opción?</label>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="multipleChoiceSwitch">
+          <label class="form-check-label" for="multipleChoiceSwitch">No / Sí</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Fecha límite de la apuesta</label>
+        <input type="datetime-local" id="deadline" class="form-control" />
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-between">
+      <a href="dashboard.html" class="btn btn-secondary">← Volver</a>
+      <button id="crearApuestaBtn" class="btn btn-verde-betbros">Crear Apuesta</button>
+    </div>
+  </div>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

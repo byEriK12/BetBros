@@ -7,6 +7,7 @@ const app = express();
 const PORT = 3010;
 const USERS_DB = path.join(__dirname, 'db', 'users.json');
 const GROUPS_DB = path.join(__dirname, 'db', 'groups.json');
+const betsFilePath = path.join(__dirname, 'db', 'bets.json');
 
 app.use(bodyParser.json());
 
@@ -144,6 +145,41 @@ app.post('/join-group', (req, res) => {
   res.status(200).json({ message: `Te has unido al grupo "${group.name}".` });
 });
 
+app.post('/save-bet', (req, res) => {
+  const { groupCode, username, nombre, tipo, fechaLimite, opciones } = req.body;
+
+  // Crear nueva apuesta
+  const nuevaApuesta = {
+    grupo: groupCode,
+    creador: username,
+    nombre: nombre,
+    tipo: tipo,
+    fechaLimite: fechaLimite,
+    opciones: opciones,
+    participantes: []
+  };
+
+  // Si el archivo no existe, lo creamos con la primera apuesta
+  if (!fs.existsSync(betsFilePath)) {
+    const initialData = { apuestas: [nuevaApuesta] };
+    fs.writeFileSync(betsFilePath, JSON.stringify(initialData, null, 2), 'utf8');
+    return res.status(200).json({ message: 'Apuesta guardada correctamente.' });
+  }
+
+  // Si el archivo existe, leemos y agregamos la apuesta
+  try {
+    const data = fs.readFileSync(betsFilePath, 'utf8');
+    const jsonData = JSON.parse(data);
+
+    jsonData.apuestas.push(nuevaApuesta);
+
+    fs.writeFileSync(betsFilePath, JSON.stringify(jsonData, null, 2), 'utf8');
+    res.status(200).json({ message: 'Apuesta guardada correctamente.' });
+  } catch (err) {
+    console.error('Error al guardar la apuesta:', err);
+    res.status(500).json({ message: 'Error al guardar la apuesta.' });
+  }
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
