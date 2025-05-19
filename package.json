@@ -4,7 +4,8 @@
   "description": "**BetBros** es una aplicación web que permite a grupos de amigos o comunidades crear y gestionar apuestas informales de manera sencilla, divertida y sin dinero real. Está diseñada para recuperar el componente social y lúdico de las apuestas, evitando malentendidos y desorganización.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

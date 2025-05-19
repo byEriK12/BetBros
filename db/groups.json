@@ -7,9 +7,23 @@
     "isPublic": false,
     "invitationCode": "3d6664f6",
     "members": [
-      "eric"
+      "eric",
+      "Biel Dogi"
     ],
     "bets": 0,
     "pendingDeletion": false
+  },
+  {
+    "name": "Lichi Gang",
+    "description": "APuesta divertidas",
+    "image": "",
+    "creator": "Biel Dogi",
+    "isPublic": false,
+    "invitationCode": "1491bde3",
+    "members": [
+      "Biel Dogi"
+    ],
+    "bets": 0,
+    "pendingDeletion": true
   }
 ]
