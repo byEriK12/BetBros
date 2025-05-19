@@ -1,27 +1,14 @@
 [
   {
-    "name": "dasdas",
-    "description": "dsadasdas",
-    "image": "sdas",
-    "creator": "eric",
+    "name": "asdas",
+    "description": "dsadasdsad",
+    "image": "dsadsad",
+    "creator": "admin",
     "isPublic": false,
-    "invitationCode": "3d6664f6",
+    "invitationCode": "6d46088f",
     "members": [
-      "eric",
-      "Biel Dogi"
-    ],
-    "bets": 0,
-    "pendingDeletion": false
-  },
-  {
-    "name": "Lichi Gang",
-    "description": "APuesta divertidas",
-    "image": "",
-    "creator": "Biel Dogi",
-    "isPublic": false,
-    "invitationCode": "1491bde3",
-    "members": [
-      "Biel Dogi"
+      "admin",
+      "eric"
     ],
     "bets": 0,
     "pendingDeletion": true

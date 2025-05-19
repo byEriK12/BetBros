@@ -68,6 +68,7 @@ function joinGroup() {
     alert(data.message); // Mostramos el mensaje del servidor
 
     if (response.ok) {
+      localStorage.setItem("currentGroupCode", code);  // Guarda el código del grupo
       window.location.href = "myGroups.html"; // redirige solo si fue exitoso
     }
   })
@@ -307,38 +308,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-function joinGroup() {
-  const code = document.getElementById("inviteCode").value.trim();
-  const user = JSON.parse(localStorage.getItem("betbros_user"));
-
-  if (!user || !user.username) {
-    alert("No se ha podido identificar al usuario.");
-    return;
-  }
-
-  if (!code) {
-    alert("Por favor, introduce un código de invitación.");
-    return;
-  }
-
-  fetch('http://localhost:3010/join-group', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ invitationCode: code, username: user.username })
-  })
-  .then(async (response) => {
-    const data = await response.json();
-    alert(data.message);
-    if (response.ok) {
-      window.location.href = "myGroups.html";
-    }
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    alert("No se pudo unir al grupo.");
-  });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   // Mostrar el nombre de usuario si tienes login cargado
   const welcomeUser = document.getElementById("welcomeUser");
@@ -346,65 +315,85 @@ document.addEventListener("DOMContentLoaded", () => {
   if (user) {
     welcomeUser.textContent = user.username;
   }
-
+  
   // Función para añadir nueva opción de apuesta
   const addOptionBtn = document.getElementById("addOptionBtn");
   const optionsContainer = document.getElementById("optionsContainer");
-
-  if (addOptionBtn && optionsContainer) {
+  if (addOptionBtn) {
     addOptionBtn.addEventListener("click", () => {
-      const input = document.createElement("input");
-      input.type = "text";
-      input.className = "form-control mb-2";
-      input.placeholder = `Opción ${optionsContainer.children.length + 1}`;
-      optionsContainer.appendChild(input);
+      const newOption = document.createElement("input");
+      newOption.type = "text";
+      newOption.className = "form-control mb-2";
+      newOption.placeholder = "Opción de apuesta";
+      optionsContainer.appendChild(newOption);
     });
   }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const crearBtn = document.getElementById('crearApuestaBtn');
-  if (crearBtn) {
-    crearBtn.addEventListener('click', async () => {
-      const username = localStorage.getItem('username');
-      const groupCode = localStorage.getItem('selectedGroupCode'); // asegúrate de guardar este valor cuando se selecciona un grupo
-      const nombre = document.getElementById('betTitle').value.trim();
-      const tipo = document.getElementById('multipleChoiceSwitch').checked ? 'multiple' : 'single';
-      const fechaLimite = document.getElementById('deadline').value;
-      const opcionesInputs = document.querySelectorAll('#optionsContainer input');
-      const opciones = Array.from(opcionesInputs)
-        .map(input => input.value.trim())
-        .filter(text => text.length > 0);
+  const createBetForm = document.getElementById('createBetForm');
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+
+  if (createBetForm) {
+    createBetForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const groupCode = localStorage.getItem("currentGroupCode");
+
+      const username = user.username;
+      const title = document.getElementById('betTitle').value.trim();
+      const description = document.getElementById('betDescription').value.trim();
+      const multipleChoice = document.getElementById('multipleChoiceSwitch').checked;
+      const limitDate = document.getElementById('deadline').value;
+      const options = Array.from(document.querySelectorAll('#optionsContainer input[type="text"]'))
+                          .map(input => input.value.trim())
+                          .filter(value => value !== "");
+      
+      console.log({
+        groupCode,
+        username,
+        title,
+        description,
+        multipleChoice,
+        limitDate,
+        options
+      });
+
+      if (!groupCode || !title || !description || !limitDate || options.length === 0) {
+        alert("Por favor, completa todos los campos obligatorios.");
+        return;
+      }
 
       const apuesta = {
         groupCode,
         username,
-        nombre,
-        tipo,
-        fechaLimite,
-        opciones
+        title,
+        description,
+        multipleChoice,
+        limitDate,
+        options
       };
 
       try {
         const response = await fetch('http://localhost:3010/save-bet', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(apuesta)
         });
 
         const data = await response.json();
         alert(data.message);
-        window.location.href = 'dashboard.html'; // redirige después de guardar
+        if (response.ok) {
+          window.location.href = "myGroups.html";
+        }
       } catch (error) {
-        console.error('Error al guardar la apuesta:', error);
-        alert('Ocurrió un error al guardar la apuesta.');
+        console.error('Error:', error);
+        alert('Hubo un problema al crear la apuesta.');
       }
     });
   }
 });
 
 
-
+  
 

@@ -146,38 +146,41 @@ app.post('/join-group', (req, res) => {
 });
 
 app.post('/save-bet', (req, res) => {
-  const { groupCode, username, nombre, tipo, fechaLimite, opciones } = req.body;
 
-  // Crear nueva apuesta
-  const nuevaApuesta = {
-    grupo: groupCode,
-    creador: username,
-    nombre: nombre,
-    tipo: tipo,
-    fechaLimite: fechaLimite,
-    opciones: opciones,
-    participantes: []
-  };
-
-  // Si el archivo no existe, lo creamos con la primera apuesta
-  if (!fs.existsSync(betsFilePath)) {
-    const initialData = { apuestas: [nuevaApuesta] };
-    fs.writeFileSync(betsFilePath, JSON.stringify(initialData, null, 2), 'utf8');
-    return res.status(200).json({ message: 'Apuesta guardada correctamente.' });
-  }
-
-  // Si el archivo existe, leemos y agregamos la apuesta
   try {
-    const data = fs.readFileSync(betsFilePath, 'utf8');
-    const jsonData = JSON.parse(data);
+    const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+    const { groupCode, username, title, description, multipleChoice, limitDate, options } = req.body;
 
-    jsonData.apuestas.push(nuevaApuesta);
+    if (!groupCode || !username || !title || !description || typeof multipleChoice !== 'boolean' || !limitDate || !Array.isArray(options) || options.length === 0) {
+  return res.status(400).json({ message: "Faltan datos para guardar la apuesta." });
+}
 
-    fs.writeFileSync(betsFilePath, JSON.stringify(jsonData, null, 2), 'utf8');
-    res.status(200).json({ message: 'Apuesta guardada correctamente.' });
-  } catch (err) {
-    console.error('Error al guardar la apuesta:', err);
-    res.status(500).json({ message: 'Error al guardar la apuesta.' });
+    const newBet = {
+      groupCode,
+      username,
+      title,
+      description,
+      multipleChoice: false,
+      limitDate,
+      options
+    };
+
+    bets.push(newBet);
+
+    fs.writeFileSync(betsFilePath, JSON.stringify(bets, null, 2));
+
+    // Actualizar contador de apuestas en el grupo
+    const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
+    const group = groups.find(g => g.invitationCode === groupCode);
+    if (group) {
+      group.bets = (group.bets || 0) + 1;
+      fs.writeFileSync(GROUPS_DB, JSON.stringify(groups, null, 2));
+    }
+
+    res.status(201).json({ message: "Apuesta guardada correctamente." });
+  } catch (error) {
+    console.error(error); 
+    res.status(500).json({ message: "Error interno al guardar la apuesta." });
   }
 });
 

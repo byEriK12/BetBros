@@ -43,56 +43,59 @@
 
   <div class="container mt-5">
     <h2 class="text-center mb-4">Crear Apuesta</h2>
+    <form id="createBetForm" class="bg-dark p-4 rounded shadow" style="max-width: 600px; margin: auto;">
+      <div class="mb-3">
 
-    <!-- Título de la apuesta -->
-    <div class="mb-4">
-      <label for="betTitle" class="form-label">Título de la apuesta</label>
-      <input type="text" id="betTitle" class="form-control" placeholder="Escribe aquí el título..." />
-    </div>
-
-    <!-- Imagen de la apuesta -->
-    <div class="mb-4">
-      <label for="betImage" class="form-label">URL de la imagen de la apuesta (opcional)</label>
-      <input type="text" id="betImage" class="form-control" placeholder="Escribe aquí la URL..." />
-    </div>
-
-    <!-- Descripción de la apuesta -->
-    <div class="mb-4">
-      <label for="betDescription" class="form-label">Descripción de la apuesta</label>
-      <textarea id="betDescription" class="form-control" rows="3" placeholder="Escribe aquí la descripción..."></textarea>
-    </div>
-
-    <!-- Opciones de apuesta -->
-    <div class="mb-4">
-      <label class="form-label">Opciones de apuesta</label>
-      <div id="optionsContainer">
-        <input type="text" class="form-control mb-2" placeholder="Opción 1" />
-        <input type="text" class="form-control mb-2" placeholder="Opción 2" />
+      <!-- Título de la apuesta -->
+      <div class="mb-4">
+        <label for="betTitle" class="form-label">Título de la apuesta</label>
+        <input type="text" id="betTitle" class="form-control" placeholder="Escribe aquí el título..." />
       </div>
-      <button id="addOptionBtn" class="btn btn-outline-light btn-sm">+ Añadir opción</button>
-    </div>
 
-    <!-- Slider + Fecha -->
-    <div class="row mb-4 align-items-center">
-      <div class="col-md-6 mb-3 mb-md-0">
-        <label class="form-label">¿Se puede apostar a más de una opción?</label>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="multipleChoiceSwitch">
-          <label class="form-check-label" for="multipleChoiceSwitch">No / Sí</label>
+      <!-- Imagen de la apuesta -->
+      <div class="mb-4">
+        <label for="betImage" class="form-label">URL de la imagen de la apuesta (opcional)</label>
+        <input type="text" id="betImage" class="form-control" placeholder="Escribe aquí la URL..." />
+      </div>
+
+      <!-- Descripción de la apuesta -->
+      <div class="mb-4">
+        <label for="betDescription" class="form-label">Descripción de la apuesta</label>
+        <textarea id="betDescription" class="form-control" rows="3" placeholder="Escribe aquí la descripción..."></textarea>
+      </div>
+
+      <!-- Opciones de apuesta -->
+      <div class="mb-4">
+        <label class="form-label">Opciones de apuesta</label>
+        <div id="optionsContainer">
+          <input type="text" class="form-control mb-2" placeholder="Opción 1" />
+          <input type="text" class="form-control mb-2" placeholder="Opción 2" />
+        </div>
+        <button id="addOptionBtn" class="btn btn-outline-light btn-sm">+ Añadir opción</button>
+      </div>
+
+      <!-- Slider + Fecha -->
+      <div class="row mb-4 align-items-center">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <label class="form-label">¿Se puede apostar a más de una opción?</label>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="multipleChoiceSwitch">
+            <label class="form-check-label" for="multipleChoiceSwitch">No / Sí</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Fecha límite de la apuesta</label>
+          <input type="datetime-local" id="deadline" class="form-control" />
         </div>
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Fecha límite de la apuesta</label>
-        <input type="datetime-local" id="deadline" class="form-control" />
-      </div>
-    </div>
 
-    <!-- Botones -->
-    <div class="d-flex justify-content-between">
-      <a href="dashboard.html" class="btn btn-secondary">← Volver</a>
-      <button id="crearApuestaBtn" class="btn btn-verde-betbros">Crear Apuesta</button>
+      <!-- Botones -->
+      <div class="d-flex justify-content-between">
+        <a href="dashboard.html" class="btn btn-secondary">← Volver</a>
+        <button id="crearApuestaBtn" class="btn btn-verde-betbros">Crear Apuesta</button>
+      </div>
+    </form>
     </div>
-  </div>
 
   <script src="scripts/main.js"></script>
 </body>
