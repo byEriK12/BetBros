@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configuración</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR igual que dashboard -->
+  <nav id="navbar" class="navbar px-4">
+    <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
+      <span>
+        <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
+        </span>
+    </a>
+    <div class="d-flex align-items-center">
+      <div class="dropdown me-3">
+        <span class="fw-bold text-verde-betbros">Bienvenid@,</span>
+        <a
+          href="#"
+          class="dropdown-toggle text-white text-decoration-none fw-bold"
+          id="userDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span id="welcomeUser"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="createPrivGroup.html">Crear grupo privado</a></li>
+          <li><a class="dropdown-item" href="joinPrivGroup.html">Unirse a grupo privado</a></li>
+          <li><a class="dropdown-item" href="myGroups.html">Mis grupos</a></li>
+          <li><a class="dropdown-item" href="configuration.html">Configuration</a></li>
+          <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Configuración</h2>
+
+  <div class="d-flex flex-column align-items-center gap-4">
+
+    <!-- Notificaciones -->
+    <div class="d-flex align-items-center gap-3">
+      <label class="mb-0">Notificaciones</label>
+      <div class="dropdown">
+        <button class="btn btn-mas-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Activar
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Activar</a></li>
+          <li><a class="dropdown-item" href="#">Desactivar</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Enviar información por correo -->
+    <div class="d-flex align-items-center gap-3">
+      <label class="mb-0">Enviar información por correo</label>
+      <div class="dropdown">
+        <button class="btn btn-mas-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Sí
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Sí</a></li>
+          <li><a class="dropdown-item" href="#">No</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Cambiar idioma -->
+    <div class="d-flex align-items-center gap-3">
+      <label class="mb-0">Idioma</label>
+      <div class="dropdown">
+        <button class="btn btn-mas-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Español
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Español</a></li>
+          <li><a class="dropdown-item" href="#">Inglés</a></li>
+          <li><a class="dropdown-item" href="#">Francés</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Eliminar cuenta -->
+    <div class="d-flex align-items-center gap-3">
+      <label class="mb-0">Eliminar cuenta</label>
+      <a class="btn btn-outline-light delete-option" href="#" onclick="confirmarEliminacion()">Eliminar cuenta</a>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<script src="scripts/main.js"></script>
+</body>
+</html>
