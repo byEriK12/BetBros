@@ -84,6 +84,11 @@ function confirmarEliminacion() {
   }
  }
 
+function setGroupAndRedirect(groupCode) {
+  localStorage.setItem("currentGroupCode", groupCode);
+  window.location.href = "makeBet.html";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{4,}$/;
@@ -262,8 +267,9 @@ if (createGroupForm) {
                 <img src="${group.image || 'https://via.placeholder.com/120'}" class="rounded me-3" alt="${group.name}" style="width: 100px; height: 100px; object-fit: cover;">
                 <div>
                   <h5 class="mb-1">
-                    <a href="group-detail.html?group=${group.name}" class="fw-bold text-verde-betbros">
-                      ${group.name}
+                   <a href="#" class="fw-bold text-verde-betbros" onclick="setGroupAndRedirect('${group.invitationCode}')">
+                    ${group.name}
+                  </a>
                     </a>
                     ${group.pendingDeletion ? '<span class="badge bg-warning text-dark">Eliminación pendiente</span>' : ''}
                   </h5>
@@ -348,16 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const options = Array.from(document.querySelectorAll('#optionsContainer input[type="text"]'))
                           .map(input => input.value.trim())
                           .filter(value => value !== "");
-      
-      console.log({
-        groupCode,
-        username,
-        title,
-        description,
-        multipleChoice,
-        limitDate,
-        options
-      });
 
       if (!groupCode || !title || !description || !limitDate || options.length === 0) {
         alert("Por favor, completa todos los campos obligatorios.");
@@ -375,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        const response = await fetch('http://localhost:3010/save-bet', {
+        const response = await fetch(`http://localhost:3010/save-bet?groupCode=${groupCode}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(apuesta)

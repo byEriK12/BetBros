@@ -1,16 +1,16 @@
 [
   {
-    "name": "asdas",
-    "description": "dsadasdsad",
-    "image": "dsadsad",
-    "creator": "admin",
+    "name": "asdsa",
+    "description": "dsadsadsad",
+    "image": "dasd",
+    "creator": "eric",
     "isPublic": false,
-    "invitationCode": "6d46088f",
+    "invitationCode": "3cf857ff",
     "members": [
-      "admin",
-      "eric"
+      "eric",
+      "admin"
     ],
-    "bets": 2,
-    "pendingDeletion": true
+    "bets": 0,
+    "pendingDeletion": false
   }
 ]

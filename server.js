@@ -166,7 +166,7 @@ app.post('/save-bet', (req, res) => {
       username,
       title,
       description,
-      multipleChoice: false,
+      multipleChoice,
       limitDate,
       options
     };
