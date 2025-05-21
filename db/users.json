@@ -7,7 +7,8 @@
   {
     "username": "eric",
     "email": "eric.matasp12@gmail.com",
-    "password": "Eric12"
+    "password": "Eric12",
+    "pendingDeletion": true
   },
   {
     "username": "Biel Dogi",

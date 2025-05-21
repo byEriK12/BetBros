@@ -77,16 +77,78 @@ function joinGroup() {
     alert("No se pudo unir al grupo.");
   });
 }
+
 function confirmarEliminacion() {
-  if (confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.")) {
-    // Aquí podrías llamar a una función para eliminar la cuenta
-    alert("Cuenta eliminada (simulado).");
+  if (confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción será revisada por el equipo de BetBros.")) {
+    const user = JSON.parse(localStorage.getItem("betbros_user"));
+    if (!user || !user.username) {
+      alert("No se ha podido identificar al usuario.");
+      return;
+    }
+
+    fetch('http://localhost:3010/request-account-deletion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: user.username })
+    })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("Hubo un problema al enviar la solicitud.");
+      });
   }
- }
+}
 
 function setGroupAndRedirect(groupCode) {
   localStorage.setItem("currentGroupCode", groupCode);
   window.location.href = "makeBet.html";
+}
+
+function cambiarNotificaciones(estado) {
+  if (estado) {
+    alert("Notificaciones activadas.");
+  } else {
+    alert("Notificaciones desactivadas.");
+  }
+}
+
+function cambiarCorreo(estado) {
+  if (estado) {
+    alert("Ahora recibirás información por correo.");
+  } else {
+    alert("Ya no recibirás información por correo.");
+  }
+}
+
+function cambiarIdioma(estado) {
+  if (estado === "es") {
+    alert("Idioma cambiado a español.");
+  } else {
+    alert("De momento no está disponible el idioma inglés. Estamos trabajando en ello.");
+  }
+}
+
+function leaveGroup(groupName) {
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+
+  if (!confirm(`¿Estás segur@ de que quieres abandonar el grupo "${groupName}"?`)) return;
+
+  fetch('http://localhost:3010/request-leave-group', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ groupName, username: user.username })
+  })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Hubo un problema al solicitar abandonar el grupo.');
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -259,6 +321,14 @@ if (createGroupForm) {
         groupsList.innerHTML = '<p class="text-center">No tienes grupos creados.</p>';
       } else {
         groups.forEach(group => {
+           const isAdmin = group.creator === user.username;
+            const abandonOption = !isAdmin ? `
+              <li>
+                <a class="dropdown-item" href="#" onclick="event.preventDefault(); leaveGroup('${group.name}')">
+                  Abandonar grupo
+                </a>
+              </li>
+            ` : '';
           const groupCard = document.createElement("div");
           groupCard.classList.add("col-12", "mb-3");
           groupCard.innerHTML = `
@@ -284,6 +354,7 @@ if (createGroupForm) {
                   Más información
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
+                  ${abandonOption}
                   <li>
                     <a class="dropdown-item delete-option" href="#" onclick="event.preventDefault(); deleteGroup('${group.name}')">
                       Eliminar grupo

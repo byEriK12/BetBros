@@ -190,6 +190,56 @@ app.post('/save-bet', (req, res) => {
   }
 });
 
+app.post('/request-account-deletion', (req, res) => {
+  const { username } = req.body;
+
+  if (!username) {
+    return res.status(400).json({ message: 'Nombre de usuario requerido.' });
+  }
+
+  const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  const userIndex = users.findIndex(u => u.username === username);
+
+  if (userIndex === -1) {
+    return res.status(404).json({ message: 'Usuario no encontrado.' });
+  }
+
+  users[userIndex].pendingDeletion = true;
+
+  fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
+  return res.status(200).json({ message: 'La solicitud de eliminación de cuenta ha sido enviada. Será revisada por el equipo de BetBros.' });
+});
+
+app.post('/request-leave-group', (req, res) => {
+  const { groupName, username } = req.body;
+
+  if (!groupName || !username) {
+    return res.status(400).json({ message: 'Faltan datos para abandonar el grupo.' });
+  }
+
+  const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
+
+  const groupIndex = groups.findIndex(g => g.name === groupName);
+  if (groupIndex === -1) {
+    return res.status(404).json({ message: 'El grupo no fue encontrado.' });
+  }
+
+  const group = groups[groupIndex];
+
+  // Evitar que el creador abandone su propio grupo
+  if (group.creator === username) {
+    return res.status(403).json({ message: 'El creador no puede abandonar su propio grupo.' });
+  }
+
+  // Filtrar al usuario de la lista de miembros
+  group.members = group.members.filter(member => member !== username);
+
+  fs.writeFileSync(GROUPS_DB, JSON.stringify(groups, null, 2));
+
+  res.json({ message: `Has abandonado el grupo "${groupName}".` });
+});
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {

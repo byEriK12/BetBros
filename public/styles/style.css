@@ -226,3 +226,17 @@ label {
   box-shadow: 0 0 0 0.2rem rgba(47, 214, 86, 0.25);
 }
 
+/* Cambiar color botón elimiar cuenta */
+.btn-danger {
+  background-color: #ff4949;
+  border-color: #ff4949;
+}
+.btn-danger:hover {
+  background-color: #e60b0b;
+  border-color: #e60b0b;
+}
+.btn-danger:active {
+  background-color: #e60b0b;
+  border-color: #e60b0b;
+}
+
