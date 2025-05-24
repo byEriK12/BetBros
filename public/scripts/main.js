@@ -104,7 +104,7 @@ function confirmarEliminacion() {
 
 function setGroupAndRedirect(groupCode) {
   localStorage.setItem("currentGroupCode", groupCode);
-  window.location.href = "makeBet.html";
+  window.location.href = "betsGroup.html";
 }
 
 function cambiarNotificaciones(estado) {
@@ -148,6 +148,39 @@ function leaveGroup(groupName) {
     .catch(error => {
       console.error('Error:', error);
       alert('Hubo un problema al solicitar abandonar el grupo.');
+    });
+}
+
+function deleteBet(betId) {
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+  const groupCode = localStorage.getItem("currentGroupCode");
+
+  if (!user || !user.username || !groupCode) {
+    alert("No se ha podido identificar al usuario o grupo.");
+    return;
+  }
+
+  fetch(`http://localhost:3010/delete-bet`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ betId, username: user.username, groupCode })
+  })
+    .then(response => {
+      return response.json().then(data => ({
+        status: response.status,
+        ok: response.ok,
+        body: data
+      }));
+    })
+    .then(({ ok, body }) => {
+      alert(body.message);
+      if (ok) {
+        location.reload();
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Hubo un problema al eliminar la apuesta.');
     });
 }
 
@@ -460,6 +493,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const betsList = document.getElementById("betsList");
+  const groupTitle = document.getElementById("groupTitle");
+  const groupCode = localStorage.getItem("currentGroupCode");
+
+  if (betsList && groupTitle && groupCode) {
+    fetch(`http://localhost:3010/group-bets?groupCode=${groupCode}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
+
+        groupTitle.textContent = data.groupName;
+
+        if (data.bets.length === 0) {
+          betsList.innerHTML = `<p class="text-center">No hay apuestas en este grupo.</p>`;
+          return;
+        }
+
+        data.bets.forEach(bet => {
+          const betCard = document.createElement("div");
+          betCard.classList.add("col-12");
+          betCard.innerHTML = `
+            <div class="card p-3">
+              <h5 class="text-verde-betbros">${bet.title}</h5>
+              <p>${bet.description}</p>
+              <p><b>Fecha límite:</b> ${new Date(bet.limitDate).toLocaleString()}</p>
+              <p><b>Opciones:</b> ${bet.options.join(", ")}</p>
+              <small class="text-muted">Creador: ${bet.username}</small>
+              <div class="d-flex flex-column align-items-end">
+                <button class="btn btn-danger mt-2" onclick="deleteBet('${bet.id}')">Eliminar apuesta</button>
+              </div>
+            </div>
+          `;
+          betsList.appendChild(betCard);
+        });
+      })
+      .catch(err => {
+        console.error("Error al obtener apuestas:", err);
+        betsList.innerHTML = `<p class="text-center text-danger">Error al cargar apuestas.</p>`;
+      });
+  }
+});
+
 
 
   

@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "18387cef",
+    "groupCode": "3cf857ff",
+    "username": "eric",
+    "title": "Prueba de Apuesta joder",
+    "description": "Si no funciona que hago?",
+    "multipleChoice": false,
+    "limitDate": "2025-06-05T00:25",
+    "options": [
+      "Me suicido",
+      "Me ahorco",
+      "Me emborracho"
+    ]
+  }
+]

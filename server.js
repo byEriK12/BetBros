@@ -146,6 +146,8 @@ app.post('/join-group', (req, res) => {
 });
 
 app.post('/save-bet', (req, res) => {
+  const generatedId = crypto.randomBytes(4).toString('hex'); // Generar un ID único para la apuesta
+  req.body.id = generatedId; // Agregar el ID al cuerpo de la solicitud
 
   try {
     const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
@@ -162,6 +164,7 @@ app.post('/save-bet', (req, res) => {
     }
 
     const newBet = {
+      id: generatedId,
       groupCode,
       username,
       title,
@@ -239,6 +242,55 @@ app.post('/request-leave-group', (req, res) => {
   res.json({ message: `Has abandonado el grupo "${groupName}".` });
 });
 
+app.get('/group-bets', (req, res) => {
+  const groupCode = req.query.groupCode;
+
+  if (!groupCode) {
+    return res.status(400).json({ error: 'Falta el código del grupo.' });
+  }
+
+  const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
+  const group = groups.find(g => g.invitationCode === groupCode);
+
+  if (!group) {
+    return res.status(404).json({ error: 'Grupo no encontrado.' });
+  }
+
+  const allBets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+  const groupBets = allBets.filter(b => b.groupCode === groupCode);
+
+  res.json({
+    groupName: group.name,
+    bets: groupBets
+  });
+});
+
+app.post('/delete-bet', (req, res) => {
+  const { betId, username, groupCode } = req.body;
+
+  if (!betId || !username || !groupCode) {
+    return res.status(400).json({ message: 'Datos incompletos.' });
+  }
+
+  const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+
+  // Buscar el índice de la apuesta en el array original
+  const betIndex = bets.findIndex(
+    bet => bet.groupCode === groupCode && bet.id === betId && bet.username === username
+  );
+
+  if (betIndex === -1) {
+    return res.status(404).json({ message: 'No se encontró la apuesta o no tienes permiso para eliminarla.' });
+  }
+
+  // Eliminar la apuesta del array original
+  bets.splice(betIndex, 1);
+
+  // Guardar el array actualizado en el archivo
+  fs.writeFileSync(betsFilePath, JSON.stringify(bets, null, 2));
+
+  res.json({ message: 'Apuesta eliminada correctamente.' });
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
