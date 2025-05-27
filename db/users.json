@@ -1,28 +1,26 @@
 [
   {
-    "username": "admin",
-    "email": "admin@gmail.com",
-    "password": "Admin0"
+    "username": "ejemplo",
+    "email": "ejemplo@correo.com",
+    "password": "Ejemplo1",
+    "avatar": "images/avatar/avatar1.png"
   },
   {
-    "username": "eric",
-    "email": "eric.matasp12@gmail.com",
-    "password": "Eric12",
-    "pendingDeletion": true
+    "username": "hola",
+    "email": "hola@gmail.com",
+    "password": "Hola1",
+    "avatar": "images/avatar/dargon.png"
   },
   {
-    "username": "Biel Dogi",
-    "email": "bieldomingog@gmail.com",
-    "password": "Biel1234"
+    "username": "Maria",
+    "email": "maria@gmail.com",
+    "password": "Hola1",
+    "avatar": "images/avatar/perro.png"
   },
   {
-    "username": "ola",
-    "email": "ola@gmail.com",
-    "password": "Ola1"
-  },
-  {
-    "username": "prueba",
-    "email": "prueba@ola.com",
-    "password": "Prueba1"
+    "username": "avatar",
+    "email": "aba@gmail.com",
+    "password": "Hola1",
+    "avatar": "images/avatar/gallo.png"
   }
 ]
