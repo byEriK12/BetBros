@@ -10,36 +10,33 @@
 </head>
 <body>
 
-  <!-- NAVBAR igual que dashboard -->
-  <nav id="navbar" class="navbar px-4">
+  <!-- NAVBAR simplificado -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
     <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
-      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
+      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="50" height="50" class="me-2">
       <span>
         <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
-        </span>
+      </span>
     </a>
-    <div class="d-flex align-items-center">
-      <div class="dropdown me-3">
-        <span class="fw-bold text-verde-betbros">Bienvenid@,</span>
-        <a
-          href="#"
-          class="dropdown-toggle text-white text-decoration-none fw-bold"
-          id="userDropdown"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <span id="welcomeUser"></span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li><a class="dropdown-item" href="createPrivGroup.html">Crear grupo privado</a></li>
-          <li><a class="dropdown-item" href="joinPrivGroup.html">Unirse a grupo privado</a></li>
-          <li><a class="dropdown-item" href="myGroups.html">Mis grupos</a></li>
-          <li><a class="dropdown-item" href="configuration.html">Configuración</a></li>
-          <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
-        </ul>
-      </div>
-
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="myGroups.html">Mis Grupos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="configuration.html">Configuración</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="logout()">Cerrar sesión</a>
+        </li>
+      </ul>
     </div>
   </nav>
 
