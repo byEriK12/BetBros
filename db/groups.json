@@ -8,9 +8,14 @@
     "invitationCode": "3cf857ff",
     "members": [
       "eric",
-      "admin"
+      "admin",
+      "Biel Dogi"
     ],
+<<<<<<< Updated upstream
     "bets": 2,
+=======
+    "bets": 7,
+>>>>>>> Stashed changes
     "pendingDeletion": false
   }
 ]

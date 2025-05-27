@@ -9,6 +9,31 @@ const USERS_DB = path.join(__dirname, 'db', 'users.json');
 const GROUPS_DB = path.join(__dirname, 'db', 'groups.json');
 const betsFilePath = path.join(__dirname, 'db', 'bets.json');
 
+// Añade esto al inicio con las demás constantes
+const isBetActive = (limitDate) => {
+  const now = new Date();
+  const deadline = new Date(limitDate);
+  return now <= deadline;
+};
+
+// Función para actualizar estados (añadir con las demás funciones)
+function updateBetsStatus() {
+  try {
+    const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+    
+    const updatedBets = bets.map(bet => ({
+      ...bet,
+      isActive: isBetActive(bet.limitDate)
+    }));
+    
+    fs.writeFileSync(betsFilePath, JSON.stringify(updatedBets, null, 2));
+  } catch (error) {
+    console.error('Error updating bets status:', error);
+  }
+}
+
+setInterval(updateBetsStatus, 3600000);
+
 app.use(bodyParser.json());
 
 app.post('/register', (req, res) => {
@@ -146,6 +171,7 @@ app.post('/join-group', (req, res) => {
 });
 
 app.post('/save-bet', (req, res) => {
+
   const generatedId = crypto.randomBytes(4).toString('hex'); // Generar un ID único para la apuesta
   req.body.id = generatedId; // Agregar el ID al cuerpo de la solicitud
 
@@ -171,7 +197,8 @@ app.post('/save-bet', (req, res) => {
       description,
       multipleChoice,
       limitDate,
-      options
+      options,
+      isActive: true
     };
 
     bets.push(newBet);
