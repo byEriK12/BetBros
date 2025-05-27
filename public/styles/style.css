@@ -1,10 +1,16 @@
 /* RESET & BASE */
 
+html, body {
+  height: 100%;
+}
+
 body {
   background: linear-gradient(135deg, #101c12 0%, #1e4023 100%);
   color: #eaffea;
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   padding: 0;
   margin: 0;
 }
@@ -328,12 +334,14 @@ h1, h2, h3, h4, h5 {
 
 .bet-footer {
   color: #2fd656;
-  background: rgba(16,28,18,0.95);
+  background: transparent !important;
   border-top: 1.5px solid #2fd656;
   font-size: 1rem;
-  margin-top: 48px;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  margin-top: 0;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  min-height: unset;
+  display: block;
 }
 
 /* BLOQUEO CARD */
