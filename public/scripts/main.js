@@ -516,22 +516,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         data.bets.forEach(bet => {
-          const betCard = document.createElement("div");
-          betCard.classList.add("col-12");
-          betCard.innerHTML = `
-            <div class="card p-3">
-              <h5 class="text-verde-betbros">${bet.title}</h5>
-              <p>${bet.description}</p>
-              <p><b>Fecha límite:</b> ${new Date(bet.limitDate).toLocaleString()}</p>
-              <p><b>Opciones:</b> ${bet.options.join(", ")}</p>
-              <small class="text-muted">Creador: ${bet.username}</small>
-              <div class="d-flex flex-column align-items-end">
-                <button class="btn btn-danger mt-2" onclick="deleteBet('${bet.id}')">Eliminar apuesta</button>
-              </div>
+        const betCard = document.createElement("div");
+        betCard.classList.add("col-12");
+        betCard.innerHTML = `
+          <div class="card p-3">
+            <h5 class="text-verde-betbros">
+              <a href="betDetails.html?betId=${bet.id}&groupCode=${groupCode}" class="text-verde-betbros">
+                ${bet.title}
+              </a>
+            </h5>
+            <p>${bet.description}</p>
+            <p><b>Fecha límite:</b> ${new Date(bet.limitDate).toLocaleString()}</p>
+            <p><b>Opciones:</b> ${bet.options.join(", ")}</p>
+            <small class="text-muted">Creador: ${bet.username}</small>
+            <div class="d-flex flex-column align-items-end">
+              <button class="btn btn-danger mt-2" onclick="deleteBet('${bet.id}')">Eliminar apuesta</button>
             </div>
-          `;
-          betsList.appendChild(betCard);
-        });
+          </div>
+        `;
+        betsList.appendChild(betCard);
+});
       })
       .catch(err => {
         console.error("Error al obtener apuestas:", err);
@@ -540,6 +544,76 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const betTitle = document.getElementById('betTitle');
+  const betDescription = document.getElementById('betDescription');
+  const optionSelect = document.getElementById('optionSelect');
+  const betForm = document.getElementById('placeBetForm');
+  const amountInput = document.getElementById('amountInput');
+  const responseMessage = document.getElementById('message');
+
+  const params = new URLSearchParams(window.location.search);
+  const betId = params.get('betId');
+  const groupCode = params.get('groupCode');
+  const user = JSON.parse(localStorage.getItem('betbros_user'));
+  const username = user?.username;
+
+  
+  if (!betId || !groupCode || !username) {
+    console.log(username, betId, groupCode);
+    responseMessage.textContent = 'Faltan datos para mostrar la apuesta.';
+    return;
+  }
+
+  // ✅ Cargar la apuesta correspondiente
+  fetch(`/group-bets?groupCode=${groupCode}`)
+    .then(res => res.json())
+    .then(data => {
+      const bet = data.bets.find(b => b.id === betId);
+
+      if (!bet) {
+        responseMessage.textContent = 'Apuesta no encontrada.';
+        return;
+      }
+
+      betTitle.textContent = bet.title;
+      betDescription.textContent = bet.description;
+
+      bet.options.forEach(optionText => {
+        const option = document.createElement('option');
+        option.value = optionText;
+        option.textContent = optionText;
+        optionSelect.appendChild(option);
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      responseMessage.textContent = 'Error al cargar los detalles de la apuesta.';
+    });
+
+  // ✅ Enviar apuesta
+  betForm?.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const selectedOption = optionSelect.value;
+    const amount = amountInput.value;
+
+    const res = await fetch('http://localhost:3010/place-bet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        betId,
+        groupCode,
+        username,
+        selectedOption,
+        amount
+      })
+    });
+
+    const data = await res.json();
+    responseMessage.textContent = data.message;
+  });
+});
 
 
   
