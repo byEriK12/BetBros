@@ -14,5 +14,15 @@
     "username": "Biel Dogi",
     "email": "bieldomingog@gmail.com",
     "password": "Biel1234"
+  },
+  {
+    "username": "ola",
+    "email": "ola@gmail.com",
+    "password": "Ola1"
+  },
+  {
+    "username": "prueba",
+    "email": "prueba@ola.com",
+    "password": "Prueba1"
   }
 ]

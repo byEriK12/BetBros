@@ -47,6 +47,18 @@
           <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
           <input type="password" class="form-control" id="confirmPassword" required>
         </div>
+        <div class="mb-3">
+          <label class="form-label">Elige tu mascota</label>
+          <div class="avatar-carousel-container">
+            <button type="button" class="avatar-arrow avatar-arrow-left" id="avatarPrev" aria-label="Anterior">&#8592;</button>
+            <div class="avatar-carousel" id="avatar-carousel">
+              <img src="images/avatar/dargon.png" alt="Dargon" class="avatar-option" id="currentAvatarImg">
+            </div>
+            <button type="button" class="avatar-arrow avatar-arrow-right" id="avatarNext" aria-label="Siguiente">&#8594;</button>
+            <input type="hidden" name="avatar" id="selectedAvatar" value="dargon.png" required>
+            <div id="avatar-error" style="display:none;color:red;width:100%">Alguna imagen de mascota no se encuentra en la carpeta <b>public/images/avatar</b>.</div>
+          </div>
+        </div>
         <button type="submit" class="btn btn-primary w-100">Registrarse</button>
         <button type="button" class="btn btn-secondary w-100 mt-2" onclick="loadInicio()">Volver</button>
       </form>
@@ -58,5 +70,37 @@
   </footer>
 
   <script src="scripts/main.js"></script>
+  <script>
+    // Carousel de avatares
+    const avatars = [
+      { src: 'images/avatar/dargon.png', value: 'dargon.png', alt: 'Dargon' },
+      { src: 'images/avatar/gallo.png', value: 'gallo.png', alt: 'Gallo' },
+      { src: 'images/avatar/gato.png', value: 'gato.png', alt: 'Gato' },
+      { src: 'images/avatar/mono.png', value: 'mono.png', alt: 'Mono' },
+      { src: 'images/avatar/perro.png', value: 'perro.png', alt: 'Perro' },
+      { src: 'images/avatar/pinguino.png', value: 'pinguino.png', alt: 'Pinguino' }
+    ];
+    let currentAvatar = 0;
+    const avatarImg = document.getElementById('currentAvatarImg');
+    const selectedAvatar = document.getElementById('selectedAvatar');
+    const avatarError = document.getElementById('avatar-error');
+    document.getElementById('avatarPrev').onclick = function() {
+      currentAvatar = (currentAvatar - 1 + avatars.length) % avatars.length;
+      updateAvatar();
+    };
+    document.getElementById('avatarNext').onclick = function() {
+      currentAvatar = (currentAvatar + 1) % avatars.length;
+      updateAvatar();
+    };
+    function updateAvatar() {
+      avatarImg.src = avatars[currentAvatar].src;
+      avatarImg.alt = avatars[currentAvatar].alt;
+      selectedAvatar.value = avatars[currentAvatar].value;
+      avatarError.style.display = 'none';
+    }
+    avatarImg.onerror = function() {
+      avatarError.style.display = 'block';
+    };
+  </script>
 </body>
 </html>
