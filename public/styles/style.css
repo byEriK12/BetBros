@@ -145,36 +145,63 @@ h1, h2, h3, h4, h5 {
 }
 
 .bet-hero .btn-green-betbros {
-  background: linear-gradient(90deg, #2fd656 60%, #b9ffb7 100%);
-  color: #101c12;
-  border-radius: 24px;
-  font-size: 1.1rem;
-  padding: 0.75rem 2.5rem;
-  box-shadow: 0 2px 12px #2fd65633;
-  border: none;
-  font-weight: bold;
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  border-radius: 2rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.5rem;
+  box-shadow: 0 4px 18px #2fd65677, 0 1.5px 0 #fff2 inset;
+  border: 2px solid #2fd656;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 0 0.5rem;
+  transition: 
+    background 0.18s,
+    color 0.18s,
+    transform 0.13s,
+    box-shadow 0.18s;
+  animation: btn-glow-green-hero 2.5s infinite alternate;
 }
-
-.bet-hero .btn-green-betbros:hover {
-  background: linear-gradient(90deg, #b9ffb7 60%, #2fd656 100%);
-  color: #193c24;
+@keyframes btn-glow-green-hero {
+  0% { box-shadow: 0 4px 18px #2fd65677, 0 1.5px 0 #fff2 inset; }
+  100% { box-shadow: 0 0 24px 8px #2fd656cc, 0 1.5px 0 #fff2 inset; }
+}
+.bet-hero .btn-green-betbros:hover, .bet-hero .btn-green-betbros:focus {
+  background: linear-gradient(90deg, #10501f 60%, #2fd656 100%);
+  color: #fff;
+  transform: scale(1.07);
+  filter: brightness(1.1) drop-shadow(0 0 12px #2fd656cc);
 }
 
 .bet-hero .btn-outline-green {
-  border-radius: 24px;
-  font-size: 1.1rem;
-  padding: 0.75rem 2.5rem;
+  border-radius: 2rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.5rem;
   border: 2px solid #2fd656;
   color: #2fd656;
-  background: transparent;
-  font-weight: bold;
-  transition: background 0.2s, color 0.2s;
+  background: #fff;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 0 0.5rem;
+  box-shadow: 0 4px 18px #2fd65644, 0 1.5px 0 #fff2 inset;
+  transition: 
+    background 0.18s,
+    color 0.18s,
+    transform 0.13s,
+    box-shadow 0.18s;
+  animation: btn-glow-outline-hero 2.5s infinite alternate;
 }
-
-.bet-hero .btn-outline-green:hover {
-  background: #2fd656;
-  color: #101c12;
-  border-color: #b9ffb7;
+@keyframes btn-glow-outline-hero {
+  0% { box-shadow: 0 4px 18px #2fd65644, 0 1.5px 0 #fff2 inset; }
+  100% { box-shadow: 0 0 24px 8px #2fd65699, 0 1.5px 0 #fff2 inset; }
+}
+.bet-hero .btn-outline-green:hover, .bet-hero .btn-outline-green:focus {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  transform: scale(1.07);
+  filter: brightness(1.1) drop-shadow(0 0 12px #2fd656cc);
 }
 
 /* COMO FUNCIONA */
@@ -279,15 +306,22 @@ h1, h2, h3, h4, h5 {
   color: #fff;
 }
 
-.btn-light {
-  background-color: #fff;
-  color: #101c12;
-  font-weight: bold;
+.hero-cta-btn {
+  transition: 
+    background 0.18s,
+    color 0.18s,
+    transform 0.13s,
+    box-shadow 0.18s,
+    filter 0.18s;
+  animation: hero-cta-glow 2.5s infinite alternate;
 }
-
-.btn-light:hover {
-  background-color: #2fd656;
-  color: #fff;
+@keyframes hero-cta-glow {
+  0% { box-shadow: 0 8px 32px #2fd65699; }
+  100% { box-shadow: 0 0 32px 12px #2fd656cc; }
+}
+.hero-cta-btn:hover, .hero-cta-btn:focus {
+  transform: scale(1.08);
+  filter: brightness(1.1) drop-shadow(0 0 16px #2fd656cc);
 }
 
 /* FOOTER */

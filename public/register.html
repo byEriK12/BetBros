@@ -3,50 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BetBros - Inicio</title>
+  <title>BetBros - Registro</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 </head>
-<body class="bg-dark text-white">
+<body>
 
-  <nav id="navbar" class="navbar px-4">
-    <a class="navbar-brand d-flex align-items-center" href="index.html">
-      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
-      <span>
-        <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
-        </span>
-    </a>
-    <div>
-      <button class="btn btn-outline-light me-2" onclick="showRegister()">REGÍSTRATE AHORA</button>
-      <button class="btn btn-light" onclick="goTo('login.html')">INICIAR SESIÓN</button>
+  <nav class="main-navbar d-flex align-items-center justify-content-between px-4 py-3">
+    <div class="d-flex align-items-center">
+      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="54" height="54" class="me-3 logo-navbar">
+      <span class="brand-title">
+        <span class="text-verde-betbros">Bet</span><span class="text-gold-betbros">Bros</span>
+      </span>
+    </div>
+    <div class="navbar-btns">
+      <button class="navbar-btn navbar-btn-green" onclick="showRegister()">
+        <i class="fa-solid fa-user-plus me-2"></i>Regístrate
+      </button>
+      <button class="navbar-btn navbar-btn-outline" onclick="goTo('login.html')">
+        <i class="fa-solid fa-right-to-bracket me-2"></i>Iniciar sesión
+      </button>
     </div>
   </nav>
 
   <div>
-          <div class="container mt-5" style="max-width: 500px;">
-        <h2 class="text-center mb-4">Regístrate en BetBros</h2>
-        <form id="registerForm">
-          <div class="mb-3">
-            <label for="username" class="form-label">Nombre de usuario</label>
-            <input type="text" class="form-control" id="username" required>
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" id="email" required>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="password" required>
-          </div>
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
-            <input type="password" class="form-control" id="confirmPassword" required>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Registrarse</button>
-          <button type="button" class="btn btn-secondary w-100 mt-2" onclick="loadInicio()">Volver</button>
-        </form>
-      </div>
+    <div class="container mt-5" style="max-width: 500px;">
+      <h2 class="text-center mb-4">Regístrate en BetBros</h2>
+      <form id="registerForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Nombre de usuario</label>
+          <input type="text" class="form-control" id="username" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input type="email" class="form-control" id="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" required>
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+          <input type="password" class="form-control" id="confirmPassword" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+        <button type="button" class="btn btn-secondary w-100 mt-2" onclick="loadInicio()">Volver</button>
+      </form>
+    </div>
   </div>
+
+  <footer class="text-center py-4 bet-footer">
+    <small>BetBros &copy; 2024 · Apuestas sociales entre amigos</small>
+  </footer>
 
   <script src="scripts/main.js"></script>
 </body>
