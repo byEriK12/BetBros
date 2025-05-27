@@ -293,10 +293,13 @@ h1, h2, h3, h4, h5 {
 /* FOOTER */
 
 .bet-footer {
-  color:#2fd656;
-  background:rgba(16,28,18,0.95);
-  border-top:1.5px solid #2fd656;
+  color: #2fd656;
+  background: rgba(16,28,18,0.95);
+  border-top: 1.5px solid #2fd656;
   font-size: 1rem;
+  margin-top: 48px;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 /* BLOQUEO CARD */
