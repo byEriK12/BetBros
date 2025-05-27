@@ -78,6 +78,32 @@ function joinGroup() {
   });
 }
 
+function joinCommunityGroup(groupName) {
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+  if (!user || !user.username) {
+    alert("Debes iniciar sesión para unirte a un grupo.");
+    return;
+  }
+  fetch('http://localhost:3010/join-community', { // También fíjate que el endpoint es '/join-community', no 'join-community-group'
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: groupName, username: user.username })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.message && data.message.includes("Te has unido a la comunidad")) {
+      alert("Te has unido al grupo correctamente.");
+      window.location.href = "myCommunities.html";
+    } else {
+      alert(data.message || "Hubo un problema al unirte al grupo.");
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("Hubo un problema al unirte al grupo.");
+  });
+}
+
 function confirmarEliminacion() {
   if (confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción será revisada por el equipo de BetBros.")) {
     const user = JSON.parse(localStorage.getItem("betbros_user"));
@@ -148,6 +174,31 @@ function leaveGroup(groupName) {
     .catch(error => {
       console.error('Error:', error);
       alert('Hubo un problema al solicitar abandonar el grupo.');
+    });
+}
+
+function leaveCommunity(communityName) {
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+  if (!user || !user.username) {
+    alert("No se ha podido identificar al usuario.");
+    return;
+  }
+  if (!confirm(`¿Estás segur@ de que quieres abandonar la comunidad "${communityName}"?`)) return;
+  fetch('http://localhost:3010/leave-community', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: communityName, username: user.username })
+  })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+      if (data.message.includes("abandonado")) {
+        window.location.href = "myCommunities.html"; // Redirige a la página de comunidades
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Hubo un problema al abandonar la comunidad.');
     });
 }
 
@@ -419,9 +470,76 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  const communitiesList = document.getElementById("communitiesList");
+  if (!communitiesList) return; // Nos aseguramos de estar en la página correcta
+
+  const userData = localStorage.getItem("betbros_user");
+  if (!userData) {
+    alert("No se ha podido identificar al usuario.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  const user = JSON.parse(userData);
+  if (!user || !user.username) {
+    alert("No se ha podido identificar al usuario.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  fetch(`http://localhost:3010/my-communities?username=${user.username}`)
+    .then(response => response.json())
+    .then(communities => {
+      if (communities.length === 0) {
+        communitiesList.innerHTML = '<p class="text-center">No tienes comunidades.</p>';
+      } else {
+        communities.forEach(community => {
+          const communityCard = document.createElement("div");
+          communityCard.classList.add("col-12", "mb-3");
+          communityCard.innerHTML = `
+            <div class="card h-100 p-3 d-flex flex-row align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <img src="${community.image || 'https://via.placeholder.com/120'}" class="rounded me-3" alt="${community.name}" style="width: 100px; height: 100px; object-fit: cover;">
+                <div>
+                  <h5 class="mb-1">
+                    <a href="#" class="fw-bold text-verde-betbros" onclick="setGroupAndRedirect('${community.invitationCode}')">
+                    ${community.name}
+                    </a>
+                  </h5>
+                  <p class="mb-1 text-muted">${community.description}</p>
+                  <small class="text-secondary">Creador: ${community.creator}</small><br>
+                  <small class="text-secondary">Apuestas en curso: <b>${community.bets || 0}</b></small><br>
+                  <small class="text-secondary">Participantes: <b>${community.members.length}</b></small>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-mas-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Más información
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item delete-option" href="#" onclick="event.preventDefault(); leaveCommunity('${community.name}')">
+                      Abandonar comunidad
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          `;
+          communitiesList.appendChild(communityCard);
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      communitiesList.innerHTML = '<p class="text-center text-danger">Error al cargar las comunidades.</p>';
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
   // Mostrar el nombre de usuario si tienes login cargado
   const welcomeUser = document.getElementById("welcomeUser");
-  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
   if (user) {
     welcomeUser.textContent = user.username;
   }
@@ -540,7 +658,69 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+ const publicGroups = [
+    { name: "Apuestas Champions", image: "images/groups/champions.png", members: 124, bets: 37 },
+    { name: "Liga Española", image: "images/groups/laliga.png", members: 89, bets: 22 },
+    { name: "NBA Fans", image: "images/groups/nba.png", members: 56, bets: 15 },
+    { name: "Premier League", image: "images/groups/premier.png", members: 102, bets: 29 },
+    { name: "Grupo Fútbol", image: "images/groups/futbol.png", members: 75, bets: 18 },
+    { name: "Grupo NBA", image: "images/groups/nba2.png", members: 42, bets: 9 }
+  ];
 
+  function createGroupCard(group) {
+    return `
+      <div class="col-md-6 col-lg-4 public-group-list-item">
+        <div class="card equal-card mb-3 w-100">
+          <img src="${group.image}" class="card-img-top" alt="${group.name}" style="height:180px;object-fit:cover;">
+          <div class="card-body d-flex flex-column bg-dark text-white">
+            <h5 class="card-title fw-bold">${group.name}</h5>
+            <p class="card-text mb-1"><strong>Personas:</strong> ${group.members}</p>
+            <p class="card-text mb-3"><strong>Apuestas:</strong> ${group.bets}</p>
+            <button class="btn btn-primary mt-auto w-100 join-group-button" data-group-name="${group.name}">Unirse</button>
+          </div>
+        </div>
+      </div>`;
+  }
 
-  
+  function renderGroups() {
+    const topGroups = publicGroups.slice(0, 3);
+    const allGroups = publicGroups.slice(3, 6);
+
+    document.getElementById('topGroupsList').innerHTML = topGroups.map(createGroupCard).join('');
+    document.getElementById('allGroupsList').innerHTML = allGroups.map(createGroupCard).join('');
+  }
+
+  function filterGroups(query) {
+    return publicGroups.filter(group => group.name.toLowerCase().includes(query.toLowerCase()));
+  }
+
+  document.getElementById('searchGroupInput').addEventListener('input', function() {
+    const query = this.value.trim();
+    const defaultSection = document.getElementById('defaultGroups');
+    const filteredSection = document.getElementById('filteredGroups');
+
+    if (query === '') {
+      defaultSection.classList.remove('d-none');
+      filteredSection.classList.add('d-none');
+    } else {
+      const results = filterGroups(query);
+      filteredSection.innerHTML = results.map(createGroupCard).join('');
+      defaultSection.classList.add('d-none');
+      filteredSection.classList.remove('d-none');
+    }
+  });
+
+  document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('join-group-button')) {
+      const groupName = event.target.getAttribute('data-group-name');
+      const user = JSON.parse(localStorage.getItem("betbros_user"));
+      if (!user || !user.username) {
+        alert("Debes iniciar sesión para unirte a un grupo.");
+        return;
+      }
+      joinCommunityGroup(groupName);
+    }
+  }
+  );
+document.addEventListener('DOMContentLoaded', renderGroups);
 

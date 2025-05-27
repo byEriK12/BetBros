@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Apuestas Champions",
+    "description": "Grupo para realizar apuestas de la Champions League",
+    "image": "images/groups/champions.png",
+    "creator": "admin",
+    "members": [],
+    "bets": 37
+  },
+  {
+    "name": "Liga Española",
+    "description": "Grupo para realizar apuestas de la Liga Española",
+    "image": "images/groups/laliga.png",
+    "creator": "admin",
+    "members": [],
+    "bets": 22
+  },
+  {
+    "name": "NBA Fans",
+    "description": "Grupo para los aficionados de la NBA",
+    "image": "images/groups/nba.png",
+    "creator": "admin",
+    "members": [],
+    "bets": 15
+  },
+  {
+    "name": "Premier League",
+    "description": "Grupo para realizar apuestas de la Premier League",
+    "image": "images/groups/premier.png",
+    "creator": "admin",
+    "members": [],
+    "bets": 29
+  },
+  {
+    "name": "Grupo Fútbol",
+    "description": "Grupo para realizar apuestas de fútbol en general",
+    "image": "images/groups/futbol.png",
+    "creator": "admin",
+    "members": [],
+    "bets": 18
+  },
+  {
+    "name": "Grupo NBA",
+    "description": "Grupo para realizar apuestas de la NBA",
+    "image": "images/groups/nba2.png",
+    "creator": "admin",
+    "members": [],
+    "bets": 9
+  }
+]
