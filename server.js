@@ -11,28 +11,56 @@ const betsFilePath = path.join(__dirname, 'db', 'bets.json');
 
 // Añade esto al inicio con las demás constantes
 const isBetActive = (limitDate) => {
-  const now = new Date();
-  const deadline = new Date(limitDate);
-  return now <= deadline;
+  try {
+    const now = new Date();
+    const deadline = new Date(limitDate);
+    
+    // Validación adicional para fechas inválidas
+    if (isNaN(deadline.getTime())) {
+      console.error(`Fecha inválida recibida: ${limitDate}`);
+      return false;
+    }
+    
+    return now <= deadline;
+  } catch (error) {
+    console.error(`Error al verificar fecha: ${error}`);
+    return false;
+  }
 };
 
 // Función para actualizar estados (añadir con las demás funciones)
-function updateBetsStatus() {
+const updateBetsStatus = () => {
   try {
-    const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+    console.log('Ejecutando actualización de estados de apuestas...');
     
-    const updatedBets = bets.map(bet => ({
-      ...bet,
-      isActive: isBetActive(bet.limitDate)
-    }));
+    const betsData = fs.readFileSync(betsFilePath, 'utf8');
+    const bets = JSON.parse(betsData);
     
-    fs.writeFileSync(betsFilePath, JSON.stringify(updatedBets, null, 2));
+    let changesMade = false;
+    
+    const updatedBets = bets.map(bet => {
+      const newStatus = isBetActive(bet.limitDate);
+      
+      if (bet.isActive !== newStatus) {
+        console.log(`Actualizando apuesta ${bet.id}: ${bet.isActive} -> ${newStatus}`);
+        changesMade = true;
+        return { ...bet, isActive: newStatus };
+      }
+      return bet;
+    });
+    
+    if (changesMade) {
+      fs.writeFileSync(betsFilePath, JSON.stringify(updatedBets, null, 2));
+      console.log('Cambios guardados correctamente');
+    } else {
+      console.log('No se requirieron cambios');
+    }
   } catch (error) {
-    console.error('Error updating bets status:', error);
+    console.error('Error crítico al actualizar estados:', error);
   }
-}
+};
 
-setInterval(updateBetsStatus, 60);
+setInterval(updateBetsStatus, 30000);
 
 app.use(bodyParser.json());
 
@@ -198,7 +226,8 @@ app.post('/save-bet', (req, res) => {
       multipleChoice,
       limitDate,
       options,
-      isActive: true
+      isActive: true,
+      correctAnswer: null
     };
 
     bets.push(newBet);
@@ -217,6 +246,58 @@ app.post('/save-bet', (req, res) => {
   } catch (error) {
     console.error(error); 
     res.status(500).json({ message: "Error interno al guardar la apuesta." });
+  }
+});
+
+
+
+app.get('/get-bets', (req, res) => {
+  try {
+    updateBetsStatus(); // Actualiza estados antes de devolverlas
+    const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+    res.status(200).json(bets);
+  } catch (error) {
+    // Manejo de errores...
+  }
+});
+
+app.post('/set-correct-answer', (req, res) => {
+  try {
+    const { betId, correctAnswer, username } = req.body;
+    const groups = JSON.parse(fs.readFileSync(GROUPS_DB, 'utf8'));
+    const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+
+    // Encontrar la apuesta
+    const betIndex = bets.findIndex(b => b.id === betId);
+    if (betIndex === -1) {
+      return res.status(404).json({ message: "Apuesta no encontrada" });
+    }
+
+    const bet = bets[betIndex];
+
+    // Verificar que el usuario es el creador de la apuesta
+    if (bet.username !== username) {
+      return res.status(403).json({ message: "Solo el creador puede marcar la respuesta correcta" });
+    }
+
+    // Verificar que la apuesta no está activa
+    if (isBetActive(bet.limitDate)) {
+      return res.status(400).json({ message: "La apuesta aún está activa" });
+    }
+
+    // Verificar que la respuesta existe en las opciones
+    if (!bet.options.includes(correctAnswer)) {
+      return res.status(400).json({ message: "La respuesta no coincide con las opciones de la apuesta" });
+    }
+
+    // Actualizar la apuesta
+    bets[betIndex].correctAnswer = correctAnswer;
+    fs.writeFileSync(betsFilePath, JSON.stringify(bets, null, 2));
+
+    res.status(200).json({ message: "Respuesta correcta actualizada" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al actualizar la respuesta correcta" });
   }
 });
 
