@@ -429,6 +429,41 @@ h1, h2, h3, h4, h5 {
   color: #fff;
 }
 
+/* Botón desplegable bonito para configuración */
+.btn-mas-info {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  border: 2px solid #2fd656;
+  font-weight: 700;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 8px #2fd65655, 0 1.5px 0 #fff2 inset;
+  letter-spacing: 1px;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.18s, color 0.18s, transform 0.13s, box-shadow 0.18s;
+}
+.btn-mas-info:hover, .btn-mas-info:focus {
+  background: linear-gradient(90deg, #10501f 60%, #2fd656 100%);
+  color: #fff;
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(0 0 8px #2fd65699);
+}
+
+.dropdown-menu {
+  background: #101c12;
+  border: 2px solid #2fd656;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px #2fd65633;
+}
+.dropdown-item {
+  color: #2fd656;
+  font-weight: 600;
+  transition: background 0.18s, color 0.18s;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+  background: #2fd656;
+  color: #fff;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 767px) {

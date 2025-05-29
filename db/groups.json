@@ -8,9 +8,23 @@
     "invitationCode": "3cf857ff",
     "members": [
       "eric",
-      "admin"
+      "admin",
+      "prueba"
     ],
     "bets": 2,
+    "pendingDeletion": false
+  },
+  {
+    "name": "olaaaa",
+    "description": "dasgggggggggg",
+    "image": "",
+    "creator": "prueba",
+    "isPublic": false,
+    "invitationCode": "4fe4d60a",
+    "members": [
+      "prueba"
+    ],
+    "bets": 1,
     "pendingDeletion": false
   }
 ]
