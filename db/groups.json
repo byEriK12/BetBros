@@ -11,11 +11,7 @@
       "admin",
       "Biel Dogi"
     ],
-<<<<<<< Updated upstream
-    "bets": 2,
-=======
-    "bets": 7,
->>>>>>> Stashed changes
+    "bets": 5,
     "pendingDeletion": false
   }
 ]
