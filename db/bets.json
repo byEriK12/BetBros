@@ -11,7 +11,8 @@
       "Me suicido",
       "Me ahorco",
       "Me emborracho"
-    ]
+    ],
+    "isActive": true
   },
   {
     "id": "0e0c4766",
@@ -24,7 +25,8 @@
     "options": [
       "rtytr",
       "ytrytryr"
-    ]
+    ],
+    "isActive": true
   },
   {
     "id": "444e9cd1",
@@ -37,7 +39,8 @@
     "options": [
       "gyu",
       "gyu"
-    ]
+    ],
+    "isActive": true
   },
   {
     "id": "f0b3083b",
@@ -50,7 +53,8 @@
     "options": [
       "fdsfds",
       "fdsf"
-    ]
+    ],
+    "isActive": true
   },
   {
     "id": "04f0ef70",
@@ -63,6 +67,7 @@
     "options": [
       "rew",
       "rew"
-    ]
+    ],
+    "isActive": true
   }
 ]
