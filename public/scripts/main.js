@@ -265,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-  // Bienvenida personalizada en dashboard
   const welcomeEl = document.getElementById("welcomeUser");
   const user = JSON.parse(localStorage.getItem("betbros_user"));
 
@@ -276,7 +275,6 @@ if (welcomeEl && user) {
     ${user.username}
   `;
 }
-
 });
 
 document.addEventListener("DOMContentLoaded", () => {
