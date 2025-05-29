@@ -12,5 +12,19 @@
       "Me ahorco",
       "Me emborracho"
     ]
+  },
+  {
+    "id": "33c5bd3d",
+    "groupCode": "4fe4d60a",
+    "username": "prueba",
+    "title": "mimimimimi",
+    "description": "abuelas en nocilla",
+    "multipleChoice": false,
+    "limitDate": "2025-06-08T19:12",
+    "options": [
+      "si",
+      "no",
+      "depende"
+    ]
   }
 ]

@@ -9,6 +9,7 @@
 </head>
 <body style="min-height:100vh; display:flex; flex-direction:column; background: linear-gradient(135deg, #101c12 0%, #1e4023 100%) !important; color: #eaffea;">
 
+<<<<<<< Updated upstream
   <nav class="main-navbar d-flex align-items-center justify-content-between px-4 py-3">
     <div class="d-flex align-items-center">
       <a href="index.html">
@@ -42,8 +43,34 @@
       <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
       <button type="button" class="btn btn-secondary w-100 mt-2" onclick="loadInicio()">Volver</button>
     </form>
+=======
+<!-- Navbar igual que index.html -->
+<nav class="main-navbar d-flex align-items-center justify-content-between px-4 py-3">
+  <div class="d-flex align-items-center">
+    <img src="images/logos/logo_final.png" alt="Logo BetBros" width="54" height="54" class="me-3 logo-navbar" onclick="window.location.href='index.html'" style="cursor:pointer;">
+    <span class="brand-title" style="cursor:pointer;" onclick="window.location.href='index.html'">
+      <span class="text-verde-betbros">Bet</span><span class="text-gold-betbros">Bros</span>
+    </span>
+>>>>>>> Stashed changes
   </div>
+</nav>
 
-  <script src="scripts/main.js"></script>
+<div class="container mt-5" style="max-width: 500px;">
+  <h2 class="text-center mb-4">Inicia sesión en BetBros</h2>
+  <form id="loginForm">
+    <div class="mb-3">
+      <label for="loginInput" class="form-label">Nombre de usuario o correo electrónico</label>
+      <input type="text" class="form-control" id="identifier" required>
+    </div>
+    <div class="mb-3">
+      <label for="loginPassword" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" id="password" required>
+    </div>
+    <button type="submit" class="btn btn-green-betbros w-100">Iniciar sesión</button>
+    <button type="button" class="btn btn-secondary w-100 mt-2" onclick="loadInicio()">Volver</button>
+  </form>
+</div>
+
+<script src="scripts/main.js"></script>
 </body>
 </html>

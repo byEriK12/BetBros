@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Unirse a un grupo público</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR igual que dashboard -->
+<nav id="navbar" class="navbar px-4">
+  <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+    <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
+    <span>
+      <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
+    </span>
+  </a>
+  <div class="d-flex align-items-center ms-auto">
+    <div class="dropdown me-3">
+      <span class="fw-bold text-verde-betbros">Bienvenid@,</span>
+      <a href="#" class="dropdown-toggle text-white text-decoration-none fw-bold" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span id="welcomeUser"></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="createPrivGroup.html">Crear grupo privado</a></li>
+        <li><a class="dropdown-item" href="joinPrivGroup.html">Unirse a grupo privado</a></li>
+        <li><a class="dropdown-item" href="joinPubGroup.html">Unirse a una comunidad</a></li>
+        <li><a class="dropdown-item" href="myGroups.html">Mis grupos</a></li>
+        <li><a class="dropdown-item" href="myCommunities.html">Mis comunidades</a></li>
+        <li><a class="dropdown-item" href="configuration.html">Configuración</a></li>
+        <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <!-- Título -->
+  <h2 class="text-center text-verde-betbros fw-bold mb-4">Únete a un grupo público</h2>
+
+  <!-- Barra de búsqueda -->
+  <div class="d-flex justify-content-center mb-5">
+    <div class="input-group w-75 w-md-50">
+      <input type="text" id="searchGroupInput" class="form-control bg-dark text-white" placeholder="Buscar grupos públicos...">
+      <span class="btn btn-primary"><i class="bi bi-search"></i></span>
+    </div>
+  </div>
+
+  <!-- Contenedor de resultados filtrados -->
+  <div id="filteredGroups" class="row g-4 justify-content-center d-none"></div>
+
+  <!-- Secciones por defecto -->
+  <div id="defaultGroups">
+    <!-- Top Grupos -->
+    <h4 class="text-center text-verde-betbros mb-3">Top Grupos</h4>
+    <div id="topGroupsList" class="row g-4 justify-content-center"></div>
+
+    <!-- Todos los Grupos -->
+    <h4 class="text-center text-verde-betbros mt-5 mb-3">Todos los grupos</h4>
+    <div id="allGroupsList" class="row g-4 justify-content-center"></div>
+  </div>
+
+  <!-- Botón de volver -->
+  <div class="text-center mt-5">
+    <button class="btn btn-secondary" onclick="goTo('dashboard.html')">Volver</button>
+  </div>
+</div>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
