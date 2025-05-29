@@ -10,8 +10,13 @@
 </head>
 <body>
   <nav class="main-navbar d-flex align-items-center justify-content-between px-4 py-3">
+    <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
+      <span>
+        <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
+        </span>
+    </a>
     <div class="d-flex align-items-center">
-<<<<<<< Updated upstream
       <div class="dropdown me-3">
         <span class="fw-bold text-verde-betbros">Bienvenid@,</span>
         <a
@@ -23,24 +28,16 @@
           aria-expanded="false"
         >
           <span id="welcomeUser"></span>
-          <img id="userAvatar" src="" alt="Avatar" width="84" height="64" class="rounded-circle ms-2 d-none">
+          <img id="userAvatar" src="" alt="Avatar" width="40" height="40" class="rounded-circle ms-2 d-none">
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <li><a class="dropdown-item" href="createPrivGroup.html">Crear grupo privado</a></li>
-=======
-      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="54" height="54" class="me-3 logo-navbar" onclick="window.location.href='dashboard.html'" style="cursor:pointer;">
-      <span class="brand-title" style="cursor:pointer;" onclick="window.location.href='dashboard.html'">
-        <span class="text-verde-betbros">Bet</span><span class="text-gold-betbros">Bros</span>
-      </span>
-    </div>
-    <div class="dropdown">
-      <button class="btn btn-green-betbros dropdown-toggle fw-bold" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa-solid fa-user me-2"></i><span id="welcomeUser"></span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-        <li><a class="dropdown-item" href="configuration.html">Configuración</a></li>
-        <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
-      </ul>
+          <li><a class="dropdown-item" href="joinPrivGroup.html">Unirse a grupo privado</a></li>
+          <li><a class="dropdown-item" href="myGroups.html">Mis grupos</a></li>
+          <li><a class="dropdown-item" href="configuration.html">Configuración</a></li>
+          <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
   <div class="barra-verde-betbros"></div>
@@ -59,7 +56,7 @@
           <i class="fa-solid fa-user-plus me-2"></i>Unirse a grupo
         </button>
         <ul class="dropdown-menu" aria-labelledby="joinGroupDropdown">
->>>>>>> Stashed changes
+
           <li><a class="dropdown-item" href="joinPrivGroup.html">Unirse a grupo privado</a></li>
           <li><a class="dropdown-item" href="joinPubGroup.html">Unirse a grupo público</a></li>
         </ul>

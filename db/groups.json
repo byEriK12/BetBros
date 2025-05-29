@@ -26,5 +26,18 @@
     ],
     "bets": 1,
     "pendingDeletion": false
+  },
+  {
+    "name": "Mario",
+    "description": "hola",
+    "image": "",
+    "creator": "hola",
+    "isPublic": false,
+    "invitationCode": "59e47fc0",
+    "members": [
+      "hola"
+    ],
+    "bets": 0,
+    "pendingDeletion": false
   }
 ]
