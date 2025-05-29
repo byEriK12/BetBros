@@ -32,7 +32,7 @@ function updateBetsStatus() {
   }
 }
 
-setInterval(updateBetsStatus, 3600000);
+setInterval(updateBetsStatus, 60);
 
 app.use(bodyParser.json());
 
