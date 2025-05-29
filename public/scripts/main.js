@@ -272,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Usuario actual:", user);
 if (welcomeEl && user) {
   welcomeEl.innerHTML = `
-    <img src="${user.avatar || 'images/avatar/gato.png'}" alt="Avatar" class="me-2 rounded-circle" style="width: 64px; height: 64px;">
+    <img src="${user.avatar || 'images/avatar/gato.png'}" alt="Avatar" class="me-2 rounded-circle"  style="width: 84px; height: 64px;">
     ${user.username}
   `;
 }

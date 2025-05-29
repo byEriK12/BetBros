@@ -22,5 +22,11 @@
     "email": "aba@gmail.com",
     "password": "Hola1",
     "avatar": "images/avatar/gallo.png"
+  },
+  {
+    "username": "hola3",
+    "email": "hola3@gmail.com",
+    "password": "Hola1",
+    "avatar": "images/avatar/mono.png"
   }
 ]
