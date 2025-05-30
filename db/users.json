@@ -2,17 +2,20 @@
   {
     "username": "admin",
     "email": "admin@gmail.com",
-    "password": "Admin0"
+    "password": "Admin0",
+    "avatar": "images/avatar/mono.png"
   },
   {
     "username": "eric",
     "email": "eric.matasp12@gmail.com",
     "password": "Eric12",
-    "pendingDeletion": true
+    "pendingDeletion": true,
+    "avatar": "images/avatar/gallo.png"
   },
   {
     "username": "Biel Dogi",
     "email": "bieldomingog@gmail.com",
-    "password": "Biel1234"
+    "password": "Biel1234",
+    "avatar": "images/avatar/perro.png"
   }
 ]

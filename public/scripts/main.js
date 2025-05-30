@@ -333,7 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.message.trim() === 'Login exitoso.') {
-          localStorage.setItem("betbros_user", JSON.stringify({ username: data.username }));
+          localStorage.setItem("betbros_user", JSON.stringify({ username: data.username, avatar: data.avatar || "" }));
           alert("¡Login exitoso!");
           window.location.href = "dashboard.html";
         } else {
@@ -351,9 +351,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const welcomeEl = document.getElementById("welcomeUser");
   const user = JSON.parse(localStorage.getItem("betbros_user"));
 
-  if (welcomeEl && user) {
-    welcomeEl.textContent = ` ${user.username}`;
-  }
+if (welcomeEl && user) {
+      welcomeEl.innerHTML = `
+    ${user.username}
+    <img src="${user.avatar || 'images/avatar/gato.png'}" alt="Avatar" class="me-2 rounded-circle"  style="width: 84px; height: 64px;">
+  `;
+}
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -566,7 +569,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const welcomeUser = document.getElementById("welcomeUser");
   const user = JSON.parse(localStorage.getItem("betbros_user"));
   if (user) {
-    welcomeUser.textContent = user.username;
+      welcomeEl.innerHTML = `
+    ${user.username}
+    <img src="${user.avatar || 'images/avatar/gato.png'}" alt="Avatar" class="me-2 rounded-circle"  style="width: 84px; height: 64px;">
+  `;
   }
   
   // Función para añadir nueva opción de apuesta

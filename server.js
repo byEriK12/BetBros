@@ -100,7 +100,7 @@ app.post('/login', (req, res) => {
     return res.status(401).json({ message: 'Credenciales incorrectas.' });
   }
 
-  res.status(200).json({ message: 'Login exitoso.', username: user.username });
+  res.status(200).json({ message: 'Login exitoso.', username: user.username ,avatar: user.avatar });
 });
 
 
