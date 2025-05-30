@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const path = require('path');
+const path= require('path');
 
 const app = express();
 const PORT = 3010;
@@ -9,6 +9,7 @@ const USERS_DB = path.join(__dirname, 'db', 'users.json');
 const GROUPS_DB = path.join(__dirname, 'db', 'groups.json');
 const betsFilePath = path.join(__dirname, 'db', 'bets.json');
 const activityFilePath = path.join(__dirname, 'db', 'betsActivity.json');
+const COMMUNITIES_DB = path.join(__dirname, 'db', 'communities.json');
 
 app.use(bodyParser.json());
 
@@ -146,6 +147,92 @@ app.post('/join-group', (req, res) => {
   res.status(200).json({ message: `Te has unido al grupo "${group.name}".` });
 });
 
+app.post('/create-community', (req, res) => {
+  const { name, description, image, creator } = req.body;
+
+  const communities = JSON.parse(fs.readFileSync(COMMUNITIES_DB, 'utf8'));
+
+  // Verificar que no exista comunidad con el mismo nombre
+  if (communities.some(c => c.name === name)) {
+    return res.status(400).json({ message: 'El nombre de la comunidad ya existe.' });
+  }
+
+  const newCommunity = {
+    name,
+    description,
+    image,
+    creator,
+    members: [creator],
+    pendingDeletion: false
+  };
+
+  communities.push(newCommunity);
+
+  fs.writeFileSync(COMMUNITIES_DB, JSON.stringify(communities, null, 2));
+
+  res.status(201).json({ message: 'Comunidad creada correctamente.' });
+});
+
+app.get('/my-communities', (req, res) => {
+  const { username } = req.query; 
+
+  const communities = JSON.parse(fs.readFileSync(COMMUNITIES_DB, 'utf8'));
+  const userCommunities = communities.filter(community => community.members.includes(username));
+  console.log("Buscando comunidades para:", username);
+  console.log("Todas las comunidades:", communities);
+
+
+  res.status(200).json(userCommunities);
+});
+
+app.post('/delete-community', (req, res) => {
+  const { name, username } = req.body;
+
+  if (!name || !username) {
+    return res.status(400).json({ message: "Faltan datos para solicitar la eliminación de la comunidad." });
+  }
+
+  const communities = JSON.parse(fs.readFileSync(COMMUNITIES_DB, 'utf8'));
+  const community = communities.find(c => c.name === name);
+
+  if (!community) {
+    return res.status(404).json({ message: "La comunidad no existe." });
+  }
+
+  if (community.creator !== username) {
+    return res.status(403).json({ message: "Solo el creador puede solicitar la eliminación." });
+  }
+
+  community.pendingDeletion = true;
+  fs.writeFileSync(COMMUNITIES_DB, JSON.stringify(communities, null, 2));
+
+  res.json({ message: "Solicitud de eliminación enviada." });
+});
+
+app.post('/join-community', (req, res) => {
+  const { name, username } = req.body;
+
+  if (!name || !username) {
+    return res.status(400).json({ message: "Faltan datos para unirse a la comunidad." });
+  }
+
+  const communities = JSON.parse(fs.readFileSync(COMMUNITIES_DB, 'utf8'));
+  const community = communities.find(c => c.name === name);
+
+  if (!community) {
+    return res.status(404).json({ message: "Comunidad no encontrada." });
+  }
+
+  if (community.members.includes(username)) {
+    return res.status(400).json({ message: "Ya eres miembro de esta comunidad." });
+  }
+
+  community.members.push(username);
+  fs.writeFileSync(COMMUNITIES_DB, JSON.stringify(communities, null, 2));
+
+  res.status(200).json({ message: `Te has unido a la comunidad "${community.name}".` });
+});
+
 app.post('/save-bet', (req, res) => {
   const generatedId = crypto.randomBytes(4).toString('hex'); // Generar un ID único para la apuesta
   req.body.id = generatedId; // Agregar el ID al cuerpo de la solicitud
@@ -241,6 +328,38 @@ app.post('/request-leave-group', (req, res) => {
   fs.writeFileSync(GROUPS_DB, JSON.stringify(groups, null, 2));
 
   res.json({ message: `Has abandonado el grupo "${groupName}".` });
+});
+
+app.post('/leave-community', (req, res) => {
+  const { name, username } = req.body;
+  console.log(`Intentando salir de comunidad: ${name}, usuario: ${username}`);
+
+  if (!name || !username) {
+    return res.status(400).json({ message: 'Faltan datos' });
+  }
+
+  const communities = JSON.parse(fs.readFileSync(COMMUNITIES_DB, 'utf-8'));
+  const community = communities.find(c => c.name === name);
+  if (!community) {
+    return res.status(404).json({ message: 'Comunidad no encontrada' });
+  }
+
+  if (!community.members.includes(username)) {
+    return res.status(400).json({ message: 'No eres miembro de esta comunidad' });
+  }
+
+  console.log(`Miembros antes: ${community.members}`);
+  community.members = community.members.filter(member => member !== username);
+  console.log(`Miembros después: ${community.members}`);
+
+  try {
+    fs.writeFileSync(COMMUNITIES_DB, JSON.stringify(communities, null, 2));
+    console.log("Archivo communities.json actualizado");
+    res.json({ message: `Has abandonado la comunidad "${name}".` });
+  } catch (err) {
+    console.error("Error al guardar el archivo:", err);
+    res.status(500).json({ message: 'Error al guardar los cambios' });
+  }
 });
 
 app.get('/group-bets', (req, res) => {
