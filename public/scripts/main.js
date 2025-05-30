@@ -682,7 +682,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="btn btn-danger mt-2" onclick="deleteBet('${bet.id}')">Eliminar apuesta</button>
                 ${
                   isCreator && isExpired && hasNoAnswer
-                    ? `<button class="btn btn-primary mt-2" onclick="window.location.href='betResponse.html?betId=${bet.id}'">Seleccionar resultado</button>`
+                    ? `<button class="btn btn-primary mt-2" onclick="window.location.href='setResponse.html?betId=${bet.id}'">Seleccionar resultado</button>`
                     : ''
                 }
               </div>
@@ -700,88 +700,90 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const betTitle = document.getElementById('betTitle');
-  const betDescription = document.getElementById('betDescription');
-  const optionSelect = document.getElementById('optionSelect');
-  const betForm = document.getElementById('placeBetForm');
-  const amountInput = document.getElementById('amountInput');
-  const responseMessage = document.getElementById('message');
+  if (window.location.pathname.includes('betDetails.html')) {
+    const betTitle = document.getElementById('betTitle');
+    const betDescription = document.getElementById('betDescription');
+    const optionSelect = document.getElementById('optionSelect');
+    const betForm = document.getElementById('placeBetForm');
+    const amountInput = document.getElementById('amountInput');
+    const responseMessage = document.getElementById('message');
 
-  const params = new URLSearchParams(window.location.search);
-  const betId = params.get('betId');
-  const groupCode = params.get('groupCode');
-  const user = JSON.parse(localStorage.getItem('betbros_user'));
-  const username = user?.username;
+    const params = new URLSearchParams(window.location.search);
+    const betId = params.get('betId');
+    const groupCode = params.get('groupCode');
+    const user = JSON.parse(localStorage.getItem('betbros_user'));
+    const username = user?.username;
 
-  if (!betId || !groupCode || !username) {
-    console.log(username, betId, groupCode);
-    responseMessage.textContent = 'Faltan datos para mostrar la apuesta.';
-    return;
-  }
+    if (!betId || !groupCode || !username) {
+      console.log(username, betId, groupCode);
+      responseMessage.textContent = 'Faltan datos para mostrar la apuesta.';
+      return;
+    }
 
-  // Cargar la apuesta correspondiente
-  fetch(`/group-bets?groupCode=${groupCode}`)
-    .then(res => res.json())
-    .then(data => {
-      const bet = data.bets.find(b => b.id === betId);
-      console.log('bet cargada:', bet);
+    // Cargar la apuesta correspondiente
+    fetch(`/group-bets?groupCode=${groupCode}`)
+      .then(res => res.json())
+      .then(data => {
+        const bet = data.bets.find(b => b.id === betId);
+        console.log('bet cargada:', bet);
 
-      if (!bet) {
-        responseMessage.textContent = 'Apuesta no encontrada.';
-        return;
-      }
+        if (!bet) {
+          responseMessage.textContent = 'Apuesta no encontrada.';
+          return;
+        }
 
-      // Validar si la apuesta está activa
-      const now = new Date();
-      const betLimitDate = new Date(bet.limitDate);
-      const isActive = betLimitDate > now;
+        // Validar si la apuesta está activa
+        const now = new Date();
+        const betLimitDate = new Date(bet.limitDate);
+        const isActive = betLimitDate > now;
 
-      // Validar que la apuesta tenga opciones
-      if (!bet.options || bet.options.length === 0) {
-        responseMessage.textContent = 'Esta apuesta no tiene opciones definidas.';
-        return;
-      }
+        // Validar que la apuesta tenga opciones
+        if (!bet.options || bet.options.length === 0) {
+          responseMessage.textContent = 'Esta apuesta no tiene opciones definidas.';
+          return;
+        }
 
-      // Mostrar detalles de la apuesta
-      betTitle.textContent = bet.title;
-      betDescription.textContent = bet.description;
+        // Mostrar detalles de la apuesta
+        betTitle.textContent = bet.title;
+        betDescription.textContent = bet.description;
 
-      // Mostrar opciones en el select
-      optionSelect.innerHTML = ''; // limpiar opciones anteriores si las hubiera
-      bet.options.forEach(optionText => {
-        const option = document.createElement('option');
-        option.value = optionText;
-        option.textContent = optionText;
-        optionSelect.appendChild(option);
-      });
-    })
-    .catch(err => {
-      console.error(err);
-      responseMessage.textContent = 'Error al cargar los detalles de la apuesta.';
-    });
-
-  // Enviar apuesta
-  betForm?.addEventListener('submit', async e => {
-    e.preventDefault();
-
-    const selectedOption = optionSelect.value;
-    const amount = amountInput.value;
-
-    const res = await fetch('http://localhost:3010/place-bet', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        betId,
-        groupCode,
-        username,
-        selectedOption,
-        amount
+        // Mostrar opciones en el select
+        optionSelect.innerHTML = ''; // limpiar opciones anteriores si las hubiera
+        bet.options.forEach(optionText => {
+          const option = document.createElement('option');
+          option.value = optionText;
+          option.textContent = optionText;
+          optionSelect.appendChild(option);
+        });
       })
-    });
+      .catch(err => {
+        console.error(err);
+        responseMessage.textContent = 'Error al cargar los detalles de la apuesta.';
+      });
 
-    const data = await res.json();
-    responseMessage.textContent = data.message;
-  });
+    // Enviar apuesta
+    betForm?.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const selectedOption = optionSelect.value;
+      const amount = amountInput.value;
+
+      const res = await fetch('http://localhost:3010/place-bet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          betId,
+          groupCode,
+          username,
+          selectedOption,
+          amount
+        })
+      });
+
+      const data = await res.json();
+      responseMessage.textContent = data.message;
+    });
+  }
 });
 
 const publicGroups = [
@@ -793,8 +795,8 @@ const publicGroups = [
     { name: "Grupo NBA", image: "images/groups/nba2.png", members: 42, bets: 9 }
   ];
 
-  function createGroupCard(group) {
-    return `
+function createGroupCard(group) {
+  return `
       <div class="col-md-6 col-lg-4 public-group-list-item">
         <div class="card equal-card mb-3 w-100">
           <img src="${group.image}" class="card-img-top" alt="${group.name}" style="height:180px;object-fit:cover;">
@@ -808,19 +810,22 @@ const publicGroups = [
       </div>`;
   }
 
-  function renderGroups() {
-    const topGroups = publicGroups.slice(0, 3);
-    const allGroups = publicGroups.slice(3, 6);
+function renderGroups() {
+  const topGroups = publicGroups.slice(0, 3);
+  const allGroups = publicGroups.slice(3, 6);
 
-    document.getElementById('topGroupsList').innerHTML = topGroups.map(createGroupCard).join('');
-    document.getElementById('allGroupsList').innerHTML = allGroups.map(createGroupCard).join('');
-  }
+  document.getElementById('topGroupsList').innerHTML = topGroups.map(createGroupCard).join('');
+  document.getElementById('allGroupsList').innerHTML = allGroups.map(createGroupCard).join('');
+}
 
-  function filterGroups(query) {
-    return publicGroups.filter(group => group.name.toLowerCase().includes(query.toLowerCase()));
-  }
+function filterGroups(query) {
+  return publicGroups.filter(group => group.name.toLowerCase().includes(query.toLowerCase()));
+}
 
-  document.getElementById('searchGroupInput').addEventListener('input', function() {
+const searchInput = document.getElementById('searchGroupInput');
+
+if (searchInput) {
+  searchInput.addEventListener('input', function () {
     const query = this.value.trim();
     const defaultSection = document.getElementById('defaultGroups');
     const filteredSection = document.getElementById('filteredGroups');
@@ -835,6 +840,7 @@ const publicGroups = [
       filteredSection.classList.remove('d-none');
     }
   });
+}
 
   document.addEventListener('click', function(event) {
     if (event.target.classList.contains('join-group-button')) {
@@ -849,5 +855,82 @@ const publicGroups = [
   }
   );
 document.addEventListener('DOMContentLoaded', renderGroups);
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Este código solo se ejecuta en setResponse.html
+  if (window.location.pathname.includes('setResponse.html')) {
+    const resultSelect = document.getElementById('resultSelect');
+    const betTitle = document.getElementById('betTitle');
+    const betDescription = document.getElementById('betDescription');
+    const betForm = document.getElementById('setResponseForm');
+    const message = document.getElementById('message');
+
+    const params = new URLSearchParams(window.location.search);
+    const betId = params.get('betId');
+    const groupCode = localStorage.getItem("currentGroupCode");
+    const user = JSON.parse(localStorage.getItem('betbros_user'));
+
+    if (!betId || !groupCode || !user) return;
+
+    fetch(`/group-bets?groupCode=${groupCode}`)
+      .then(res => res.json())
+      .then(data => {
+        const bet = data.bets.find(b => b.id === betId);
+        if (!bet) {
+          message.textContent = "Apuesta no encontrada.";
+          return;
+        }
+
+        if (bet.username !== user.username) {
+          message.textContent = "No tienes permiso para establecer el resultado.";
+          return;
+        }
+
+        // Rellenar datos
+        betTitle.textContent = bet.title;
+        betDescription.textContent = bet.description;
+        resultSelect.innerHTML = '';
+        bet.options.forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt;
+          option.textContent = opt;
+          resultSelect.appendChild(option);
+        });
+        
+
+        // Enviar apuesta
+        betForm?.addEventListener('submit', async e => {
+          e.preventDefault();
+          const selected = resultSelect.value;
+          try {
+            const res = await fetch('http://localhost:3010/set-result', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                groupCode,
+                betId,
+                correctAnswer: selected
+              })
+            });
+
+            const result = await res.json();
+            message.textContent = result.message;
+
+            if (res.ok) {
+              setTimeout(() => window.location.href = "myGroups.html", 1500);
+            }
+          } catch (err) {
+            console.error(err);
+            message.textContent = "Error al guardar el resultado.";
+          }
+        });
+      });
+  }
+});
+
+
+
+
+
 
 
