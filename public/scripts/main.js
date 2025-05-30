@@ -641,6 +641,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const betsList = document.getElementById("betsList");
   const groupTitle = document.getElementById("groupTitle");
   const groupCode = localStorage.getItem("currentGroupCode");
+  const user = JSON.parse(localStorage.getItem("betbros_user")); // Usuario actual
 
   if (betsList && groupTitle && groupCode) {
     fetch(`http://localhost:3010/group-bets?groupCode=${groupCode}`)
@@ -659,26 +660,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         data.bets.forEach(bet => {
-        const betCard = document.createElement("div");
-        betCard.classList.add("col-12");
-        betCard.innerHTML = `
-          <div class="card p-3">
-            <h5 class="text-verde-betbros">
-              <a href="betDetails.html?betId=${bet.id}&groupCode=${groupCode}" class="text-verde-betbros">
-                ${bet.title}
-              </a>
-            </h5>
-            <p>${bet.description}</p>
-            <p><b>Fecha límite:</b> ${new Date(bet.limitDate).toLocaleString()}</p>
-            <p><b>Opciones:</b> ${bet.options.join(", ")}</p>
-            <small class="text-muted">Creador: ${bet.username}</small>
-            <div class="d-flex flex-column align-items-end">
-              <button class="btn btn-danger mt-2" onclick="deleteBet('${bet.id}')">Eliminar apuesta</button>
+          const betCard = document.createElement("div");
+          betCard.classList.add("col-12");
+
+          const isCreator = bet.username === user.username;
+          const isExpired = new Date(bet.limitDate) < new Date();
+          const hasNoAnswer = !bet.correctAnswer;
+
+          betCard.innerHTML = `
+            <div class="card p-3 mb-3">
+              <h5 class="text-verde-betbros">
+                <a href="betDetails.html?betId=${bet.id}&groupCode=${groupCode}" class="text-verde-betbros">
+                  ${bet.title}
+                </a>
+              </h5>
+              <p>${bet.description}</p>
+              <p><b>Fecha límite:</b> ${new Date(bet.limitDate).toLocaleString()}</p>
+              <p><b>Opciones:</b> ${bet.options.join(", ")}</p>
+              <small class="text-muted">Creador: ${bet.username}</small>
+              <div class="d-flex flex-column align-items-end">
+                <button class="btn btn-danger mt-2" onclick="deleteBet('${bet.id}')">Eliminar apuesta</button>
+                ${
+                  isCreator && isExpired && hasNoAnswer
+                    ? `<button class="btn btn-primary mt-2" onclick="window.location.href='betResponse.html?betId=${bet.id}'">Seleccionar resultado</button>`
+                    : ''
+                }
+              </div>
             </div>
-          </div>
-        `;
-        betsList.appendChild(betCard);
-});
+          `;
+
+          betsList.appendChild(betCard);
+        });
       })
       .catch(err => {
         console.error("Error al obtener apuestas:", err);
@@ -701,27 +713,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const user = JSON.parse(localStorage.getItem('betbros_user'));
   const username = user?.username;
 
-  
   if (!betId || !groupCode || !username) {
     console.log(username, betId, groupCode);
     responseMessage.textContent = 'Faltan datos para mostrar la apuesta.';
     return;
   }
 
-  // ✅ Cargar la apuesta correspondiente
+  // Cargar la apuesta correspondiente
   fetch(`/group-bets?groupCode=${groupCode}`)
     .then(res => res.json())
     .then(data => {
       const bet = data.bets.find(b => b.id === betId);
+      console.log('bet cargada:', bet);
 
       if (!bet) {
         responseMessage.textContent = 'Apuesta no encontrada.';
         return;
       }
 
+      // Validar si la apuesta está activa
+      const now = new Date();
+      const betLimitDate = new Date(bet.limitDate);
+      const isActive = betLimitDate > now;
+
+      // Validar que la apuesta tenga opciones
+      if (!bet.options || bet.options.length === 0) {
+        responseMessage.textContent = 'Esta apuesta no tiene opciones definidas.';
+        return;
+      }
+
+      // Mostrar detalles de la apuesta
       betTitle.textContent = bet.title;
       betDescription.textContent = bet.description;
 
+      // Mostrar opciones en el select
+      optionSelect.innerHTML = ''; // limpiar opciones anteriores si las hubiera
       bet.options.forEach(optionText => {
         const option = document.createElement('option');
         option.value = optionText;
@@ -734,7 +760,7 @@ document.addEventListener('DOMContentLoaded', () => {
       responseMessage.textContent = 'Error al cargar los detalles de la apuesta.';
     });
 
-  // ✅ Enviar apuesta
+  // Enviar apuesta
   betForm?.addEventListener('submit', async e => {
     e.preventDefault();
 
@@ -758,7 +784,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
- const publicGroups = [
+const publicGroups = [
     { name: "Apuestas Champions", image: "images/groups/champions.png", members: 124, bets: 37 },
     { name: "Liga Española", image: "images/groups/laliga.png", members: 89, bets: 22 },
     { name: "NBA Fans", image: "images/groups/nba.png", members: 56, bets: 15 },
@@ -823,4 +849,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   );
 document.addEventListener('DOMContentLoaded', renderGroups);
+
 

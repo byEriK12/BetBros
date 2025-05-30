@@ -1,76 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Detalles de la Apuesta</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Apuestas del Grupo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+    <!-- NAVBAR igual que dashboard -->
+  <nav id="navbar" class="navbar px-4">
+    <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+      <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
+      <span>
+        <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
+        </span>
+    </a>
+    <div class="d-flex align-items-center">
+      <div class="dropdown me-3">
+        <span class="fw-bold text-verde-betbros">Bienvenid@,</span>
+        <a
+          href="#"
+          class="dropdown-toggle text-white text-decoration-none fw-bold"
+          id="userDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span id="welcomeUser"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="createPrivGroup.html">Crear grupo privado</a></li>
+          <li><a class="dropdown-item" href="joinPrivGroup.html">Unirse a grupo privado</a></li>
+          <li><a class="dropdown-item" href="joinPublicGroup.html">Unirse a una comunidad</a></li>
+          <li><a class="dropdown-item" href="myGroups.html">Mis grupos</a></li>
+          <li><a class="dropdown-item" href="myCommunities.html">Mis comunidades</a></li>
+          <li><a class="dropdown-item" href="configuration.html">Configuración</a></li>
+          <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
   <div class="container mt-5">
-    <h1 id="betTitle" class="text-verde-betbros text-center mb-4"></h1>
-    <p id="betDescription" class="text-center"></p>
+    <h2 id="betTitle"></h2>
+    <p id="betDescription"></p>
 
-    <form id="correctAnswerForm" class="text-center">
+    <form id="correctAnswerForm">
       <div id="optionsContainer" class="mb-4"></div>
-      <button type="submit" class="btn btn-success">Confirmar respuesta correcta</button>
+      <button type="submit" class="btn btn-primary">Guardar respuesta correcta</button>
     </form>
-
+    <p id="message" class="mt-3 text-center text-white"></p>
+    <!-- Botón de volver -->
     <div class="text-center mt-5">
       <button class="btn btn-secondary" onclick="goTo('dashboard.html')">Volver</button>
     </div>
   </div>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const betId = params.get('betId');
-
-    async function loadBetDetails() {
-      const res = await fetch(`/api/get-bet-details?betId=${betId}`);
-      const bet = await res.json();
-
-      document.getElementById('betTitle').textContent = bet.title;
-      document.getElementById('betDescription').textContent = bet.description;
-
-      const container = document.getElementById('optionsContainer');
-      bet.options.forEach(option => {
-        const radio = document.createElement('div');
-        radio.className = 'form-check';
-        radio.innerHTML = `
-          <input class="form-check-input" type="radio" name="correctOption" id="option-${option}" value="${option}">
-          <label class="form-check-label" for="option-${option}">${option}</label>
-        `;
-        container.appendChild(radio);
-      });
-    }
-
-    document.getElementById('correctAnswerForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const selected = document.querySelector('input[name="correctOption"]:checked');
-      if (!selected) {
-        alert("Por favor selecciona una opción.");
-        return;
-      }
-
-      await fetch('/set-correct-answer', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          betId: betId,
-          correctAnswer: selected.value
-        })
-      });
-
-      alert('Respuesta correcta guardada.');
-      window.location.href = 'dashboard.html';
-    });
-
-    function goTo(url) {
-      window.location.href = url;
-    }
-
-    loadBetDetails();
-  </script>
+  <script src="scripts/main.js"></script>
 </body>
 </html>

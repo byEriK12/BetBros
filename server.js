@@ -337,8 +337,6 @@ app.post('/save-bet', (req, res) => {
   }
 });
 
-
-
 app.get('/get-bets', (req, res) => {
   try {
     updateBetsStatus(); // Actualiza estados antes de devolverlas

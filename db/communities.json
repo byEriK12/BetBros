@@ -14,7 +14,9 @@
     "description": "Grupo para realizar apuestas de la Liga Española",
     "image": "images/groups/laliga.png",
     "creator": "admin",
-    "members": [],
+    "members": [
+      "admin"
+    ],
     "bets": 22
   },
   {
