@@ -285,6 +285,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
+async function setCorrectAnswer(betId, correctAnswer) {
+  const user = JSON.parse(localStorage.getItem("betbros_user"));
+  
+  try {
+    const response = await fetch('http://localhost:3010/set-correct-answer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        betId,
+        correctAnswer,
+        username: user.username
+      })
+    });
+
+    const data = await response.json();
+    alert(data.message);
+    return response.ok;
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Hubo un problema al guardar la respuesta correcta');
+    return false;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
 

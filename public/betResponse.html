@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detalles de la Apuesta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 id="betTitle" class="text-verde-betbros text-center mb-4"></h1>
+    <p id="betDescription" class="text-center"></p>
+
+    <form id="correctAnswerForm" class="text-center">
+      <div id="optionsContainer" class="mb-4"></div>
+      <button type="submit" class="btn btn-success">Confirmar respuesta correcta</button>
+    </form>
+
+    <div class="text-center mt-5">
+      <button class="btn btn-secondary" onclick="goTo('dashboard.html')">Volver</button>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const betId = params.get('betId');
+
+    async function loadBetDetails() {
+      const res = await fetch(`/api/get-bet-details?betId=${betId}`);
+      const bet = await res.json();
+
+      document.getElementById('betTitle').textContent = bet.title;
+      document.getElementById('betDescription').textContent = bet.description;
+
+      const container = document.getElementById('optionsContainer');
+      bet.options.forEach(option => {
+        const radio = document.createElement('div');
+        radio.className = 'form-check';
+        radio.innerHTML = `
+          <input class="form-check-input" type="radio" name="correctOption" id="option-${option}" value="${option}">
+          <label class="form-check-label" for="option-${option}">${option}</label>
+        `;
+        container.appendChild(radio);
+      });
+    }
+
+    document.getElementById('correctAnswerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const selected = document.querySelector('input[name="correctOption"]:checked');
+      if (!selected) {
+        alert("Por favor selecciona una opción.");
+        return;
+      }
+
+      await fetch('/set-correct-answer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          betId: betId,
+          correctAnswer: selected.value
+        })
+      });
+
+      alert('Respuesta correcta guardada.');
+      window.location.href = 'dashboard.html';
+    });
+
+    function goTo(url) {
+      window.location.href = url;
+    }
+
+    loadBetDetails();
+  </script>
+</body>
+</html>
