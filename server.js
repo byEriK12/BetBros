@@ -545,6 +545,33 @@ app.post('/place-bet', (req, res) => {
   res.json({ message: 'Apuesta registrada correctamente.' });
 });
 
+app.post('/set-result', (req, res) => {
+  const { groupCode, betId, correctAnswer } = req.body;
+
+  if (!groupCode || !betId || !correctAnswer) {
+    return res.status(400).json({ message: 'Faltan datos para establecer el resultado.' });
+  }
+
+  fs.readFile(betsFilePath, 'utf8', (err, data) => {
+    if (err) return res.status(500).json({ message: 'Error al leer las apuestas.' });
+
+    const bets = JSON.parse(data);
+    const betIndex = bets.findIndex(b => b.id === betId && b.groupCode === groupCode);
+
+    if (betIndex === -1) {
+      return res.status(404).json({ message: 'Apuesta no encontrada.' });
+    }
+
+    bets[betIndex].correctAnswer = correctAnswer;
+
+    fs.writeFile(betsFilePath, JSON.stringify(bets, null, 2), (err) => {
+      if (err) return res.status(500).json({ message: 'Error al guardar el resultado.' });
+
+      return res.json({ message: 'Resultado guardado correctamente.' });
+    });
+  });
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
