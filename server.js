@@ -1,13 +1,14 @@
 const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const path = require('path');
+const path= require('path');
 
 const app = express();
 const PORT = 3010;
 const USERS_DB = path.join(__dirname, 'db', 'users.json');
 const GROUPS_DB = path.join(__dirname, 'db', 'groups.json');
 const betsFilePath = path.join(__dirname, 'db', 'bets.json');
+const activityFilePath = path.join(__dirname, 'db', 'betsActivity.json');
 const COMMUNITIES_DB = path.join(__dirname, 'db', 'communities.json');
 
 app.use(bodyParser.json());
@@ -409,6 +410,33 @@ app.post('/delete-bet', (req, res) => {
   fs.writeFileSync(betsFilePath, JSON.stringify(bets, null, 2));
 
   res.json({ message: 'Apuesta eliminada correctamente.' });
+});
+
+app.post('/place-bet', (req, res) => {
+  const { betId, groupCode, username, selectedOption, amount } = req.body;
+
+  if (!betId || !groupCode || !username || !selectedOption || !amount) {
+    return res.status(400).json({ message: 'Datos incompletos.' });
+  }
+
+  const newActivity = {
+    betId,
+    groupCode,
+    username,
+    selectedOption,
+    amount
+  };
+
+  let activities = [];
+  if (fs.existsSync(activityFilePath)) {
+    activities = JSON.parse(fs.readFileSync(activityFilePath, 'utf8'));
+  }
+
+  activities.push(newActivity);
+
+  fs.writeFileSync(activityFilePath, JSON.stringify(activities, null, 2));
+
+  res.json({ message: 'Apuesta registrada correctamente.' });
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
