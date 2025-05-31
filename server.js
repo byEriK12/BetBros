@@ -594,7 +594,37 @@ app.post('/set-result', (req, res) => {
     fs.writeFile(betsFilePath, JSON.stringify(bets, null, 2), (err) => {
       if (err) return res.status(500).json({ message: 'Error al guardar el resultado.' });
 
-      return res.json({ message: 'Resultado guardado correctamente.' });
+      // ---- Reward Algorithm ----
+      // Read activities (bets placed)
+      const activities = JSON.parse(fs.readFileSync(activityFilePath, 'utf8'));
+      const relevantActivities = activities.filter(
+        a => a.betId === betId && a.groupCode === groupCode
+      );
+
+      const totalPot = relevantActivities.reduce((sum, a) => sum + Number(a.amount), 0);
+      const correctBets = relevantActivities.filter(a => a.selectedOption === correctAnswer);
+      const totalCorrectAmount = correctBets.reduce((sum, a) => sum + Number(a.amount), 0);
+
+
+      if (correctBets.length === 0 || totalCorrectAmount === 0) {
+        return res.json({ message: 'Resultado guardado. Nadie acertó la apuesta.' });
+      }
+
+      const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+
+      correctBets.forEach(bet => {
+        const userIndex = users.findIndex(u => u.username === bet.username);
+        if (userIndex !== -1) {
+          const proportion = Number(bet.amount) / totalCorrectAmount;
+          const reward = Math.floor(totalPot * proportion);
+
+          users[userIndex].creditos += reward;
+        }
+      });
+
+      fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
+
+      return res.json({ message: 'Resultado guardado y recompensas distribuidas correctamente.' });
     });
   });
 });

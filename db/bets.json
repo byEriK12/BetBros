@@ -84,5 +84,20 @@
     ],
     "isActive": true,
     "correctAnswer": null
+  },
+  {
+    "id": "68c9d1d2",
+    "groupCode": "3cf857ff",
+    "username": "Ivet",
+    "title": "Funcionara",
+    "description": "njdsf",
+    "multipleChoice": false,
+    "limitDate": "2025-05-31T15:38",
+    "options": [
+      "si",
+      "no"
+    ],
+    "isActive": false,
+    "correctAnswer": "si"
   }
 ]
