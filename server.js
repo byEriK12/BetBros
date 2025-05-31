@@ -631,6 +631,22 @@ app.post('/set-result', (req, res) => {
   });
 });
 
+app.post('/get-user', (req, res) => {
+  const { username } = req.body;
+  if (!username) {
+    return res.status(400).json({ message: 'Nombre de usuario requerido.' });
+  }
+
+  const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  const user = users.find(u => u.username === username);
+
+  if (!user) {
+    return res.status(404).json({ message: 'Usuario no encontrado.' });
+  }
+
+  res.json(user);
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
