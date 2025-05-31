@@ -13,6 +13,13 @@
   {
     "username": "Biel Dogi",
     "email": "bieldomingog@gmail.com",
-    "password": "Biel1234"
+    "password": "Biel1234",
+    "creditos": null
+  },
+  {
+    "username": "Biel",
+    "email": "gfskjdfads@gmail",
+    "password": "Biel1234",
+    "creditos": 87
   }
 ]

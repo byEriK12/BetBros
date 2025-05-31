@@ -67,23 +67,24 @@ setInterval(updateBetsStatus, 30000);
 app.use(bodyParser.json());
 
 app.post('/register', (req, res) => {
-    const { username, email, password } = req.body;
+  const { username, email, password } = req.body;
 
-    const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
 
-    const userExists = users.some(
-        (user) => user.username === username || user.email === email
-    );
+  const userExists = users.some(
+    (user) => user.username === username || user.email === email
+  );
 
-    if (userExists) {
-        return res.status(400).json({ message: 'Usuario o correo ya registrado.' });
-    }
+  if (userExists) {
+    return res.status(400).json({ message: 'Usuario o correo ya registrado.' });
+  }
 
-    users.push({ username, email, password });
-    fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
+  users.push({ username, email, password, creditos: 100 });
+  fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
 
-    res.status(201).json({ message: 'Usuario registrado correctamente.' });
+  res.status(201).json({ message: 'Usuario registrado correctamente.' });
 });
+
 
 app.post('/login', (req, res) => {
   const { identifier, password } = req.body;
@@ -525,17 +526,31 @@ app.post('/place-bet', (req, res) => {
     return res.status(400).json({ message: 'Datos incompletos.' });
   }
 
-    // Leer el archivo de apuestas y verificar si la apuesta está activa
+  // Leer el archivo de apuestas y verificar si la apuesta está activa
   const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
   const betIndex = bets.findIndex(
-    bet => bet.groupCode === groupCode && bet.id === betId && bet.username === username
+    bet => bet.groupCode === groupCode && bet.id === betId 
   );
 
   if (betIndex === -1 || !bets[betIndex].isActive) {
     return res.status(400).json({ message: 'No se puede apostar en esta apuesta. Ya no está activa.' });
   }
 
-  
+  // Leer el archivo de usuarios y restar créditos
+  const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  const userIndex = users.findIndex(user => user.username === username);
+
+  if (userIndex === -1) {
+    return res.status(400).json({ message: 'Usuario no encontrado.' });
+  }
+
+  if (users[userIndex].creditos < amount) {
+    return res.status(400).json({ message: 'Créditos insuficientes para realizar la apuesta.' });
+  }
+
+  users[userIndex].creditos -= amount;
+  fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
+
   const newActivity = {
     betId,
     groupCode,
@@ -555,6 +570,7 @@ app.post('/place-bet', (req, res) => {
 
   res.json({ message: 'Apuesta registrada correctamente.' });
 });
+
 
 app.post('/set-result', (req, res) => {
   const { groupCode, betId, correctAnswer } = req.body;

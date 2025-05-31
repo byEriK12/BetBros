@@ -19,5 +19,40 @@
     "username": "Biel Dogi",
     "selectedOption": "fdsfds",
     "amount": "3"
+  },
+  {
+    "betId": "cd3e1402",
+    "groupCode": "3cf857ff",
+    "username": "Biel",
+    "selectedOption": "dfsafads",
+    "amount": "3"
+  },
+  {
+    "betId": "cd3e1402",
+    "groupCode": "3cf857ff",
+    "username": "Biel",
+    "selectedOption": "dfsa",
+    "amount": "4"
+  },
+  {
+    "betId": "04f0ef70",
+    "groupCode": "3cf857ff",
+    "username": "Biel Dogi",
+    "selectedOption": "rew",
+    "amount": "4"
+  },
+  {
+    "betId": "cd3e1402",
+    "groupCode": "3cf857ff",
+    "username": "Biel",
+    "selectedOption": "dfsa",
+    "amount": "4"
+  },
+  {
+    "betId": "04f0ef70",
+    "groupCode": "3cf857ff",
+    "username": "Biel",
+    "selectedOption": "rew",
+    "amount": "5"
   }
 ]
