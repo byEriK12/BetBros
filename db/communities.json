@@ -24,7 +24,9 @@
     "description": "Grupo para los aficionados de la NBA",
     "image": "images/groups/nba.png",
     "creator": "admin",
-    "members": [],
+    "members": [
+      "Ivet"
+    ],
     "bets": 15
   },
   {

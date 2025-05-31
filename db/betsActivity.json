@@ -2,85 +2,22 @@
   {
     "betId": "18387cef",
     "groupCode": "3cf857ff",
+    "username": "Ivet",
+    "selectedOption": "Me emborracho",
+    "amount": "150"
+  },
+  {
+    "betId": "18387cef",
+    "groupCode": "3cf857ff",
+    "username": "admin",
+    "selectedOption": "Me suicido",
+    "amount": "2000"
+  },
+  {
+    "betId": "18387cef",
+    "groupCode": "3cf857ff",
     "username": "eric",
-    "selectedOption": "Me ahorco",
-    "amount": "20"
-  },
-  {
-    "betId": "04f0ef70",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "selectedOption": "rew",
-    "amount": "2"
-  },
-  {
-    "betId": "f0b3083b",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "selectedOption": "fdsfds",
-    "amount": "3"
-  },
-  {
-    "betId": "cd3e1402",
-    "groupCode": "3cf857ff",
-    "username": "Biel",
-    "selectedOption": "dfsafads",
-    "amount": "3"
-  },
-  {
-    "betId": "cd3e1402",
-    "groupCode": "3cf857ff",
-    "username": "Biel",
-    "selectedOption": "dfsa",
-    "amount": "4"
-  },
-  {
-    "betId": "04f0ef70",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "selectedOption": "rew",
-    "amount": "4"
-  },
-  {
-    "betId": "cd3e1402",
-    "groupCode": "3cf857ff",
-    "username": "Biel",
-    "selectedOption": "dfsa",
-    "amount": "4"
-  },
-  {
-    "betId": "04f0ef70",
-    "groupCode": "3cf857ff",
-    "username": "Biel",
-    "selectedOption": "rew",
-    "amount": "5"
-  },
-  {
-    "betId": "68c9d1d2",
-    "groupCode": "3cf857ff",
-    "username": "Ivet",
-    "selectedOption": "si",
-    "amount": "20"
-  },
-  {
-    "betId": "68c9d1d2",
-    "groupCode": "3cf857ff",
-    "username": "Biel",
-    "selectedOption": "no",
-    "amount": "25"
-  },
-  {
-    "betId": "074dea19",
-    "groupCode": "3cf857ff",
-    "username": "Ivet",
-    "selectedOption": "YES",
-    "amount": "10"
-  },
-  {
-    "betId": "074dea19",
-    "groupCode": "3cf857ff",
-    "username": "Biel",
-    "selectedOption": "NO",
-    "amount": "13"
+    "selectedOption": "Me suicido",
+    "amount": "100"
   }
 ]

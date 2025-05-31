@@ -2,30 +2,31 @@
   {
     "username": "admin",
     "email": "admin@gmail.com",
-    "password": "Admin0"
+    "password": "Admin0",
+    "creditos": 999998000
   },
   {
     "username": "eric",
     "email": "eric.matasp12@gmail.com",
     "password": "Eric12",
-    "pendingDeletion": true
+    "creditos": 0
   },
   {
     "username": "Biel Dogi",
     "email": "bieldomingog@gmail.com",
     "password": "Biel1234",
-    "creditos": null
+    "creditos": 100
   },
   {
     "username": "Biel",
     "email": "gfskjdfads@gmail",
     "password": "Biel1234",
-    "creditos": 49
+    "creditos": 1097
   },
   {
     "username": "Ivet",
     "email": "ivet@f",
     "password": "Ivet1234",
-    "creditos": 2118
+    "creditos": 2000
   }
 ]

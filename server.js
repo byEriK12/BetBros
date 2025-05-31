@@ -533,7 +533,7 @@ app.post('/place-bet', (req, res) => {
   );
 
   if (betIndex === -1 || !bets[betIndex].isActive) {
-    return res.status(400).json({ message: 'No se puede apostar en esta apuesta. Ya no está activa.' });
+    return res.status(400).json({ message: 'Estas apuesta ya no está activa. Se está procesando la respuesta correcta.' });
   }
 
   // Leer el archivo de usuarios y restar créditos
@@ -594,8 +594,7 @@ app.post('/set-result', (req, res) => {
     fs.writeFile(betsFilePath, JSON.stringify(bets, null, 2), (err) => {
       if (err) return res.status(500).json({ message: 'Error al guardar el resultado.' });
 
-      // ---- Reward Algorithm ----
-      // Read activities (bets placed)
+      // ---- Reparto de recompensas ----
       const activities = JSON.parse(fs.readFileSync(activityFilePath, 'utf8'));
       const relevantActivities = activities.filter(
         a => a.betId === betId && a.groupCode === groupCode
@@ -605,20 +604,23 @@ app.post('/set-result', (req, res) => {
       const correctBets = relevantActivities.filter(a => a.selectedOption === correctAnswer);
       const totalCorrectAmount = correctBets.reduce((sum, a) => sum + Number(a.amount), 0);
 
-
       if (correctBets.length === 0 || totalCorrectAmount === 0) {
         return res.json({ message: 'Resultado guardado. Nadie acertó la apuesta.' });
       }
 
       const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
 
+      // Solo se reparte el bote de los que fallaron como ganancia
+      const potFromLosers = totalPot - totalCorrectAmount;
+
       correctBets.forEach(bet => {
         const userIndex = users.findIndex(u => u.username === bet.username);
         if (userIndex !== -1) {
           const proportion = Number(bet.amount) / totalCorrectAmount;
-          const reward = Math.floor(totalPot * proportion);
+          const extraReward = Math.round(potFromLosers * proportion);
+          const totalReward = Number(bet.amount) + extraReward;
 
-          users[userIndex].creditos += reward;
+          users[userIndex].creditos += totalReward;
         }
       });
 

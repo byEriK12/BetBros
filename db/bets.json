@@ -6,113 +6,12 @@
     "title": "Prueba de Apuesta joder",
     "description": "Si no funciona que hago?",
     "multipleChoice": false,
-    "limitDate": "2025-06-05T00:25",
+    "limitDate": "2026-05-05T00:25",
     "options": [
       "Me suicido",
       "Me ahorco",
       "Me emborracho"
     ],
     "isActive": true
-  },
-  {
-    "id": "f0b3083b",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "title": "rdwf",
-    "description": "dsf",
-    "multipleChoice": false,
-    "limitDate": "2025-05-31T21:50",
-    "options": [
-      "fdsfds",
-      "fdsf"
-    ],
-    "isActive": true
-  },
-  {
-    "id": "04f0ef70",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "title": "dsa",
-    "description": "few",
-    "multipleChoice": false,
-    "limitDate": "2025-05-31T22:06",
-    "options": [
-      "rew",
-      "rew"
-    ],
-    "isActive": true
-  },
-  {
-    "id": "5c4b098c",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "title": "dsa",
-    "description": "edqw",
-    "multipleChoice": false,
-    "limitDate": "2025-05-29T17:18",
-    "options": [
-      "eqwed",
-      "ewrw"
-    ],
-    "isActive": false
-  },
-  {
-    "id": "e900c722",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "title": "gfd",
-    "description": "rewrewºº",
-    "multipleChoice": false,
-    "limitDate": "2025-05-29T17:28",
-    "options": [
-      "qqqqq",
-      "aqwssss"
-    ],
-    "isActive": false
-  },
-  {
-    "id": "cd3e1402",
-    "groupCode": "3cf857ff",
-    "username": "Biel",
-    "title": "fsd",
-    "description": "fdsaf",
-    "multipleChoice": false,
-    "limitDate": "2025-05-31T22:20",
-    "options": [
-      "dfsa",
-      "dfsafads"
-    ],
-    "isActive": true,
-    "correctAnswer": null
-  },
-  {
-    "id": "68c9d1d2",
-    "groupCode": "3cf857ff",
-    "username": "Ivet",
-    "title": "Funcionara",
-    "description": "njdsf",
-    "multipleChoice": false,
-    "limitDate": "2025-05-31T15:38",
-    "options": [
-      "si",
-      "no"
-    ],
-    "isActive": false,
-    "correctAnswer": "si"
-  },
-  {
-    "id": "074dea19",
-    "groupCode": "3cf857ff",
-    "username": "Ivet",
-    "title": "ARAAAA",
-    "description": "trewas",
-    "multipleChoice": false,
-    "limitDate": "2025-05-31T15:48",
-    "options": [
-      "YES",
-      "NO"
-    ],
-    "isActive": false,
-    "correctAnswer": "YES"
   }
 ]
