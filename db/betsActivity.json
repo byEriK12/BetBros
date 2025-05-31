@@ -68,5 +68,19 @@
     "username": "Biel",
     "selectedOption": "no",
     "amount": "25"
+  },
+  {
+    "betId": "074dea19",
+    "groupCode": "3cf857ff",
+    "username": "Ivet",
+    "selectedOption": "YES",
+    "amount": "10"
+  },
+  {
+    "betId": "074dea19",
+    "groupCode": "3cf857ff",
+    "username": "Biel",
+    "selectedOption": "NO",
+    "amount": "13"
   }
 ]

@@ -99,5 +99,20 @@
     ],
     "isActive": false,
     "correctAnswer": "si"
+  },
+  {
+    "id": "074dea19",
+    "groupCode": "3cf857ff",
+    "username": "Ivet",
+    "title": "ARAAAA",
+    "description": "trewas",
+    "multipleChoice": false,
+    "limitDate": "2025-05-31T15:48",
+    "options": [
+      "YES",
+      "NO"
+    ],
+    "isActive": false,
+    "correctAnswer": "YES"
   }
 ]
