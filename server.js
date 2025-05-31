@@ -525,6 +525,17 @@ app.post('/place-bet', (req, res) => {
     return res.status(400).json({ message: 'Datos incompletos.' });
   }
 
+    // Leer el archivo de apuestas y verificar si la apuesta está activa
+  const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+  const betIndex = bets.findIndex(
+    bet => bet.groupCode === groupCode && bet.id === betId && bet.username === username
+  );
+
+  if (betIndex === -1 || !bets[betIndex].isActive) {
+    return res.status(400).json({ message: 'No se puede apostar en esta apuesta. Ya no está activa.' });
+  }
+
+  
   const newActivity = {
     betId,
     groupCode,

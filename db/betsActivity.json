@@ -5,5 +5,19 @@
     "username": "eric",
     "selectedOption": "Me ahorco",
     "amount": "20"
+  },
+  {
+    "betId": "04f0ef70",
+    "groupCode": "3cf857ff",
+    "username": "Biel Dogi",
+    "selectedOption": "rew",
+    "amount": "2"
+  },
+  {
+    "betId": "f0b3083b",
+    "groupCode": "3cf857ff",
+    "username": "Biel Dogi",
+    "selectedOption": "fdsfds",
+    "amount": "3"
   }
 ]
