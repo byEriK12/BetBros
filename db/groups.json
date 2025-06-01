@@ -8,22 +8,9 @@
     "invitationCode": "3cf857ff",
     "members": [
       "eric",
-      "admin",
       "Biel Dogi",
       "Biel",
-      "Ivet"
-    ],
-    "bets": 1,
-    "pendingDeletion": false
-  },
-  {
-    "name": "Hola",
-    "description": "sada",
-    "image": "",
-    "creator": "admin",
-    "isPublic": false,
-    "invitationCode": "2b040330",
-    "members": [
+      "Ivet",
       "admin"
     ],
     "bets": 1,
@@ -40,7 +27,6 @@
       "admin",
       "pruebacion2"
     ],
-    "bets": 1,
-    "pendingDeletion": false
+    "bets": 1
   }
 ]

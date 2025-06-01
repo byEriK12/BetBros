@@ -380,13 +380,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // Bienvenida personalizada en dashboard
   const welcomeEl = document.getElementById("welcomeUser");
+  const welcomeUsername = document.getElementById("welcomeUsername");
   const user = JSON.parse(localStorage.getItem("betbros_user"));
 
-if (welcomeEl && user) {
-      welcomeEl.innerHTML = `
-    ${user.username}
-    <img src="${user.avatar || 'images/avatar/gato.png'}" alt="Avatar" class="me-2 rounded-circle"  style="width: 84px; height: 64px;">
-  `;
+if (user) {
+  if (welcomeEl) {
+    welcomeEl.innerHTML = `
+      ${user.username}
+      <img src="${user.avatar || 'images/avatar/gato.png'}" alt="Avatar" class="me-2 rounded-circle"  style="width: 84px; height: 64px;">
+    `;
+  }
+  if (welcomeUsername) {
+    welcomeUsername.textContent = user.username;
+  }
 }
 });
 
@@ -499,7 +505,7 @@ if (createGroupForm) {
                 <ul class="dropdown-menu dropdown-menu-end">
                   ${abandonOption}
                   <li>
-                    <a class="dropdown-item delete-option" href="#" onclick="event.preventDefault(); deleteGroup('${group.name}')">
+                    <a class="dropdown-item delete-option" style="color: red;" href="#" onclick="event.preventDefault(); deleteGroup('${group.name}')">
                       Eliminar grupo
                     </a>
                   </li>

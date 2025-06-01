@@ -3,14 +3,21 @@
     "username": "admin",
     "email": "admin@gmail.com",
     "password": "Admin0",
-    "avatar": "images/avatar/mono.png"
+    "avatar": "images/avatar/mono.png",
     "creditos": 1000000
   },
   {
     "username": "eric",
     "email": "eric.matasp12@gmail.com",
     "password": "Eric12",
-    "avatar": "images/avatar/gallo.png"
+    "avatar": "images/avatar/gallo.png",
     "creditos": 100
   },
+  {
+    "username": "Biel",
+    "email": "biel@gmail.com",
+    "password": "Biel1234",
+    "avatar": "images/avatar/gato.png",
+    "creditos": 150
+  }
 ]

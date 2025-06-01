@@ -46,7 +46,7 @@
 
   <div class="container py-4" style="max-width: 700px;">
     <div class="intro-dashboard text-center mb-4 p-4 rounded-4 shadow-sm">
-      <h1 class="fw-bold text-verde-betbros mb-2">¡Bienvenido, <span id='usernameWelcome'></span>!</h1>
+      <h1 class="fw-bold text-verde-betbros mb-2">¡Bienvenid@, <span id='welcomeUsername'></span>!</h1>
       <p class="lead text-light">Aquí puedes gestionar tus grupos de apuestas, crear nuevos, unirte a otros y ver toda la actividad de tus amigos. ¡Que empiece la diversión!</p>
     </div>
     <div class="d-flex justify-content-center gap-3 mb-4">
@@ -73,69 +73,6 @@
   <script src="scripts/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Mostrar el nombre de usuario en el centro y en el menú
-    const username = localStorage.getItem('user') || 'Usuario';
-    document.getElementById('welcomeUser').textContent = username;
-    document.getElementById('usernameWelcome').textContent = username;
-
-    // Simulación de grupos (reemplaza por tu lógica real)
-    let allGroups = [];
-    fetch('db/groups.json')
-      .then(res => res.json())
-      .then(grupos => {
-        allGroups = grupos.filter(g => g.members.includes(username));
-        showGroups('private');
-      });
-
-    function showGroups(type) {
-      const groupsList = document.getElementById('groupsList');
-      let filtered = [];
-      if (type === 'public') {
-        filtered = allGroups.filter(g => g.isPublic);
-        document.getElementById('groupsTitle').textContent = 'Grupos públicos';
-      } else {
-        filtered = allGroups.filter(g => !g.isPublic);
-        document.getElementById('groupsTitle').textContent = 'Grupos privados';
-      }
-      groupsList.innerHTML = '';
-      if (!filtered.length) {
-        groupsList.innerHTML = '<div class="text-center text-light py-5">No hay grupos en esta categoría.</div>';
-        return;
-      }
-      filtered.forEach(g => {
-        const item = document.createElement('div');
-        item.className = 'group-card-betbros d-flex align-items-center justify-content-between p-4 shadow rounded-4';
-        item.innerHTML = `
-          <div class="d-flex align-items-center gap-3">
-            <img src="${g.image || 'images/logos/logo_final.png'}" alt="${g.name}" class="rounded-circle group-avatar-betbros">
-            <div>
-              <div class="fw-bold text-verde-betbros fs-4">${g.name}</div>
-              <div class="text-light small mb-1">${g.description || ''}</div>
-              <div class="text-secondary small">Creador: <b>${g.creator}</b></div>
-              <div class="text-secondary small">Apuestas en curso: <b>${g.bets || 0}</b></div>
-              <div class="text-secondary small">Participantes: <b>${g.members.join(',')}</b></div>
-            </div>
-          </div>
-          <div>
-            <div class="dropdown">
-              <button class="btn btn-green-betbros dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Más información
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Ver grupo</a></li>
-                <li><a class="dropdown-item" href="#">Salir del grupo</a></li>
-              </ul>
-            </div>
-          </div>
-        `;
-        groupsList.appendChild(item);
-      });
-    }
-
-    function logout() {
-      localStorage.removeItem('user');
-      window.location.href = 'login.html';
-    }
   </script>
 </body>
 </html>

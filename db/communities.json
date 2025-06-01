@@ -4,10 +4,7 @@
     "description": "Grupo para realizar apuestas de la Champions League",
     "image": "images/groups/champions.png",
     "creator": "admin",
-    "members": [
-      "eric",
-      "pruebacion2"
-    ],
+    "members": [],
     "bets": 37
   },
   {
@@ -16,7 +13,7 @@
     "image": "images/groups/laliga.png",
     "creator": "admin",
     "members": [
-      "admin"
+      "Biel"
     ],
     "bets": 22
   },
@@ -25,9 +22,7 @@
     "description": "Grupo para los aficionados de la NBA",
     "image": "images/groups/nba.png",
     "creator": "admin",
-    "members": [
-      "Ivet"
-    ],
+    "members": [],
     "bets": 15
   },
   {
