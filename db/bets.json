@@ -26,7 +26,7 @@
       "fdsfds",
       "fdsf"
     ],
-    "isActive": true
+    "isActive": false
   },
   {
     "id": "04f0ef70",
@@ -40,7 +40,7 @@
       "rew",
       "rew"
     ],
-    "isActive": true
+    "isActive": false
   },
   {
     "id": "5c4b098c",
@@ -82,7 +82,7 @@
       "1",
       "2"
     ],
-    "isActive": true,
+    "isActive": false,
     "correctAnswer": null
   }
 ]

@@ -234,10 +234,24 @@ function deleteBet(betId) {
       alert('Hubo un problema al eliminar la apuesta.');
     });
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{4,}$/;
+
+  // --- AVATAR CAROUSEL LOGIC ---
+  // Si existe el input hidden y el carrusel, sincroniza el valor del avatar seleccionado
+  const selectedAvatarInput = document.getElementById("selectedAvatar");
+  const avatarImg = document.getElementById("currentAvatarImg");
+  if (selectedAvatarInput && avatarImg) {
+    // Actualiza el input hidden cada vez que cambia la imagen del carrusel
+    const observer = new MutationObserver(() => {
+      // El valor debe ser la ruta completa, no solo el nombre
+      selectedAvatarInput.value = avatarImg.getAttribute("src");
+    });
+    observer.observe(avatarImg, { attributes: true, attributeFilter: ["src"] });
+    // Inicializa el valor al cargar
+    selectedAvatarInput.value = avatarImg.getAttribute("src");
+  }
 
   if (registerForm) {
     registerForm.addEventListener("submit", (e) => {
@@ -247,20 +261,32 @@ document.addEventListener("DOMContentLoaded", () => {
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
+      // Obtener avatar seleccionado del input hidden o del radio (compatibilidad)
+      let avatar = "";
+      if (selectedAvatarInput) {
+        avatar = selectedAvatarInput.value;
+      } else {
+        const avatarRadio = document.querySelector('input[name="avatar"]:checked');
+        avatar = avatarRadio ? avatarRadio.value : "";
+      }
 
       if (!passwordRegex.test(password)) {
-      alert("La contraseña debe tener al menos 4 caracteres, una mayúscula y un número.");
-      return;
-    }
+        alert("La contraseña debe tener al menos 4 caracteres, una mayúscula y un número.");
+        return;
+      }
 
       if (password !== confirmPassword) {
         alert("Las contraseñas no coinciden.");
         return;
-    }
+      }
 
-      const newUser = { username, email, password };
+      if (!avatar) {
+        alert("Por favor, selecciona un avatar.");
+        return;
+      }
 
-      // Enviar el nuevo usuario al backend con fetch
+      const newUser = { username, email, password, avatar };
+
       fetch('http://localhost:3010/register', {
         method: 'POST',
         headers: {
@@ -272,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         if (data.message === 'Usuario registrado correctamente.') {
           alert("¡Registro exitoso!");
-          window.location.href = "login.html"; // Redirigir al login
+          window.location.href = "login.html";
         } else {
           alert(data.message);
         }
