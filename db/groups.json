@@ -35,9 +35,10 @@
     "isPublic": false,
     "invitationCode": "dd110074",
     "members": [
-      "admin"
+      "admin",
+      "pruebacion2"
     ],
-    "bets": 0,
+    "bets": 1,
     "pendingDeletion": false
   }
 ]

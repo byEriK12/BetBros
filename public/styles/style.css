@@ -42,10 +42,12 @@ h1, h2, h3, h4, h5 {
 }
 
 .brand-title {
-  font-size: 2.2rem;
+  font-size: 3.5rem;
   font-weight: bold;
-  color: #fff;
-  letter-spacing: 2px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  min-height: 54px;
 }
 
 .text-verde-betbros {
@@ -53,7 +55,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .text-gold-betbros {
-  color: #2fd656 !important;
+  color: #fff !important;
 }
 
 /* NAVBAR BUTTONS DESTACADOS */
@@ -468,7 +470,7 @@ h1, h2, h3, h4, h5 {
 
 @media (max-width: 767px) {
   .main-navbar { border-radius: 0 0 12px 12px; }
-  .brand-title { font-size: 1.3rem; }
+  .brand-title { font-size: 3.5rem !important; }
   .bet-hero, .bet-howto-card { border-radius: 16px; padding: 1.2rem !important; }
   .casino-card { border-radius: 14px; }
   .casino-card img { height: 120px; }

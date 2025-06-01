@@ -138,5 +138,12 @@
     "username": "admin",
     "selectedOption": "1",
     "amount": "2432"
+  },
+  {
+    "betId": "1d10fccb",
+    "groupCode": "dd110074",
+    "username": "pruebacion2",
+    "selectedOption": "2",
+    "amount": "10000000"
   }
 ]

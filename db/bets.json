@@ -84,5 +84,20 @@
     ],
     "isActive": false,
     "correctAnswer": null
+  },
+  {
+    "id": "1d10fccb",
+    "groupCode": "dd110074",
+    "username": "pruebacion2",
+    "title": "apuesta de prueba",
+    "description": "apuesta de prueba",
+    "multipleChoice": true,
+    "limitDate": "2025-06-11T13:28",
+    "options": [
+      "1",
+      "2"
+    ],
+    "isActive": true,
+    "correctAnswer": null
   }
 ]
