@@ -72,21 +72,21 @@ app.post('/register', (req, res) => {
     if (!username || !email || !password || !avatar) {
         return res.status(400).json({ message: 'Faltan datos para el registro.' });
     }
+  
+  const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
 
-    const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  const userExists = users.some(
+    (user) => user.username === username || user.email === email
+  );
 
-    const userExists = users.some(
-        (user) => user.username === username || user.email === email
-    );
+  if (userExists) {
+    return res.status(400).json({ message: 'Usuario o correo ya registrado.' });
+  }
 
-    if (userExists) {
-        return res.status(400).json({ message: 'Usuario o correo ya registrado.' });
-    }
-
-    users.push({ username, email, password, avatar }); // Guardar avatar
+    users.push({ username, email, password, avatar, creditos: 100 }); // Guardar avatar
     fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
 
-    res.status(201).json({ message: 'Usuario registrado correctamente.' });
+  res.status(201).json({ message: 'Usuario registrado correctamente.' });
 });
 
 app.post('/login', (req, res) => {
@@ -529,6 +529,31 @@ app.post('/place-bet', (req, res) => {
     return res.status(400).json({ message: 'Datos incompletos.' });
   }
 
+  // Leer el archivo de apuestas y verificar si la apuesta está activa
+  const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+  const betIndex = bets.findIndex(
+    bet => bet.groupCode === groupCode && bet.id === betId 
+  );
+
+  if (betIndex === -1 || !bets[betIndex].isActive) {
+    return res.status(400).json({ message: 'Estas apuesta ya no está activa. Se está procesando la respuesta correcta.' });
+  }
+
+  // Leer el archivo de usuarios y restar créditos
+  const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  const userIndex = users.findIndex(user => user.username === username);
+
+  if (userIndex === -1) {
+    return res.status(400).json({ message: 'Usuario no encontrado.' });
+  }
+
+  if (users[userIndex].creditos < amount) {
+    return res.status(400).json({ message: 'Créditos insuficientes para realizar la apuesta.' });
+  }
+
+  users[userIndex].creditos -= amount;
+  fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
+
   const newActivity = {
     betId,
     groupCode,
@@ -548,6 +573,7 @@ app.post('/place-bet', (req, res) => {
 
   res.json({ message: 'Apuesta registrada correctamente.' });
 });
+
 
 app.post('/set-result', (req, res) => {
   const { groupCode, betId, correctAnswer } = req.body;
@@ -571,9 +597,57 @@ app.post('/set-result', (req, res) => {
     fs.writeFile(betsFilePath, JSON.stringify(bets, null, 2), (err) => {
       if (err) return res.status(500).json({ message: 'Error al guardar el resultado.' });
 
-      return res.json({ message: 'Resultado guardado correctamente.' });
+      // ---- Reparto de recompensas ----
+      const activities = JSON.parse(fs.readFileSync(activityFilePath, 'utf8'));
+      const relevantActivities = activities.filter(
+        a => a.betId === betId && a.groupCode === groupCode
+      );
+
+      const totalPot = relevantActivities.reduce((sum, a) => sum + Number(a.amount), 0);
+      const correctBets = relevantActivities.filter(a => a.selectedOption === correctAnswer);
+      const totalCorrectAmount = correctBets.reduce((sum, a) => sum + Number(a.amount), 0);
+
+      if (correctBets.length === 0 || totalCorrectAmount === 0) {
+        return res.json({ message: 'Resultado guardado. Nadie acertó la apuesta.' });
+      }
+
+      const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+
+      // Solo se reparte el bote de los que fallaron como ganancia
+      const potFromLosers = totalPot - totalCorrectAmount;
+
+      correctBets.forEach(bet => {
+        const userIndex = users.findIndex(u => u.username === bet.username);
+        if (userIndex !== -1) {
+          const proportion = Number(bet.amount) / totalCorrectAmount;
+          const extraReward = Math.round(potFromLosers * proportion);
+          const totalReward = Number(bet.amount) + extraReward;
+
+          users[userIndex].creditos += totalReward;
+        }
+      });
+
+      fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
+
+      return res.json({ message: 'Resultado guardado y recompensas distribuidas correctamente.' });
     });
   });
+});
+
+app.post('/get-user', (req, res) => {
+  const { username } = req.body;
+  if (!username) {
+    return res.status(400).json({ message: 'Nombre de usuario requerido.' });
+  }
+
+  const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  const user = users.find(u => u.username === username);
+
+  if (!user) {
+    return res.status(404).json({ message: 'Usuario no encontrado.' });
+  }
+
+  res.json(user);
 });
 
 app.use(express.static(path.join(__dirname, 'public')));

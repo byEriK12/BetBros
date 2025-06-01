@@ -4,24 +4,13 @@
     "email": "admin@gmail.com",
     "password": "Admin0",
     "avatar": "images/avatar/mono.png"
+    "creditos": 1000000
   },
   {
     "username": "eric",
     "email": "eric.matasp12@gmail.com",
     "password": "Eric12",
-    "pendingDeletion": true,
     "avatar": "images/avatar/gallo.png"
+    "creditos": 100
   },
-  {
-    "username": "Biel Dogi",
-    "email": "bieldomingog@gmail.com",
-    "password": "Biel1234",
-    "avatar": "images/avatar/perro.png"
-  },
-  {
-    "username": "pruebacion2",
-    "email": "prueba@ola.com",
-    "password": "Prueba1",
-    "avatar": "images/avatar/pinguino.png"
-  }
 ]

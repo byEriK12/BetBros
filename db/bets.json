@@ -6,98 +6,12 @@
     "title": "Prueba de Apuesta joder",
     "description": "Si no funciona que hago?",
     "multipleChoice": false,
-    "limitDate": "2025-06-05T00:25",
+    "limitDate": "2026-05-05T00:25",
     "options": [
       "Me suicido",
       "Me ahorco",
       "Me emborracho"
     ],
     "isActive": true
-  },
-  {
-    "id": "f0b3083b",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "title": "rdwf",
-    "description": "dsf",
-    "multipleChoice": false,
-    "limitDate": "2025-05-31T21:50",
-    "options": [
-      "fdsfds",
-      "fdsf"
-    ],
-    "isActive": false
-  },
-  {
-    "id": "04f0ef70",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "title": "dsa",
-    "description": "few",
-    "multipleChoice": false,
-    "limitDate": "2025-05-31T22:06",
-    "options": [
-      "rew",
-      "rew"
-    ],
-    "isActive": false
-  },
-  {
-    "id": "5c4b098c",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "title": "dsa",
-    "description": "edqw",
-    "multipleChoice": false,
-    "limitDate": "2025-05-29T17:18",
-    "options": [
-      "eqwed",
-      "ewrw"
-    ],
-    "isActive": false
-  },
-  {
-    "id": "e900c722",
-    "groupCode": "3cf857ff",
-    "username": "Biel Dogi",
-    "title": "gfd",
-    "description": "rewrewºº",
-    "multipleChoice": false,
-    "limitDate": "2025-05-29T17:28",
-    "options": [
-      "qqqqq",
-      "aqwssss"
-    ],
-    "isActive": false
-  },
-  {
-    "id": "a040539d",
-    "groupCode": "2b040330",
-    "username": "admin",
-    "title": "M",
-    "description": "asda",
-    "multipleChoice": false,
-    "limitDate": "2025-05-31T22:52",
-    "options": [
-      "1",
-      "2"
-    ],
-    "isActive": false,
-    "correctAnswer": null
-  },
-  {
-    "id": "1d10fccb",
-    "groupCode": "dd110074",
-    "username": "pruebacion2",
-    "title": "apuesta de prueba",
-    "description": "apuesta de prueba",
-    "multipleChoice": true,
-    "limitDate": "2025-06-11T13:28",
-    "options": [
-      "1",
-      "2"
-    ],
-    "isActive": true,
-    "correctAnswer": null
   }
 ]

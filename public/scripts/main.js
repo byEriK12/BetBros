@@ -130,7 +130,7 @@ function confirmarEliminacion() {
 
 function setGroupAndRedirect(groupCode) {
   localStorage.setItem("currentGroupCode", groupCode);
-  window.location.href = "betsGroup.html";
+  window.location.href = "betsGroup.html"; 
 }
 
 function cambiarNotificaciones(estado) {
@@ -336,6 +336,11 @@ async function setCorrectAnswer(betId, correctAnswer) {
   }
 }
 
+function togglePassword() {
+      const input = document.getElementById('profilePassword');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+    
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
 
@@ -556,8 +561,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <img src="${community.image || 'https://via.placeholder.com/120'}" class="rounded me-3" alt="${community.name}" style="width: 100px; height: 100px; object-fit: cover;">
                 <div>
                   <h5 class="mb-1">
-                    <a href="#" class="fw-bold text-verde-betbros" onclick="setGroupAndRedirect('${community.invitationCode}')">
-                    ${community.name}
+                    <a href="#" class="fw-bold text-verde-betbros" onclick="${community.invitationCode ? `setGroupAndRedirect('${community.invitationCode}')` : `window.location.href='communityMaint.html'`}">
+                      ${community.name}
                     </a>
                   </h5>
                   <p class="mb-1 text-muted">${community.description}</p>
@@ -958,6 +963,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
   }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const localUser = JSON.parse(localStorage.getItem('betbros_user'));
+
+  fetch('/get-user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: localUser.username })
+  })
+    .then(res => res.json())
+    .then(user => {
+      document.getElementById('profileUsername').textContent = user.username || '-';
+      document.getElementById('profileEmail').textContent = user.email || '-';
+      document.getElementById('profilePassword').value = user.password || '';
+      document.getElementById('profileCredits').textContent = `${user.creditos} créditos`;
+
+      // Actualiza localStorage también si quieres mantenerlo al día:
+      localStorage.setItem('betbros_user', JSON.stringify(user));
+    })
+    .catch(err => {
+      console.error('Error al cargar datos del perfil:', err);
+    });
 });
 
 

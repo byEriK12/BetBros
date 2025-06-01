@@ -476,4 +476,9 @@ h1, h2, h3, h4, h5 {
   .casino-card img { height: 120px; }
   .main-content { padding: 0 0.5rem; }
 }
+.card.bg-dark {
+  background-color: #111 !important;
+  border: 1px solid #2fd656;
+  border-radius: 16px;
+}
 
