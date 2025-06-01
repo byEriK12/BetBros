@@ -1,10 +1,18 @@
-/* GENERAL */
+/* RESET & BASE */
+
+html, body {
+  height: 100%;
+}
 
 body {
-  background-color: #1b1919; /* negro */
-  color: #fff; /* blanco */
-  padding-bottom: 80px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #101c12 0%, #1e4023 100%);
+  color: #eaffea;
+  font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
 }
 
 a, a:hover {
@@ -12,145 +20,359 @@ a, a:hover {
   text-decoration: none;
 }
 
-h2, h3, h4, h5 {
-  color: #2fd656; /* verde para títulos */
+h1, h2, h3, h4, h5 {
+  font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 /* NAVBAR */
 
-.navbar {
-  background-color: #000 !important;
-  border-bottom: 1px solid #2fd656;
+.main-navbar {
+  background: linear-gradient(90deg, #101c12 60%, #2fd656 100%);
+  box-shadow: 0 4px 24px #2fd65633;
+  border-bottom: 2px solid #2fd656;
+  border-radius: 0 0 24px 24px;
 }
 
-.navbar-brand {
-  color: #2fd656 !important;
+.logo-navbar {
+  border-radius: 12px;
+  border:2px solid #2fd656;
+  background: #193c24;
+}
+
+.brand-title {
+  font-size: 3.5rem;
   font-weight: bold;
-  font-size: 1.5rem;
-}
-
-/* BUTTONS */
-
-.btn-primary {
-  background-color: #2fd656;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #10501f;
-}
-
-.btn-outline-light {
-  border-color: #2fd656;
-  color: #2fd656;
-}
-
-.btn-outline-light:hover {
-  background-color: #2fd656;
-  color: #fff;
-}
-
-.btn-light {
-  background-color: #fff;
-  color: #000;
-}
-
-.btn-light:hover {
-  background-color: #2fd656;
-}
-
-/* CARDS */
-
-.equal-card {
-  height: 100%;
+  line-height: 1;
   display: flex;
-  flex-direction: column;
-  border: 1px solid #fff;
-}
-
-.equal-card img {
-  height: 250px;
-  object-fit: cover;
-  width: 100%;
-}
-
-.equal-card .card-body {
-  flex-grow: 1;
-  background-color: #111;
-  color: #fff;
-}
-
-.card-title {
-  color: #2fd656;
-}
-
-/* FORMS */
-
-.form-control {
-  background-color: #222;
-  color: #fff;
-  border: 1px solid #2fd656;
-}
-
-.form-control:focus {
-  background-color: #111;
-  color: #fff;
-  border-color: #2fd656;
-  box-shadow: 0 0 5px #fff;
-}
-
-label {
-  color: #fff;
-}
-
-/* OTHERS */
-
-.shadow {
-  box-shadow: 0 0 10px rgba(40, 167, 69, 0.4) !important;
-}
-
-.img-fluid {
-  border: 2px solid #fff;
-  border-radius: 8px;
+  align-items: center;
+  min-height: 54px;
 }
 
 .text-verde-betbros {
   color: #2fd656 !important;
 }
 
-.btn-verde-betbros {
-  background-color: #2fd656;
+.text-gold-betbros {
+  color: #fff !important;
+}
+
+/* NAVBAR BUTTONS DESTACADOS */
+.navbar-btns {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.navbar-btn {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 8px #2fd65655, 0 1.5px 0 #fff2 inset;
+  letter-spacing: 1px;
   border: none;
-  color: white;
+  outline: none;
+  transition: 
+    transform 0.13s,
+    box-shadow 0.18s,
+    background 0.18s,
+    color 0.18s,
+    filter 0.18s;
+  text-transform: uppercase;
+  font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.navbar-btn i {
+  font-size: 1.15em;
+  vertical-align: middle;
+}
+.navbar-btn.navbar-btn-green {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  border: 2px solid #2fd656;
+  text-shadow: 0 2px 8px #10501f33;
+  box-shadow: 0 4px 16px #2fd65655, 0 1.5px 0 #fff2 inset;
+  filter: drop-shadow(0 0 4px #2fd65655);
+  animation: btn-glow-green 2.5s infinite alternate;
+}
+@keyframes btn-glow-green {
+  0% { box-shadow: 0 4px 16px #2fd65655, 0 1.5px 0 #fff2 inset; }
+  100% { box-shadow: 0 0 16px 4px #2fd65699, 0 1.5px 0 #fff2 inset; }
+}
+.navbar-btn.navbar-btn-green:hover, .navbar-btn.navbar-btn-green:focus {
+  background: linear-gradient(90deg, #10501f 60%, #2fd656 100%);
+  color: #fff;
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(0 0 8px #2fd65699);
 }
 
-.btn-verde-betbros:hover {
-  background-color: #10501f;
+.navbar-btn.navbar-btn-outline {
+  background: #fff;
+  border: 2px solid #2fd656;
+  color: #2fd656;
+  text-shadow: none;
+  box-shadow: 0 4px 16px #2fd65633, 0 1.5px 0 #fff2 inset;
+  filter: drop-shadow(0 0 4px #2fd65633);
+  animation: btn-glow-outline 2.5s infinite alternate;
+}
+@keyframes btn-glow-outline {
+  0% { box-shadow: 0 4px 16px #2fd65633, 0 1.5px 0 #fff2 inset; }
+  100% { box-shadow: 0 0 16px 4px #2fd65655, 0 1.5px 0 #fff2 inset; }
+}
+.navbar-btn.navbar-btn-outline:hover, .navbar-btn.navbar-btn-outline:focus {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(0 0 8px #2fd65699);
 }
 
-.card.locked {
+/* HERO SECTION */
+
+.bet-hero {
+  background: linear-gradient(135deg, #193c24 80%, #2fd65622 100%);
+  border-radius: 32px;
+  box-shadow: 0 8px 40px 0 #2fd65622, 0 1.5px 0 #2fd65644 inset;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  padding: 2.5rem 2rem 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.bet-hero h1 {
+  color: #2fd656;
+  text-shadow: 0 2px 12px #2fd65633;
+}
+
+.bet-hero p {
+  color: #eaffea;
+  font-size: 1.2rem;
+}
+
+.bet-hero .btn-green-betbros {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  border-radius: 2rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.5rem;
+  box-shadow: 0 4px 18px #2fd65677, 0 1.5px 0 #fff2 inset;
+  border: 2px solid #2fd656;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 0 0.5rem;
+  transition: 
+    background 0.18s,
+    color 0.18s,
+    transform 0.13s,
+    box-shadow 0.18s;
+  animation: btn-glow-green-hero 2.5s infinite alternate;
+}
+@keyframes btn-glow-green-hero {
+  0% { box-shadow: 0 4px 18px #2fd65677, 0 1.5px 0 #fff2 inset; }
+  100% { box-shadow: 0 0 24px 8px #2fd656cc, 0 1.5px 0 #fff2 inset; }
+}
+.bet-hero .btn-green-betbros:hover, .bet-hero .btn-green-betbros:focus {
+  background: linear-gradient(90deg, #10501f 60%, #2fd656 100%);
+  color: #fff;
+  transform: scale(1.07);
+  filter: brightness(1.1) drop-shadow(0 0 12px #2fd656cc);
+}
+
+.bet-hero .btn-outline-green {
+  border-radius: 2rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.5rem;
+  border: 2px solid #2fd656;
+  color: #2fd656;
+  background: #fff;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 0 0.5rem;
+  box-shadow: 0 4px 18px #2fd65644, 0 1.5px 0 #fff2 inset;
+  transition: 
+    background 0.18s,
+    color 0.18s,
+    transform 0.13s,
+    box-shadow 0.18s;
+  animation: btn-glow-outline-hero 2.5s infinite alternate;
+}
+@keyframes btn-glow-outline-hero {
+  0% { box-shadow: 0 4px 18px #2fd65644, 0 1.5px 0 #fff2 inset; }
+  100% { box-shadow: 0 0 24px 8px #2fd65699, 0 1.5px 0 #fff2 inset; }
+}
+.bet-hero .btn-outline-green:hover, .bet-hero .btn-outline-green:focus {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  transform: scale(1.07);
+  filter: brightness(1.1) drop-shadow(0 0 12px #2fd656cc);
+}
+
+/* COMO FUNCIONA */
+
+.bet-howto-section {
+  margin-bottom: 2.5rem;
+}
+
+.bet-howto-card {
+  background: rgba(16,28,18,0.93);
+  border:2px solid #2fd656;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px #2fd65622;
+}
+
+.bet-howto-card h3 {
+  color: #2fd656;
+}
+
+.bet-howto-card ul li {
+  margin-bottom: 1rem;
+}
+
+/* CARDS APUESTA */
+
+.casino-card {
+  background: linear-gradient(135deg, #193c24 80%, #101c12 100%);
+  border: 2.5px solid #2fd656;
+  box-shadow: 0 8px 32px #2fd65622, 0 0.5px 0 #fff2 inset;
+  border-radius: 24px;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+
+.casino-card:hover {
+  transform: scale(1.04) rotate(-1deg);
+  box-shadow: 0 12px 48px #2fd65644, 0 0.5px 0 #fff4 inset;
+  border-color: #b9ffb7;
+}
+
+.casino-card .card-title {
+  color: #2fd656;
+  text-shadow: 0 2px 8px #2fd65655;
+  letter-spacing: 1.5px;
+}
+
+.casino-card .badge-green {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  padding: 0.4em 1.2em;
+  font-weight: 600;
+  background: linear-gradient(90deg, #2fd656 60%, #eaffea 100%);
+  color: #101c12;
+  box-shadow: 0 2px 8px #2fd65622;
+  border: 1.5px solid #b9ffb7;
+}
+
+.casino-card img {
+  height: 180px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 24px 24px 0 0;
+  border-bottom: 2px solid #2fd656;
+}
+
+.casino-card .card-body {
+  background: #101c12;
+  border-radius: 0 0 24px 24px;
+  color: #fff;
+}
+
+/* BOTONES */
+
+.btn-green-betbros,
+.btn-primary {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s;
+  box-shadow: 0 2px 8px #2fd65633;
+}
+
+.btn-green-betbros:hover,
+.btn-primary:hover {
+  background: linear-gradient(90deg, #10501f 60%, #2fd656 100%);
+  color: #fff;
+}
+
+.btn-outline-green {
+  border-color: #2fd656;
+  color: #2fd656;
+  background: transparent;
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s;
+}
+
+.btn-outline-green:hover {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+}
+
+.hero-cta-btn {
+  transition: 
+    background 0.18s,
+    color 0.18s,
+    transform 0.13s,
+    box-shadow 0.18s,
+    filter 0.18s;
+  animation: hero-cta-glow 2.5s infinite alternate;
+}
+@keyframes hero-cta-glow {
+  0% { box-shadow: 0 8px 32px #2fd65699; }
+  100% { box-shadow: 0 0 32px 12px #2fd656cc; }
+}
+.hero-cta-btn:hover, .hero-cta-btn:focus {
+  transform: scale(1.08);
+  filter: brightness(1.1) drop-shadow(0 0 16px #2fd656cc);
+}
+
+/* FOOTER */
+
+.bet-footer {
+  color: #2fd656;
+  background: transparent !important;
+  border-top: 1.5px solid #2fd656;
+  font-size: 1rem;
+  margin-top: 0;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  min-height: unset;
+  display: block;
+}
+
+/* BLOQUEO CARD */
+
+.locked {
+  opacity: 0.93;
+  filter: grayscale(0.1);
   position: relative;
   overflow: hidden;
   cursor: not-allowed;
 }
 
-.card.locked::before {
+.locked::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(16, 28, 18, 0.5);
   transition: background-color 0.3s ease;
   z-index: 1;
 }
 
-.card.locked:hover::before {
-  background-color: rgba(0, 0, 0, 0.6);
+.locked:hover::before {
+  background-color: rgba(16, 28, 18, 0.7);
 }
 
-.card.locked::after {
+.locked::after {
   content: "🔒";
   font-size: 2.5rem;
-  color: white;
+  color: #2fd656;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -159,92 +381,104 @@ label {
   pointer-events: none;
 }
 
-/* DROPDOWN */
+/* Avatar carousel uniform size and centering for all avatars */
+.avatar-carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 10px;
+}
+
+.avatar-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  min-height: 150px;
+}
+
+.avatar-option {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 3px solid #e0e0e0;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: border 0.2s, box-shadow 0.2s;
+  padding: 16px;
+  display: block;
+}
+
+.avatar-arrow {
+  background: #fff;
+  border: 2px solid #28a745;
+  color: #28a745;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.avatar-arrow:hover {
+  background: #28a745;
+  color: #fff;
+}
+
+/* Botón desplegable bonito para configuración */
+.btn-mas-info {
+  background: linear-gradient(90deg, #2fd656 60%, #10501f 100%);
+  color: #fff;
+  border: 2px solid #2fd656;
+  font-weight: 700;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 8px #2fd65655, 0 1.5px 0 #fff2 inset;
+  letter-spacing: 1px;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.18s, color 0.18s, transform 0.13s, box-shadow 0.18s;
+}
+.btn-mas-info:hover, .btn-mas-info:focus {
+  background: linear-gradient(90deg, #10501f 60%, #2fd656 100%);
+  color: #fff;
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(0 0 8px #2fd65699);
+}
 
 .dropdown-menu {
-  background-color: #111 !important; 
-  border: 1px solid #2fd656;
+  background: #101c12;
+  border: 2px solid #2fd656;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px #2fd65633;
 }
-
-.dropdown-menu .dropdown-item {
-  color: #fff; 
-}
-
-.dropdown-menu .dropdown-item:hover {
-  background-color: #2fd656;
-  color: #000;
-}
-
-/* GROUPS LIST */
-.card {
-  border-radius: 12px;
-  transition: box-shadow 0.2s;
-}
-
-.card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
-
-.img-thumbnail {
-  border: none;
-  border-radius: 10px;
-}
-
-.btn-mas-info {
-  background-color: transparent;
-  border: 1px solid #2fd656;
+.dropdown-item {
   color: #2fd656;
-  transition: all 0.2s ease-in-out;
+  font-weight: 600;
+  transition: background 0.18s, color 0.18s;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+  background: #2fd656;
+  color: #fff;
 }
 
-.btn-mas-info:hover,
-.btn-mas-info:focus,
-.btn-mas-info:active,
-.btn-mas-info.show {
-  background-color: #2fd656;
-  color: #000;
-  border-color: #2fd656;
-  box-shadow: none;
-}
+/* RESPONSIVE */
 
-.dropdown-menu .dropdown-item.delete-option {
-  color: #ff6565;
-}
-
-.dropdown-menu .dropdown-item.delete-option:hover {
-  background-color: #ff6565;
-  color: #a70000;
-}
-
-/* Cambiar color del switch (input[type=checkbox]) cuando está activo */
-.form-check-input:checked {
-  background-color: #2fd656;
-  border-color: #2fd656;
-}
-
-.form-check-input:focus {
-  box-shadow: 0 0 0 0.2rem rgba(47, 214, 86, 0.25);
-}
-
-/* Cambiar color botón elimiar cuenta */
-.btn-danger {
-  background-color: #ff4949;
-  border-color: #ff4949;
-}
-.btn-danger:hover {
-  background-color: #e60b0b;
-  border-color: #e60b0b;
-}
-.btn-danger:active {
-  background-color: #e60b0b;
-  border-color: #e60b0b;
+@media (max-width: 767px) {
+  .main-navbar { border-radius: 0 0 12px 12px; }
+  .brand-title { font-size: 3.5rem !important; }
+  .bet-hero, .bet-howto-card { border-radius: 16px; padding: 1.2rem !important; }
+  .casino-card { border-radius: 14px; }
+  .casino-card img { height: 120px; }
+  .main-content { padding: 0 0.5rem; }
 }
 .card.bg-dark {
   background-color: #111 !important;
   border: 1px solid #2fd656;
   border-radius: 16px;
 }
-
-
-
 

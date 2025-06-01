@@ -15,5 +15,32 @@
     ],
     "bets": 1,
     "pendingDeletion": false
+  },
+  {
+    "name": "Hola",
+    "description": "sada",
+    "image": "",
+    "creator": "admin",
+    "isPublic": false,
+    "invitationCode": "2b040330",
+    "members": [
+      "admin"
+    ],
+    "bets": 1,
+    "pendingDeletion": false
+  },
+  {
+    "name": "prueba",
+    "description": "2",
+    "image": "",
+    "creator": "admin",
+    "isPublic": false,
+    "invitationCode": "dd110074",
+    "members": [
+      "admin",
+      "pruebacion2"
+    ],
+    "bets": 1,
+    "pendingDeletion": false
   }
 ]

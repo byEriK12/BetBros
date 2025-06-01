@@ -67,8 +67,12 @@ setInterval(updateBetsStatus, 30000);
 app.use(bodyParser.json());
 
 app.post('/register', (req, res) => {
-  const { username, email, password } = req.body;
+    const { username, email, password, avatar } = req.body; // avatar incluido
 
+    if (!username || !email || !password || !avatar) {
+        return res.status(400).json({ message: 'Faltan datos para el registro.' });
+    }
+  
   const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
 
   const userExists = users.some(
@@ -79,12 +83,11 @@ app.post('/register', (req, res) => {
     return res.status(400).json({ message: 'Usuario o correo ya registrado.' });
   }
 
-  users.push({ username, email, password, creditos: 100 });
-  fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
+    users.push({ username, email, password, avatar, creditos: 100 }); // Guardar avatar
+    fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
 
   res.status(201).json({ message: 'Usuario registrado correctamente.' });
 });
-
 
 app.post('/login', (req, res) => {
   const { identifier, password } = req.body;
@@ -101,7 +104,7 @@ app.post('/login', (req, res) => {
     return res.status(401).json({ message: 'Credenciales incorrectas.' });
   }
 
-  res.status(200).json({ message: 'Login exitoso.', username: user.username });
+  res.status(200).json({ message: 'Login exitoso.', username: user.username ,avatar: user.avatar });
 });
 
 

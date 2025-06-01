@@ -11,11 +11,11 @@
 <body>
 
   <!-- NAVBAR igual que dashboard -->
-  <nav id="navbar" class="navbar px-4">
+  <nav class="main-navbar d-flex align-items-center justify-content-between px-4 py-3">
     <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
       <img src="images/logos/logo_final.png" alt="Logo BetBros" width="70" height="70" class="me-2">
-      <span>
-        <span class="text-verde-betbros fw-bold">Bet</span><span class="text-white fw-bold">Bros</span>
+      <span class="brand-title">
+        <span class="text-verde-betbros">Bet</span><span class="text-gold-betbros">Bros</span>
         </span>
     </a>
     <div class="d-flex align-items-center">
@@ -30,6 +30,7 @@
           aria-expanded="false"
         >
           <span id="welcomeUser"></span>
+          <img id="userAvatar" src="" alt="Avatar" width="40" height="40" class="rounded-circle ms-2 d-none">
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <li><a class="dropdown-item" href="createPrivGroup.html">Crear grupo privado</a></li>
