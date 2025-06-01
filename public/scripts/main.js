@@ -287,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const newUser = { username, email, password, avatar };
 
-      fetch('http://localhost:3010/register', {
+      fetch('https://betbros.onrender.com/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const loginData = { identifier, password };
       const user = JSON.parse(localStorage.getItem("betbros_user"));
       // Enviar datos al backend para validar el login
-      fetch('http://localhost:3010/login', {
+      fetch('https://betbros.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -974,7 +974,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const localUser = JSON.parse(localStorage.getItem('betbros_user'));
 
-  fetch('/get-user', {
+  fetch('https://betbros.onrender.com/get-user', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: localUser.username })
