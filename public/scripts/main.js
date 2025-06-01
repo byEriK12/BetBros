@@ -130,7 +130,7 @@ function confirmarEliminacion() {
 
 function setGroupAndRedirect(groupCode) {
   localStorage.setItem("currentGroupCode", groupCode);
-  window.location.href = "betsGroup.html";
+  window.location.href = "betsGroup.html"; 
 }
 
 function cambiarNotificaciones(estado) {
@@ -532,8 +532,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <img src="${community.image || 'https://via.placeholder.com/120'}" class="rounded me-3" alt="${community.name}" style="width: 100px; height: 100px; object-fit: cover;">
                 <div>
                   <h5 class="mb-1">
-                    <a href="#" class="fw-bold text-verde-betbros" onclick="setGroupAndRedirect('${community.invitationCode}')">
-                    ${community.name}
+                    <a href="#" class="fw-bold text-verde-betbros" onclick="${community.invitationCode ? `setGroupAndRedirect('${community.invitationCode}')` : `window.location.href='communityMaint.html'`}">
+                      ${community.name}
                     </a>
                   </h5>
                   <p class="mb-1 text-muted">${community.description}</p>
