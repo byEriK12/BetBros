@@ -590,6 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <small class="text-secondary">Creador: ${community.creator}</small><br>
                   <small class="text-secondary">Apuestas en curso: <b>${community.bets || 0}</b></small><br>
                   <small class="text-secondary">Participantes: <b>${community.members.length}</b></small>
+                  <small class="text-secondary">Código de invitación: <b>${group.invitationCode}</b></small>
                 </div>
               </div>
               <div class="dropdown">
