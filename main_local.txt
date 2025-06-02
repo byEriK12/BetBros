@@ -511,6 +511,7 @@ if (createGroupForm) {
                   <small class="text-secondary">Creador: ${group.creator}</small><br>
                   <small class="text-secondary">Apuestas en curso: <b>${group.bets || 0}</b></small><br>
                   <small class="text-secondary">Participantes: <b>${group.members || 1}</b></small>
+                  <small class="text-secondary">Código de invitación: <b>${group.invitationCode}</b></small>
                 </div>
               </div>
               <div class="dropdown">
@@ -590,7 +591,6 @@ document.addEventListener("DOMContentLoaded", () => {
                   <small class="text-secondary">Creador: ${community.creator}</small><br>
                   <small class="text-secondary">Apuestas en curso: <b>${community.bets || 0}</b></small><br>
                   <small class="text-secondary">Participantes: <b>${community.members.length}</b></small>
-                  <small class="text-secondary">Código de invitación: <b>${group.invitationCode}</b></small>
                 </div>
               </div>
               <div class="dropdown">
