@@ -536,7 +536,7 @@ app.post('/place-bet', (req, res) => {
   );
 
   const currentDate = new Date();
-  const betDeadline = new Date(bet.limitDate) < currentDate
+  const betDeadline = new Date(bets.limitDate) < currentDate
 
   // Devolver por consola la fecha limite de la apuesta y la fecha actual
   console.log('Fecha límite de la apuesta: ${bet.limitDate}, Fecha actual: ${currentDate}');
