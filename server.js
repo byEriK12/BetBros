@@ -529,8 +529,18 @@ app.post('/place-bet', (req, res) => {
     return res.status(400).json({ message: 'Datos incompletos.' });
   }
 
-  // Leer el archivo de apuestas y verificar si la apuesta está activa
+  // Validar que el creador de la apuesta no pueda apostar en su propia apuesta
   const bets = JSON.parse(fs.readFileSync(betsFilePath, 'utf8'));
+  const bet = bets.find(b => b.id === betId && b.groupCode === groupCode);
+  if (!bet) {
+    return res.status(404).json({ message: 'Apuesta no encontrada.' });
+  }
+  
+  if (bet.username === username) {
+    return res.status(400).json({ message: 'El creador de la apuesta no puede apostar en su propia apuesta.' });
+  }
+
+  // Leer el archivo de apuestas y verificar si la apuesta está activa
   const betIndex = bets.findIndex(
     bet => bet.groupCode === groupCode && bet.id === betId 
   );
