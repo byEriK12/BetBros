@@ -652,6 +652,9 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Por favor, completa todos los campos obligatorios.");
         return;
       }
+      if (multipleChoice) {
+        alert("La opción de múltiples respuestas aún no está implementada. Estamos trabajando en ello.");
+      }
 
       const apuesta = {
         groupCode,
