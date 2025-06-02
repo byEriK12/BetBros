@@ -541,18 +541,26 @@ app.post('/place-bet', (req, res) => {
     return res.status(400).json({ message: 'Apuesta no encontrada.' });
   }
 
-  // Convertimos la fecha local (guardada como string) a Date
-  const localDeadline = new Date(bets[betIndex].limitDate);
+  // 1. Leer la fecha guardada (ej: "2025-06-02T18:19") como si fuera hora española (CEST)
+  const localLimitDateStr = bets[betIndex].limitDate;
+  const [datePart, timePart] = localLimitDateStr.split('T');
+  const [year, month, day] = datePart.split('-');
+  const [hour, minute] = timePart.split(':');
 
-  // Y luego la convertimos a UTC para compararla bien en Render
-  const deadlineUTC = new Date(localDeadline.getTime() - localDeadline.getTimezoneOffset() * 60000);
+  // 2. Crear la fecha manualmente en horario de España (UTC+2 en verano)
+  const deadlineUTC = new Date(Date.UTC(
+    parseInt(year),
+    parseInt(month) - 1,
+    parseInt(day),
+    parseInt(hour) - 2, // Resta 2 horas porque España está en UTC+2 en verano
+    parseInt(minute)
+  ));
 
-  // Debug
-  console.log(`Fecha límite de la apuesta (ajustada a UTC): ${deadlineUTC.toISOString()}`);
+  // 3. Comparar con la hora actual en UTC
+  console.log(`Fecha límite (interpretada como UTC+2): ${deadlineUTC.toISOString()}`);
   console.log(`Fecha actual (UTC): ${currentDate.toISOString()}`);
   console.log("currentDate > deadlineUTC:", currentDate > deadlineUTC);
 
-  // Comparación correcta
   if (currentDate > deadlineUTC) {
     return res.status(400).json({ message: 'La fecha límite de la apuesta ha pasado. No puedes realizar la apuesta.' });
   }
