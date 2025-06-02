@@ -536,13 +536,19 @@ app.post('/place-bet', (req, res) => {
   );
 
   const currentDate = new Date();
-  const betDeadline = new Date(bets.limitDate) < currentDate
 
-  // Devolver por consola la fecha limite de la apuesta y la fecha actual
-  console.log('Fecha límite de la apuesta: ${bet.limitDate}, Fecha actual: ${currentDate}');
+  if (betIndex === -1) {
+    return res.status(400).json({ message: 'Apuesta no encontrada.' });
+  }
 
-  if (betDeadline) {
-    return res.status(400).json({ message: 'La fecha límite de la apuesta ha pasado. No puedes realizar la apuesta.'}); 
+  const deadline = new Date(bets[betIndex].limitDate);
+
+  // Debug correcto:
+  console.log(`Fecha límite de la apuesta: ${deadline.toISOString()}, Fecha actual: ${currentDate.toISOString()}`);
+
+  // Comparación correcta:
+  if (currentDate > deadline) {
+    return res.status(400).json({ message: 'La fecha límite de la apuesta ha pasado. No puedes realizar la apuesta.' });
   }
 
   if (betIndex === -1 || !bets[betIndex].isActive) {
