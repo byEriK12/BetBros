@@ -541,22 +541,26 @@ app.post('/place-bet', (req, res) => {
     return res.status(400).json({ message: 'Apuesta no encontrada.' });
   }
 
-  const deadline = new Date(bets[betIndex].limitDate);
+  // Convertimos la fecha local (guardada como string) a Date
+  const localDeadline = new Date(bets[betIndex].limitDate);
 
-  // Debug correcto:
-  console.log(`Fecha límite de la apuesta: ${deadline.toISOString()}, Fecha actual: ${currentDate.toISOString()}`);
-  console.log("Tipo de limitDate:", typeof bets[betIndex].limitDate);
-  console.log("Valor bruto:", bets[betIndex].limitDate);
-  console.log("currentDate > deadline:", currentDate > deadline);
-  
-  // Comparación correcta:
-  if (currentDate > deadline) {
+  // Y luego la convertimos a UTC para compararla bien en Render
+  const deadlineUTC = new Date(localDeadline.getTime() - localDeadline.getTimezoneOffset() * 60000);
+
+  // Debug
+  console.log(`Fecha límite de la apuesta (ajustada a UTC): ${deadlineUTC.toISOString()}`);
+  console.log(`Fecha actual (UTC): ${currentDate.toISOString()}`);
+  console.log("currentDate > deadlineUTC:", currentDate > deadlineUTC);
+
+  // Comparación correcta
+  if (currentDate > deadlineUTC) {
     return res.status(400).json({ message: 'La fecha límite de la apuesta ha pasado. No puedes realizar la apuesta.' });
   }
 
-  if (betIndex === -1 || !bets[betIndex].isActive) {
+  if (!bets[betIndex].isActive) {
     return res.status(400).json({ message: 'Estas apuesta ya no está activa. Se está procesando la respuesta correcta.' });
   }
+
 
   // Leer el archivo de usuarios y restar créditos
   const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
