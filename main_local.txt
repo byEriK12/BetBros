@@ -340,7 +340,22 @@ function togglePassword() {
       const input = document.getElementById('profilePassword');
       input.type = input.type === 'password' ? 'text' : 'password';
     }
-    
+
+function addOption() {
+  const optionsContainer = document.getElementById('betOptionsContainer');
+  const newOption = document.createElement('div');
+  newOption.className = 'input-group mb-3';
+  newOption.innerHTML = `
+    <input type="text" class="form-control" placeholder="Nueva opción de apuesta" required>
+        <button class="btn btn-danger remove-option-btn" type="button">Eliminar</button>
+  `;
+  optionsContainer.appendChild(newOption);
+  // Añadir evento para eliminar la opción
+    newOption.querySelector(".remove-option-btn").addEventListener("click", () => {
+      optionsContainer.removeChild(newOption);
+    });
+}
+  
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
 
@@ -611,19 +626,6 @@ document.addEventListener("DOMContentLoaded", () => {
     <img src="${user.avatar || 'images/avatar/gato.png'}" alt="Avatar" class="me-2 rounded-circle"  style="width: 84px; height: 64px;">
   `;
   }
-  
-  // Función para añadir nueva opción de apuesta
-  const addOptionBtn = document.getElementById("addOptionBtn");
-  const optionsContainer = document.getElementById("optionsContainer");
-  if (addOptionBtn) {
-    addOptionBtn.addEventListener("click", () => {
-      const newOption = document.createElement("input");
-      newOption.type = "text";
-      newOption.className = "form-control mb-2";
-      newOption.placeholder = "Opción de apuesta";
-      optionsContainer.appendChild(newOption);
-    });
-  }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -641,7 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const description = document.getElementById('betDescription').value.trim();
       const multipleChoice = document.getElementById('multipleChoiceSwitch').checked;
       const limitDate = document.getElementById('deadline').value;
-      const options = Array.from(document.querySelectorAll('#optionsContainer input[type="text"]'))
+      const options = Array.from(document.querySelectorAll('#betOptionsContainer input[type="text"]'))
                           .map(input => input.value.trim())
                           .filter(value => value !== "");
 
@@ -993,10 +995,4 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error al cargar datos del perfil:', err);
     });
 });
-
-
-
-
-
-
 

@@ -68,16 +68,24 @@
         <textarea id="betDescription" class="form-control" rows="3" placeholder="Escribe aquí la descripción..."></textarea>
       </div>
 
-      <!-- Opciones de apuesta -->
+      <!-- Opciones de apuesta. Desplegable que te sale y pudes ir añadiendo más de dos opciones-->
       <div class="mb-4">
         <label class="form-label">Opciones de apuesta</label>
-        <div id="optionsContainer">
-          <input type="text" class="form-control mb-2" placeholder="Opción 1" />
-          <input type="text" class="form-control mb-2" placeholder="Opción 2" />
+        <div id="betOptionsContainer">
+          <div class="input-group mb-3">
+            <!-- Poner 2 opciones por defecto-->
+            <input type="text" class="form-control" placeholder="Opción 1" />
+            <button class="btn btn-outline-secondary" type="button" onclick="addOption()">+</button>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Opción 2" />
+            <button class="btn btn-outline-secondary" type="button" onclick="addOption()">+</button>
+          </div>
         </div>
-        <button id="addOptionBtn" class="btn btn-outline-light btn-sm">+ Añadir opción</button>
+        <button type="button" class="btn btn-primary" onclick="addOption()">Añadir otra opción</button>
       </div>
-
+      </div>
+          
       <!-- Slider + Fecha -->
       <div class="row mb-4 align-items-center">
         <div class="col-md-6 mb-3 mb-md-0">
