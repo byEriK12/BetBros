@@ -545,7 +545,10 @@ app.post('/place-bet', (req, res) => {
 
   // Debug correcto:
   console.log(`Fecha límite de la apuesta: ${deadline.toISOString()}, Fecha actual: ${currentDate.toISOString()}`);
-
+  console.log("Tipo de limitDate:", typeof bets[betIndex].limitDate);
+  console.log("Valor bruto:", bets[betIndex].limitDate);
+  console.log("currentDate > deadline:", currentDate > deadline);
+  
   // Comparación correcta:
   if (currentDate > deadline) {
     return res.status(400).json({ message: 'La fecha límite de la apuesta ha pasado. No puedes realizar la apuesta.' });
