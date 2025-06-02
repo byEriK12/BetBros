@@ -6,12 +6,12 @@
     "title": "Prueba de Apuesta joder",
     "description": "Si no funciona que hago?",
     "multipleChoice": false,
-    "limitDate": "2026-05-05T00:25",
+    "limitDate": "2025-05-05T00:25",
     "options": [
       "Me suicido",
       "Me ahorco",
       "Me emborracho"
     ],
-    "isActive": true
+    "isActive": false
   }
 ]

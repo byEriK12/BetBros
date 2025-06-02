@@ -535,6 +535,13 @@ app.post('/place-bet', (req, res) => {
     bet => bet.groupCode === groupCode && bet.id === betId 
   );
 
+  const currentDate = new Date();
+  const betDeadline = new Date(bets[betIndex].deadline);
+
+  if (currentDate > betDeadline) {
+    return res.status(400).json({ message: 'La fecha límite de la apuesta ha pasado. Ya no se puede apostar.' });
+  }
+
   if (betIndex === -1 || !bets[betIndex].isActive) {
     return res.status(400).json({ message: 'Estas apuesta ya no está activa. Se está procesando la respuesta correcta.' });
   }

@@ -510,7 +510,7 @@ if (createGroupForm) {
                   <p class="mb-1 text-muted">${group.description}</p>
                   <small class="text-secondary">Creador: ${group.creator}</small><br>
                   <small class="text-secondary">Apuestas en curso: <b>${group.bets || 0}</b></small><br>
-                  <small class="text-secondary">Participantes: <b>${group.members || 1}</b></small>
+                  <small class="text-secondary">Participantes: <b>${group.members || 1}</b></small><br>
                   <small class="text-secondary">Código de invitación: <b>${group.invitationCode}</b></small>
                 </div>
               </div>
