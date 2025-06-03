@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
                           .map(input => input.value.trim())
                           .filter(value => value !== "");
 
-      if (!groupCode || !title || !description || !limitDate || options.length === 0) {
+      if (!groupCode || !title || !description || !limitDate || options.length <2) {
         alert("Por favor, completa todos los campos obligatorios.");
         return;
       }
@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
         username,
         title,
         description,
-        multipleChoice,
+        multipleChoice: false,
         limitDate,
         options
       };
