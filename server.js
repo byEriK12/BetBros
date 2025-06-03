@@ -305,8 +305,8 @@ app.post('/save-bet', (req, res) => {
     if (!username || !title || !description || !limitDate || !options) {
       return res.status(400).json({ message: "Faltan datos para guardar la apuesta." });
     }
-    if (multipleChoice && options.length < 2) {
-      return res.status(400).json({ message: "Se requieren al menos 2 opciones para una apuesta de opción múltiple." });
+    if (options.length < 2) {
+      return res.status(400).json({ message: "Se requieren al menos 2 opciones para una apuesta" });
     }
 
     const newBet = {
