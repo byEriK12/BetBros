@@ -24,7 +24,7 @@ function deleteGroup(groupName) {
   const user = JSON.parse(localStorage.getItem("betbros_user"));
   if (!confirm(`¿Estás segur@ de que quieres eliminar el grupo "${groupName}"?`)) return;
 
-  fetch(`http://localhost:3010/delete-group`, {
+  fetch(`https://betbros.onrender.com/delete-group`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: groupName, username: user?.username})
@@ -57,7 +57,7 @@ function joinGroup() {
     return;
   }
 
-  fetch('http://localhost:3010/join-group', {
+  fetch('https://betbros.onrender.com/join-group', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ invitationCode: code, username: user.username })
@@ -84,7 +84,7 @@ function joinCommunityGroup(groupName) {
     alert("Debes iniciar sesión para unirte a un grupo.");
     return;
   }
-  fetch('http://localhost:3010/join-community', { // También fíjate que el endpoint es '/join-community', no 'join-community-group'
+  fetch('https://betbros.onrender.com/join-community', { // También fíjate que el endpoint es '/join-community', no 'join-community-group'
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: groupName, username: user.username })
@@ -112,7 +112,7 @@ function confirmarEliminacion() {
       return;
     }
 
-    fetch('http://localhost:3010/request-account-deletion', {
+    fetch('https://betbros.onrender.com/request-account-deletion', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: user.username })
@@ -162,7 +162,7 @@ function leaveGroup(groupName) {
 
   if (!confirm(`¿Estás segur@ de que quieres abandonar el grupo "${groupName}"?`)) return;
 
-  fetch('http://localhost:3010/request-leave-group', {
+  fetch('https://betbros.onrender.com/request-leave-group', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ groupName, username: user.username })
@@ -184,7 +184,7 @@ function leaveCommunity(communityName) {
     return;
   }
   if (!confirm(`¿Estás segur@ de que quieres abandonar la comunidad "${communityName}"?`)) return;
-  fetch('http://localhost:3010/leave-community', {
+  fetch('https://betbros.onrender.com/leave-community', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: communityName, username: user.username })
@@ -211,7 +211,7 @@ function deleteBet(betId) {
     return;
   }
 
-  fetch(`http://localhost:3010/delete-bet`, {
+  fetch(`https://betbros.onrender.com/delete-bet`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ betId, username: user.username, groupCode })
@@ -287,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const newUser = { username, email, password, avatar };
 
-      fetch('http://localhost:3010/register', {
+      fetch('https://betbros.onrender.com/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -316,7 +316,7 @@ async function setCorrectAnswer(betId, correctAnswer) {
   const user = JSON.parse(localStorage.getItem("betbros_user"));
   
   try {
-    const response = await fetch('http://localhost:3010/set-correct-answer', {
+    const response = await fetch('https://betbros.onrender.com/set-correct-answer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const loginData = { identifier, password };
       const user = JSON.parse(localStorage.getItem("betbros_user"));
       // Enviar datos al backend para validar el login
-      fetch('http://localhost:3010/login', {
+      fetch('https://betbros.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -438,7 +438,7 @@ if (createGroupForm) {
       return;
     }
 
-    fetch('http://localhost:3010/create-group', {
+    fetch('https://betbros.onrender.com/create-group', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -478,7 +478,7 @@ if (createGroupForm) {
     return;
   }
 
-  fetch(`http://localhost:3010/my-groups?username=${user.username}`)
+  fetch(`https://betbros.onrender.com/my-groups?username=${user.username}`)
     .then(response => response.json())
     .then(groups => {
       if (groups.length === 0) {
@@ -568,7 +568,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  fetch(`http://localhost:3010/my-communities?username=${user.username}`)
+  fetch(`https://betbros.onrender.com/my-communities?username=${user.username}`)
     .then(response => response.json())
     .then(communities => {
       if (communities.length === 0) {
@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
                           .map(input => input.value.trim())
                           .filter(value => value !== "");
 
-      if (!groupCode || !title || !description || !limitDate || options.length < 2) {
+      if (!groupCode || !title || !description || !limitDate || options.length === 0) {
         alert("Por favor, completa todos los campos obligatorios.");
         return;
       }
@@ -661,13 +661,13 @@ document.addEventListener('DOMContentLoaded', () => {
         username,
         title,
         description,
-        multipleChoice: false,
+        multipleChoice,
         limitDate,
         options
       };
 
       try {
-        const response = await fetch(`http://localhost:3010/save-bet?groupCode=${groupCode}`, {
+        const response = await fetch(`https://betbros.onrender.com/save-bet?groupCode=${groupCode}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(apuesta)
@@ -693,7 +693,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(localStorage.getItem("betbros_user")); // Usuario actual
 
   if (betsList && groupTitle && groupCode) {
-    fetch(`http://localhost:3010/group-bets?groupCode=${groupCode}`)
+    fetch(`https://betbros.onrender.com/group-bets?groupCode=${groupCode}`)
       .then(res => res.json())
       .then(data => {
         if (data.error) {
@@ -770,7 +770,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Cargar la apuesta correspondiente
-    fetch(`http://localhost:3010/group-bets?groupCode=${groupCode}`)
+    fetch(`https://betbros.onrender.com/group-bets?groupCode=${groupCode}`)
       .then(res => res.json())
       .then(data => {
         const bet = data.bets.find(b => b.id === betId);
@@ -817,7 +817,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const selectedOption = optionSelect.value;
       const amount = amountInput.value;
 
-      const res = await fetch('http://localhost:3010/place-bet', {
+      const res = await fetch('https://betbros.onrender.com/place-bet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -921,7 +921,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!betId || !groupCode || !user) return;
 
-    fetch(`http://localhost:3010/group-bets?groupCode=${groupCode}`)
+    fetch(`https://betbros.onrender.com/group-bets?groupCode=${groupCode}`)
       .then(res => res.json())
       .then(data => {
         const bet = data.bets.find(b => b.id === betId);
@@ -952,7 +952,7 @@ document.addEventListener('DOMContentLoaded', () => {
           e.preventDefault();
           const selected = resultSelect.value;
           try {
-            const res = await fetch('http://localhost:3010/set-result', {
+            const res = await fetch('https://betbros.onrender.com/set-result', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -980,7 +980,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const localUser = JSON.parse(localStorage.getItem('betbros_user'));
 
-  fetch('http://localhost:3010/get-user', {
+  fetch('https://betbros.onrender.com/get-user', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: localUser.username })
@@ -999,3 +999,4 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error al cargar datos del perfil:', err);
     });
 });
+
