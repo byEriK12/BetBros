@@ -19,5 +19,301 @@
     "password": "Biel1234",
     "avatar": "images/avatar/gato.png",
     "creditos": 150
-  }
+  },
+  {
+    "username": "PolGarcia",
+    "email": "polgarcia@gmail.com",
+    "password": "Pol1234",
+    "avatar": "images/avatar/pinguino.png",
+    "creditos": 100
+  },
+  {
+    "username": "WassimIbn",
+    "email": "wassimibn@gmail.com",
+    "password": "Wassim1234",
+    "avatar": "images/avatar/dargon.png",
+    "creditos": 100
+  },
+  {
+    "username": "MartinaJarque",
+    "email": "martinajarque@gmail.com",
+    "password": "Martina1234",
+    "avatar": "images/avatar/mono.png",
+    "creditos": 100
+  },
+  {
+    "username": "ArnauMartin",
+    "email": "arnaumartin@gmail.com",
+    "password": "Arnau1234",
+    "avatar": "images/avatar/gallo.png",
+    "creditos": 100
+  },
+  {
+    "username": "JavierOcampo",
+    "email": "javierocampo@gmail.com",
+    "password": "Javier1234",
+    "avatar": "images/avatar/perro.png",
+    "creditos": 100
+  },
+  {
+    "username": "AlejandroPoole",
+    "email": "alejandropoole@gmail.com",
+    "password": "Alejandro1234",
+    "avatar": "images/avatar/gato.png",
+    "creditos": 100
+  },
+  {
+    "username": "LucasAndreu",
+    "email": "lucasandreu@gmail.com",
+    "password": "Lucas1234",
+    "avatar": "images/avatar/mono.png",
+    "creditos": 100
+  },
+  {
+    "username": "AlejandroGonzalez",
+    "email": "alejandrogonzalez@gmail.com",
+    "password": "Alejandro1234",
+    "avatar": "images/avatar/dargon.png",
+    "creditos": 100
+  },
+  {
+    "username": "SaraLopez",
+    "email": "saralopez@gmail.com",
+    "password": "Sara1234",
+    "avatar": "images/avatar/pinguino.png",
+    "creditos": 100
+  },
+  {
+    "username": "PauPuig",
+    "email": "paupuig@gmail.com",
+    "password": "Pau1234",
+    "avatar": "images/avatar/gallo.png",
+    "creditos": 100
+  },
+  {
+    "username": "JoanVicente",
+    "email": "joanvicente@gmail.com",
+    "password": "Joan1234",
+    "avatar": "images/avatar/perro.png",
+    "creditos": 100
+  },
+  {
+    "username": "JoelAbellan",
+    "email": "joelabellan@gmail.com",
+    "password": "Joel1234",
+    "avatar": "images/avatar/gato.png",
+    "creditos": 100
+  },
+  {
+    "username": "JavierBellon",
+    "email": "javierbellon@gmail.com",
+    "password": "Javier1234",
+    "avatar": "images/avatar/dargon.png",
+    "creditos": 100
+  },
+  {
+    "username": "IrisCorbalan",
+    "email": "iriscorbalan@gmail.com",
+    "password": "Iris1234",
+    "avatar": "images/avatar/mono.png",
+    "creditos": 100
+  },
+  {
+    "username": "PedroGavalda",
+    "email": "pedrogavalda@gmail.com",
+    "password": "Pedro1234",
+    "avatar": "images/avatar/gallo.png",
+    "creditos": 100
+  },
+  {
+    "username": "IvanJimenez",
+    "email": "ivanjimenez@gmail.com",
+    "password": "Ivan1234",
+    "avatar": "images/avatar/pinguino.png",
+    "creditos": 100
+  },
+  {
+    "username": "GuillemVizcarro",
+    "email": "guillemvizcarro@gmail.com",
+    "password": "Guillem1234",
+    "avatar": "images/avatar/perro.png",
+    "creditos": 100
+  },
+  {
+    "username": "OmarAbdellah",
+    "email": "omarabdellah@gmail.com",
+    "password": "Omar1234",
+    "avatar": "images/avatar/gato.png",
+    "creditos": 100
+  },
+  {
+    "username": "EstelaCallejon",
+    "email": "estelacallejon@gmail.com",
+    "password": "Estela1234",
+    "avatar": "images/avatar/dargon.png",
+    "creditos": 100
+  },
+  {
+    "username": "AnaEnrech",
+    "email": "anaenrech@gmail.com",
+    "password": "Ana1234",
+    "avatar": "images/avatar/mono.png",
+    "creditos": 100
+  },
+  {
+    "username": "RogerGuinyon",
+    "email": "rogerguinyon@gmail.com",
+    "password": "Roger1234",
+    "avatar": "images/avatar/gallo.png",
+    "creditos": 100
+  },
+  {
+    "username": "MartiLapena",
+    "email": "martilapena@gmail.com",
+    "password": "Marti1234",
+    "avatar": "images/avatar/pinguino.png",
+    "creditos": 100
+  },
+  {
+    "username": "ArnauSala",
+    "email": "arnausala@gmail.com",
+    "password": "Arnau1234",
+    "avatar": "images/avatar/perro.png",
+    "creditos": 100
+  },
+  {
+    "username": "VictorCamiruaga",
+    "email": "victorcamiruaga@gmail.com",
+    "password": "Victor1234",
+    "avatar": "images/avatar/gato.png",
+    "creditos": 100
+  },
+  {
+    "username": "DavidCampdelacreu",
+    "email": "davidcampdelacreu@gmail.com",
+    "password": "David1234",
+    "avatar": "images/avatar/perro.png",
+    "creditos": 100
+  },
+  {
+    "username": "DavidCasillas",
+    "email": "davidcasillas@gmail.com",
+    "password": "David1234",
+    "avatar": "images/avatar/dargon.png",
+    "creditos": 100
+  },
+  {
+    "username": "AnnaFreixas",
+    "email": "annafreixas@gmail.com",
+    "password": "Anna1234",
+    "avatar": "images/avatar/pinguino.png",
+    "creditos": 100
+  },
+  {
+    "username": "AdrianGarcia",
+    "email": "adriangarcia@gmail.com",
+    "password": "Adrian1234",
+    "avatar": "images/avatar/mono.png",
+    "creditos": 100
+  },
+  {
+    "username": "GorkaHernandez",
+    "email": "gorkahernandez@gmail.com",
+    "password": "Gorka1234",
+    "avatar": "images/avatar/gallo.png",
+    "creditos": 100
+  },
+  {
+    "username": "CintaCarot",
+    "email": "cintacarot@gmail.com",
+    "password": "Cinta1234",
+    "avatar": "images/avatar/gato.png",
+    "creditos": 100
+  },
+  {
+    "username": "MenChen",
+    "email": "menchen@gmail.com",
+    "password": "Men1234",
+    "avatar": "images/avatar/perro.png",
+    "creditos": 100
+  },
+  {
+    "username": "YerayEspinosa",
+    "email": "yerayespinosa@gmail.com",
+    "password": "Yeray1234",
+    "avatar": "images/avatar/dargon.png",
+    "creditos": 100
+  },
+  {
+    "username": "FerranMogas",
+    "email": "ferranmogas@gmail.com",
+    "password": "Ferran1234",
+    "avatar": "images/avatar/pinguino.png",
+    "creditos": 100
+  },
+  {
+    "username": "DaviPenna-Mattos",
+    "email": "davipenna-mattos@gmail.com",
+    "password": "Davi1234",
+    "avatar": "images/avatar/mono.png",
+    "creditos": 100
+  },
+  {
+    "username": "IvanTorres",
+    "email": "ivantorres@gmail.com",
+    "password": "Ivan1234",
+    "avatar": "images/avatar/gallo.png",
+    "creditos": 100
+  },
+  {
+    "username": "ArnauBalart",
+    "email": "arnaubalart@gmail.com",
+    "password": "Arnau1234",
+    "avatar": "images/avatar/gato.png",
+    "creditos": 100
+  },
+  {
+    "username": "NathanGarcia",
+    "email": "nathangarcia@gmail.com",
+    "password": "Nathan1234",
+    "avatar": "images/avatar/perro.png",
+    "creditos": 100
+  },
+  {
+    "username": "ArnauGil",
+    "email": "arnaugil@gmail.com",
+    "password": "Arnau1234",
+    "avatar": "images/avatar/dargon.png",
+    "creditos": 100
+  },
+  {
+    "username": "MatiasMolina",
+    "email": "matiasmolina@gmail.com",
+    "password": "Matias1234",
+    "avatar": "images/avatar/pinguino.png",
+    "creditos": 100
+  },
+  {
+    "username": "MarRetamal",
+    "email": "marretamal@gmail.com",
+    "password": "Mar1234",
+    "avatar": "images/avatar/mono.png",
+    "creditos": 100
+  },
+  {
+    "username": "HugoSanz",
+    "email": "hugosanz@gmail.com",
+    "password": "Hugo1234",
+    "avatar": "images/avatar/gallo.png",
+    "creditos": 100
+  },
+  {
+  "username": "ToniLunar",
+  "email": "tonilunar@gmail.com",
+  "password": "Toni1234",
+  "avatar": "images/avatar/perro.png",
+  "creditos": 100
+}
+
+
 ]
