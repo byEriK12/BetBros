@@ -2,7 +2,7 @@
   {
     "name": "asdsa",
     "description": "dsadsadsad",
-    "image": "dasd",
+    "image": "images/groups/mobex_logo.png",
     "creator": "eric",
     "isPublic": false,
     "invitationCode": "3cf857ff",
@@ -13,7 +13,7 @@
       "Ivet",
       "admin"
     ],
-    "bets": 12,
+    "bets": 7,
     "pendingDeletion": false
   },
   {
