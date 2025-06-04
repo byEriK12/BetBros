@@ -1,32 +1,15 @@
 [
   {
-    "name": "asdsa",
-    "description": "dsadsadsad",
+    "name": "Presentación BetBros",
+    "description": "Grupo creado por Mobex exclusivamente para la presentación de BetBros en la asignatura de Ingeniería del Software.",
     "image": "images/groups/mobex_logo.png",
     "creator": "eric",
     "isPublic": false,
     "invitationCode": "3cf857ff",
     "members": [
       "eric",
-      "Biel Dogi",
-      "Biel",
-      "Ivet",
       "admin"
     ],
-    "bets": 7,
-    "pendingDeletion": false
-  },
-  {
-    "name": "prueba",
-    "description": "2",
-    "image": "",
-    "creator": "admin",
-    "isPublic": false,
-    "invitationCode": "dd110074",
-    "members": [
-      "admin",
-      "pruebacion2"
-    ],
-    "bets": 1
+    "bets": 0
   }
 ]
