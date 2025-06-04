@@ -579,6 +579,21 @@ app.post('/place-bet', (req, res) => {
     return res.status(400).json({ message: 'Estas apuesta ya no está activa. Se está procesando la respuesta correcta.' });
   }
 
+  // Verificar si el usuario ya ha apostado en esta apuesta
+  const existingActivity = JSON.parse(fs.readFileSync(activityFilePath, 'utf8')); 
+  const userActivity = existingActivity.find(
+    activity => activity.betId === betId && activity.groupCode === groupCode && activity.username === username
+  );
+  console.log("userActivity:", userActivity);
+  console.log("betId:", betId);
+  console.log("groupCode:", groupCode);
+  console.log("username:", username);
+  console.log("userActivity:", userActivity);
+
+
+  if (userActivity) {
+    return res.status(400).json({ message: 'Ya has apostado en esta apuesta.' });
+  }
 
   // Leer el archivo de usuarios y restar créditos
   const users = JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));

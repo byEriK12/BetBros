@@ -11,14 +11,14 @@
     "email": "eric.matasp12@gmail.com",
     "password": "Eric12",
     "avatar": "images/avatar/gallo.png",
-    "creditos": 100
+    "creditos": 200
   },
   {
     "username": "Biel",
     "email": "biel@gmail.com",
     "password": "Biel1234",
     "avatar": "images/avatar/gato.png",
-    "creditos": 150
+    "creditos": 200
   },
   {
     "username": "PolGarcia",
@@ -308,12 +308,10 @@
     "creditos": 100
   },
   {
-  "username": "ToniLunar",
-  "email": "tonilunar@gmail.com",
-  "password": "Toni1234",
-  "avatar": "images/avatar/perro.png",
-  "creditos": 100
-}
-
-
+    "username": "ToniLunar",
+    "email": "tonilunar@gmail.com",
+    "password": "Toni1234",
+    "avatar": "images/avatar/perro.png",
+    "creditos": 100
+  }
 ]

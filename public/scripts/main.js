@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
                           .map(input => input.value.trim())
                           .filter(value => value !== "");
 
-      if (!groupCode || !title || !description || !limitDate || options.length < 2) {
+      if (!groupCode || !title || !description || !limitDate || options.length <2) {
         alert("Por favor, completa todos los campos obligatorios.");
         return;
       }
@@ -999,4 +999,3 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error al cargar datos del perfil:', err);
     });
 });
-
