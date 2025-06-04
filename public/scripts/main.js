@@ -496,38 +496,46 @@ if (createGroupForm) {
           const groupCard = document.createElement("div");
           groupCard.classList.add("col-12", "mb-3");
           groupCard.innerHTML = `
-            <div class="card h-100 p-3 d-flex flex-row align-items-center justify-content-between">
-              <div class="d-flex align-items-center">
-                <img src="${group.image || 'https://via.placeholder.com/120'}" class="rounded me-3" alt="${group.name}" style="width: 100px; height: 100px; object-fit: cover;">
-                <div>
-                  <h5 class="mb-1">
-                   <a href="#" class="fw-bold text-verde-betbros" onclick="setGroupAndRedirect('${group.invitationCode}')">
+            <div class="card h-100 p-3 d-flex flex-row justify-content-between">
+              <!-- Imagen fija a la izquierda y centrada verticalmente -->
+              <div class="d-flex align-items-center me-3">
+                <img src="${group.image || 'https://via.placeholder.com/120'}"
+                    class="rounded"
+                    alt="${group.name}"
+                    style="width: 100px; height: 100px; object-fit: cover; flex-shrink: 0;">
+              </div>
+
+              <!-- Contenido del grupo -->
+              <div class="d-flex flex-column flex-grow-1 overflow-hidden">
+                <h5 class="mb-1">
+                  <a href="#" class="fw-bold text-verde-betbros" onclick="setGroupAndRedirect('${group.invitationCode}')">
                     ${group.name}
                   </a>
-                    </a>
-                    ${group.pendingDeletion ? '<span class="badge bg-warning text-dark">Eliminación pendiente</span>' : ''}
-                  </h5>
-                  <p class="mb-1 text-muted">${group.description}</p>
-                  <small class="text-secondary">Creador: ${group.creator}</small><br>
-                  <small class="text-secondary">Apuestas en curso: <b>${group.bets || 0}</b></small><br>
-                  <small class="text-secondary">Participantes: <b>${group.members || 1}</b></small><br>
-                  <small class="text-secondary">Código de invitación: <b>${group.invitationCode}</b></small>
-                </div>
+                  ${group.pendingDeletion ? '<span class="badge bg-warning text-dark">Eliminación pendiente</span>' : ''}
+                </h5>
+                <p class="mb-1 text-muted">${group.description}</p>
+                <small class="text-secondary">Creador: ${group.creator}</small><br>
+                <small class="text-secondary">Apuestas en curso: <b>${group.bets || 0}</b></small><br>
+                <small class="text-secondary">Participantes: <b>${group.members || 1}</b></small><br>
+                <small class="text-secondary">Código de invitación: <b class="d-inline-block text-break">${group.invitationCode}</b></small>
               </div>
-              <div class="dropdown">
+
+              <!-- Botón "Más información" alineado a la derecha y centrado verticalmente -->
+              <div class="dropdown align-self-center ms-3">
                 <button class="btn btn-mas-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Más información
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                   ${abandonOption}
                   <li>
-                    <a class="dropdown-item delete-option" style="color: red;" href="#" onclick="event.preventDefault(); deleteGroup('${group.name}')">
+                    <a class="dropdown-item delete-option text-danger" href="#" onclick="event.preventDefault(); deleteGroup('${group.name}')">
                       Eliminar grupo
                     </a>
                   </li>
                 </ul>
               </div>
             </div>
+
           `;
           groupsList.appendChild(groupCard);
         });
@@ -999,3 +1007,5 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error al cargar datos del perfil:', err);
     });
 });
+
+
